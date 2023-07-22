@@ -9,43 +9,44 @@ import Leaderboard from '../pages/leaderboard'
 import Forum from '../pages/forum'
 import ForumPost from '../pages/forum-post'
 import EndGame from '../pages/end-game'
+import { ROUTE_PATH } from './constants'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTE_PATH.HOME,
     element: <Home />,
     errorElement: <Page404 />,
   },
   {
-    path: '/login',
+    path: ROUTE_PATH.LOGIN,
     element: <Login />,
   },
   {
-    path: '/registration',
+    path: ROUTE_PATH.REGISTRATION,
     element: <Registration />,
   },
   {
-    path: '/profile',
+    path: ROUTE_PATH.PROFILE,
     element: <Profile />,
   },
   {
-    path: '/game',
+    path: ROUTE_PATH.GAME,
     element: <Game />,
   },
   {
-    path: '/leaderboard',
+    path: ROUTE_PATH.LEADERBOARD,
     element: <Leaderboard />,
   },
   {
-    path: '/forum',
+    path: ROUTE_PATH.FORUM,
     element: <Forum />,
   },
   {
-    path: '/forum/:postId',
+    path: ROUTE_PATH.FORUM + '/:postId',
     element: <ForumPost />,
   },
   {
-    path: '/end-game',
+    path: ROUTE_PATH.ENDGAME,
     element: <EndGame />,
   },
 ])
