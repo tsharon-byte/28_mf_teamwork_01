@@ -15,9 +15,7 @@ export default class Validator {
   }
 
   public get errors(): TValidationErrors {
-    return Object.fromEntries(
-      Object.entries(this._errors).map(([name, errors]) => [name, [...errors]])
-    )
+    return JSON.parse(JSON.stringify(this._errors))
   }
 
   public validate<T extends Record<string, unknown>>(data: T): void {
@@ -40,7 +38,7 @@ export default class Validator {
   }
 
   protected _setError(fieldName: string, error: string): void {
-    if (!Object.prototype.hasOwnProperty.call(this._errors, fieldName)) {
+    if (!this._errors[fieldName]) {
       this._errors[fieldName] = []
     }
     this._errors[fieldName].push(error)

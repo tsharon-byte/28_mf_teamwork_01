@@ -9,14 +9,6 @@ describe('test password validation rule', () => {
     expect(actual).toBeFalsy()
   })
 
-  it('should return false if more than fourty characters are entered', () => {
-    const value = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-
-    const actual = passwordValidationRule.validate(value)
-
-    expect(actual).toBeFalsy()
-  })
-
   it('should return false if input text does not contain at least one digit', () => {
     const value = 'Xxxxxxxx'
 

@@ -48,7 +48,7 @@ describe('test Validator class', () => {
       }
     }
     const validator = new MockedValidator(rules)
-    const expected = '{"someFieldName":{"error":"some error"}}'
+    const expected = '{"someFieldName":{"error":"some error","checks":[]}}'
     const actual = JSON.stringify(validator.rules)
     expect(actual).toBe(expected)
   })

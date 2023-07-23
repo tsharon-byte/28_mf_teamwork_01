@@ -1,4 +1,4 @@
-import React, { FC, FormEventHandler, Children, isValidElement } from 'react'
+import React, { FC, FormEventHandler } from 'react'
 import classNames from 'classnames'
 import styles from './styles.module.css'
 
@@ -18,10 +18,8 @@ const Form: FC<IFormProps> = ({
       const formData = new FormData(form)
       const jsonData: Record<string, unknown> = {}
 
-      Children.forEach(children, child => {
-        if (isValidElement(child) && child.props.name) {
-          jsonData[child.props.name] = formData.get(child.props.name)
-        }
+      formData.forEach((val, key) => {
+        jsonData[key] = val
       })
 
       validator.validate(jsonData)
