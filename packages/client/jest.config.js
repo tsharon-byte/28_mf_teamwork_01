@@ -9,8 +9,7 @@ export default {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   transform: {
-    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$':
-      'jest-css-modules-transform',
-    '^.+\\.svg$': '<rootDir>/src/utils/svgTransform.cjs',
-  },
+    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-css-modules-transform',
+    '^.+\\.svg$': '<rootDir>/src/utils/svgTransform.cjs'
+  }
 }

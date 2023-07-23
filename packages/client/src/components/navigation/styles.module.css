@@ -1,0 +1,24 @@
+.appBar {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.list {
+  display: flex;
+  margin-left: auto !important;
+  padding: 8px !important;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  padding: 16px;
+  white-space: nowrap;
+}
+
+.link:hover {
+  opacity: 0.9;
+}
+
+.link_active {
+  font-weight: bold;
+}

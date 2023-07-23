@@ -6,6 +6,7 @@ import {
   passwordValidationRule,
 } from '../../validation-rules'
 import { registrationValidator } from '../../validators'
+import { ContentLayout } from '../../layouts'
 
 const Login: FC = () => {
   const handleSubmit = () => {
@@ -13,20 +14,24 @@ const Login: FC = () => {
   }
 
   return (
-    <Form validator={registrationValidator} onSubmit={handleSubmit}>
-      <TextField
-        label="Логин"
-        name="login"
-        validationRules={[loginValidationRule]}
-        required></TextField>
-      <TextField
-        label="Пароль"
-        name="password"
-        type="password"
-        validationRules={[passwordValidationRule]}
-        required></TextField>
-      <Button type="submit">Войти</Button>
-    </Form>
+    <ContentLayout navigation={false}>
+      <Form validator={registrationValidator} onSubmit={handleSubmit}>
+        <TextField
+          label="Логин"
+          name="login"
+          validationRules={[loginValidationRule]}
+          required
+        />
+        <TextField
+          label="Пароль"
+          name="password"
+          type="password"
+          validationRules={[passwordValidationRule]}
+          required
+        />
+        <Button type="submit" variant="contained">Войти</Button>
+      </Form>
+    </ContentLayout>
   )
 }
 

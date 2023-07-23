@@ -1,7 +1,7 @@
 import App from '.'
 import { render, screen } from '@testing-library/react'
 
-const appContent = 'BOMBERMAN'
+const appContent = 'Начать игру'
 
 // @ts-ignore
 global.fetch = jest.fn(() =>
