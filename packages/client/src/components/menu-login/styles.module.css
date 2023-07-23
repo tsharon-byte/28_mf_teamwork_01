@@ -1,0 +1,13 @@
+.link {
+  display: flex;
+  column-gap: 0.44rem;
+  align-items: center;
+  text-decoration: none;
+}
+.name {
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
