@@ -5,7 +5,7 @@ import accountImg from '../../assets/images/account.svg'
 import styles from './styles.module.css'
 
 const MenuLogin: FC = () => {
-  const [name, setName] = useState('Accew12')
+  const [name, setName] = useState<string>('Accew12')
 
   return (
     <Link to={ROUTE_PATH.PROFILE} className={styles.link}>

@@ -17,6 +17,9 @@ const Home: FC = () => {
           className={styles.startLink}>
           Начать игру
         </Link>
+        <Link to="#" className={styles.link}>
+          Правила игры
+        </Link>
       </div>
     </main>
   )

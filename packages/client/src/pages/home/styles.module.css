@@ -39,3 +39,9 @@
   border: 5px solid #fff;
   padding: 27px 69px;
 }
+.link {
+  composes: startLink;
+  font-size: 1.5rem;
+  border: unset;
+  font-weight: 600;
+}
