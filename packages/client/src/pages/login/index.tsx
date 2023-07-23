@@ -1,7 +1,8 @@
 import { FC } from 'react'
+import { ContentLayout } from '../../layouts'
 
 const Login: FC = () => {
-  return <div>Заглушка логин</div>
+  return <ContentLayout>Заглушка для страницы авторизации</ContentLayout>
 }
 
 export default Login
