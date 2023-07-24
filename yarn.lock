@@ -515,6 +515,16 @@
   resolved "https://registry.yarnpkg.com/@evilmartians/lefthook/-/lefthook-1.3.9.tgz#3425f170c2f205d0441c1a90ef554b0d7847db66"
   integrity sha512-qR2Q0NLKOOx7eNrW99y3IK2eVKWPmhstTUXOulFxWhzQYIpo4W08D+GDUzWC8cTcqI0Ai6f6MM9dY801lyWlHg==
 
+"@fontsource/khand@^5.0.5":
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/khand/-/khand-5.0.5.tgz#e4734c6a981110ca6302d128c7fb6da9a58afd7b"
+  integrity sha512-RQRgrdngd2sXhX0vdTM6q90oB7E4OGDPQHN7ObcgIbC8RS+Z6/bbhvZXwHtYeFPvHXkNC4fNEHDHSMC/dmOY0Q==
+
+"@fontsource/notable@^5.0.5":
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/notable/-/notable-5.0.5.tgz#b1dfc9e8a04689a16ee70664a8d8a477046f5de9"
+  integrity sha512-p7bltGtIn1xbmoYI0zL0oYX7PYpgTwJNG2ux5s7A2v30u+si5NaygwyHDvEu+8B4EzSNzRD2A5bk2AORW/H9Cw==
+
 "@gar/promisify@^1.1.3":
   version "1.1.3"
   resolved "https://registry.npmjs.org/@gar/promisify/-/promisify-1.1.3.tgz"

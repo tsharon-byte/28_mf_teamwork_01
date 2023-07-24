@@ -9,7 +9,8 @@ import Forum from '../pages/forum'
 import ForumPost from '../pages/forum-post'
 import EndGame from '../pages/end-game'
 import { ROUTE_PATH } from './constants'
-import ErrorPage from '../pages/error-page'  
+import ErrorPage from '../pages/error-page'
+import Page500 from '../pages/page-500'
 
 const router = createBrowserRouter([
   {
