@@ -51,7 +51,7 @@ const TextField: TextFieldFC = ({
             '.MuiInputLabel-root': {
               color: 'rgba(255, 255, 255, 0.50)',
             },
-            '.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
               borderColor: '#FFF',
             },
             '.MuiOutlinedInput-notchedOutline': {

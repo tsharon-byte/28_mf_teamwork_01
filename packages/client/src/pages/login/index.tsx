@@ -1,14 +1,13 @@
 import { FC } from 'react'
-import { TextField, Form } from '../../components'
+import { TextField, Form, Button } from '../../components'
 import {
   loginValidationRule,
   passwordValidationRule,
 } from '../../validation-rules'
-import { registrationValidator } from '../../validators'
+import { loginValidator } from '../../validators'
 import { Link } from 'react-router-dom'
 import { ROUTE_PATH } from '../../utils/constants'
 import styles from './styles.module.css'
-import Button from '../../components/button'
 
 const Login: FC = () => {
   const handleSubmit = () => {
@@ -20,7 +19,7 @@ const Login: FC = () => {
       <div className={styles.wrapper}>
         <div className={styles.form}>
           <h1 className={styles.heading}>Вход</h1>
-          <Form validator={registrationValidator} onSubmit={handleSubmit}>
+          <Form validator={loginValidator} onSubmit={handleSubmit}>
             <TextField
               label="Логин"
               name="login"
