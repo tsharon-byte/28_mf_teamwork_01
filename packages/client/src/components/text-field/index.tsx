@@ -1,5 +1,6 @@
 import React, { FocusEventHandler, useState } from 'react'
-import { TextField as MUITextField } from '@mui/material'
+import { TextField as MUITextField, ThemeProvider } from '@mui/material'
+import { createTheme } from '@mui/material/styles'
 
 import type TextFieldFC from './types'
 
@@ -39,14 +40,42 @@ const TextField: TextFieldFC = ({
     })
   }
 
+  const theme = createTheme({
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            '.MuiInputBase-input': {
+              color: '#FFF',
+            },
+            '.MuiInputLabel-root': {
+              color: 'rgba(255, 255, 255, 0.50)',
+            },
+            '.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#FFF',
+            },
+            '.MuiOutlinedInput-notchedOutline': {
+              borderColor: '#FFF',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'rgba(255, 255, 255, 0.50)',
+            },
+          },
+        },
+      },
+    },
+  })
+
   return (
-    <MUITextField
-      {...props}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      error={hasError}
-      helperText={errorText}
-    />
+    <ThemeProvider theme={theme}>
+      <MUITextField
+        {...props}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        error={hasError}
+        helperText={errorText}
+      />
+    </ThemeProvider>
   )
 }
 
