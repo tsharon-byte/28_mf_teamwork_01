@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import './Game.css'
 import Sprite from '../../utils/Sprite'
 
 const size = 32
-const width = 15
-const height = 11
+const width = 31
+const height = 13
 const BETTY_SPRITE = 'img/betty.png'
 const BETTY2_SPRITE = 'img/betty2.png'
 const GEORGE = 'img/george.png'
@@ -81,18 +81,20 @@ const Game: FC = () => {
     if (bomber3) {
       bomber3.stop()
     }
+    //document.location.reload();
   }
-
   return (
+    // @ts-ignore
     <div className="game">
       <canvas
         ref={ref}
         width={size * (width + 2)}
         height={size * (height + 2)}
-        className="game"
       />
-      <button onClick={startGame}>Начать Игру</button>
-      <button onClick={stopGame}>Окончить Игру</button>
+      <div className="game_buttons">
+        <button onClick={startGame}>Начать Игру</button>
+        <button onClick={stopGame}>Окончить Игру</button>
+      </div>
     </div>
   )
 }

@@ -11,6 +11,8 @@ type SpriteOptions = {
   y0?: number
 }
 
+const FRAME_HEIGHT = 48
+
 class Sprite {
   private ctx: CanvasRenderingContext2D
   private readonly image: CanvasImageSource
@@ -26,6 +28,7 @@ class Sprite {
   private readonly background: string
   private readonly x0: number
   private readonly y0: number
+  private sy: number
 
   constructor(options: SpriteOptions) {
     this.ctx = options.ctx
@@ -44,8 +47,10 @@ class Sprite {
     this.size = options.size
     this.x0 = options.x0 || 0
     this.y0 = options.y0 || 0
+    this.sy = 0
     this.background = options.background
     this.loop = this.loop.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
   }
 
   update() {
@@ -72,7 +77,7 @@ class Sprite {
     this.ctx.drawImage(
       this.image,
       (this.frameIndex * this.width) / this.numberOfFrames,
-      0,
+      this.sy,
       this.width / this.numberOfFrames,
       this.height,
       this.size + this.x0,
@@ -80,6 +85,18 @@ class Sprite {
       this.size,
       this.size
     )
+  }
+
+  handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Right' || e.key === 'ArrowRight') {
+      this.sy = FRAME_HEIGHT * 3
+    } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
+      this.sy = FRAME_HEIGHT
+    } else if (e.key === 'Up' || e.key === 'ArrowUp') {
+      this.sy = FRAME_HEIGHT * 2
+    } else if (e.key === 'Down' || e.key === 'ArrowDown') {
+      this.sy = 0
+    }
   }
 
   loop = () => {
@@ -94,6 +111,7 @@ class Sprite {
     this.started = true
     if (!this.requestId) {
       this.requestId = window.requestAnimationFrame(this.loop)
+      document.addEventListener('keydown', this.handleKeyDown, false)
     }
   }
 
@@ -102,6 +120,7 @@ class Sprite {
     if (this.requestId) {
       window.cancelAnimationFrame(this.requestId)
       this.requestId = undefined
+      document.removeEventListener('keydown', this.handleKeyDown)
     }
   }
 }

@@ -1,8 +1,13 @@
 .game {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 1px;
   height: 100vh;
   justify-content: center;
   align-items: center;
+}
+
+.game_buttons {
+  display: flex;
+  justify-content: center;
 }
