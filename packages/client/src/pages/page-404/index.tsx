@@ -3,8 +3,6 @@ import { Link, Box, Typography } from '@mui/material'
 import { ThemeProvider } from '@mui/material'
 import { createTheme, styled } from '@mui/material/styles'
 import explosionImg from '../../assets/images/explosion.svg'
-import '@fontsource/khand/400.css'
-import '@fontsource/notable/400.css'
 
 const theme = createTheme({
   typography: {
