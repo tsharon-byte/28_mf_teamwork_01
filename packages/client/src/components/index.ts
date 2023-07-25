@@ -2,6 +2,7 @@ import App from './app'
 import TextField from './text-field'
 import Form from './form'
 import Error from './error'
-import Button from './button'
+import Navigation from './navigation'
+import Title from './title'
 
-export { App, TextField, Form, Error, Button }
+export { App, TextField, Form, Error, Navigation, Title }

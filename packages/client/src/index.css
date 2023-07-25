@@ -34,27 +34,33 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Notable';
-  src: url('./assets/fonts/Notable-Regular.woff2') format('woff2'),
-    url('./assets/fonts/Notable-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-:root {
-  box-sizing: border-box;
-}
-
 *,
 ::before,
 ::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  margin: 0;
+body,
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   font-family: 'Inter', Arial, sans-serif;
-  background: #171813;
+}
+
+@font-face {
+  font-family: 'Notable Regular';
+  src: url('./assets/fonts/notable-regular/Notable-Regular.eot');
+  src: local('Notable Regular'), local('Notable-Regular'),
+    url('./assets/fonts/notable-regular/Notable-Regular.eot?#iefix')
+      format('embedded-opentype'),
+    url('./assets/fonts/notable-regular/Notable-Regular.woff2') format('woff2'),
+    url('./assets/fonts/notable-regular/Notable-Regular.woff') format('woff'),
+    url('./assets/fonts/notable-regular/Notable-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }

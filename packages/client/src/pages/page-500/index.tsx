@@ -1,7 +1,8 @@
 import { FC } from 'react'
+import { ContentLayout } from '../../layouts'
 
 const Page500: FC = () => {
-  return <div>Заглушка для 500</div>
+  return <ContentLayout>Заглушка для 500</ContentLayout>
 }
 
 export default Page500

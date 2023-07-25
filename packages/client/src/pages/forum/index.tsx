@@ -1,7 +1,8 @@
 import { FC } from 'react'
+import { ContentLayout } from '../../layouts'
 
 const Forum: FC = () => {
-  return <div>Заглушка для форума</div>
+  return <ContentLayout>Заглушка для форума</ContentLayout>
 }
 
 export default Forum
