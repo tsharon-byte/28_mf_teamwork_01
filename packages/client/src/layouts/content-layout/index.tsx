@@ -10,12 +10,19 @@ const ContentLayout: FC<IContentLayoutProps> = ({
   children,
   footer,
   navigation = true,
-  className,
+  headerClassName,
+  mainClassName,
+  footerClassName,
+  pageClassNames,
 }) => (
-  <PageLayout navigation={navigation}>
-    {header && <Box className={styles.header}>{header}</Box>}
-    <Box className={classNames(styles.main, className)}>{children}</Box>
-    {footer && <Box className={styles.footer}>{footer}</Box>}
+  <PageLayout navigation={navigation} {...pageClassNames}>
+    {header && (
+      <Box className={classNames(styles.header, headerClassName)}>{header}</Box>
+    )}
+    <Box className={classNames(styles.main, mainClassName)}>{children}</Box>
+    {footer && (
+      <Box className={classNames(styles.footer, footerClassName)}>{footer}</Box>
+    )}
   </PageLayout>
 )
 

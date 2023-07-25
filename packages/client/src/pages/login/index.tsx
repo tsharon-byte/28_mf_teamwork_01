@@ -17,7 +17,7 @@ const Login: FC = () => {
   }
 
   return (
-    <ContentLayout navigation={false} className={styles.layout}>
+    <ContentLayout navigation={false} mainClassName={styles.main}>
       <h1 className={styles.heading}>Вход</h1>
       <Form validator={registrationValidator} onSubmit={handleSubmit}>
         <TextField

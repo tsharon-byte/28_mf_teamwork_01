@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Button, Box } from '@mui/material'
 import { PageLayout } from '../../layouts'
@@ -6,15 +6,8 @@ import { Title } from '../../components'
 import styles from './styles.module.css'
 
 const Home: FC = () => {
-  useEffect(() => {
-    document.body.style.backgroundImage = 'url("home-page.png")'
-    return () => {
-      document.body.style.backgroundImage = 'none'
-    }
-  }, [])
-
   return (
-    <PageLayout>
+    <PageLayout pageClassName={styles.page}>
       <Box
         display="flex"
         flexDirection="column"
