@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from '@mui/material'
 import { TextField, Form } from '../../components'
 import {
@@ -7,6 +8,8 @@ import {
 } from '../../validation-rules'
 import { registrationValidator } from '../../validators'
 import { ContentLayout } from '../../layouts'
+import { ROUTE_PATH } from '../../utils/constants'
+import styles from './styles.module.css'
 
 const Login: FC = () => {
   const handleSubmit = () => {
@@ -14,7 +17,8 @@ const Login: FC = () => {
   }
 
   return (
-    <ContentLayout navigation={false}>
+    <ContentLayout navigation={false} className={styles.layout}>
+      <h1 className={styles.heading}>Вход</h1>
       <Form validator={registrationValidator} onSubmit={handleSubmit}>
         <TextField
           label="Логин"
@@ -33,6 +37,12 @@ const Login: FC = () => {
           Войти
         </Button>
       </Form>
+      <div className={styles.textBlock}>
+        <span className={styles.text}>Нет аккаунта?</span>
+        <Link to={ROUTE_PATH.REGISTRATION} className={styles.link}>
+          Зарегистрироваться
+        </Link>
+      </div>
     </ContentLayout>
   )
 }

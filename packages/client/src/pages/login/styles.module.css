@@ -1,0 +1,29 @@
+.layout {
+  flex-direction: column;
+  gap: 20px;
+}
+
+.heading {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+  margin-bottom: 5rem;
+}
+
+.textBlock {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.text {
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.25rem;
+}
+
+.link {
+  composes: text;
+  color: #fff;
+  text-decoration: none;
+}
