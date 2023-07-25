@@ -42,16 +42,6 @@
   padding: 0;
 }
 
-body,
-#root {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  font-family: 'Inter', Arial, sans-serif;
-}
-
 @font-face {
   font-family: 'Notable Regular';
   src: url('./assets/fonts/notable-regular/Notable-Regular.eot');
