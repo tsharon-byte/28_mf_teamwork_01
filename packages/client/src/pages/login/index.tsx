@@ -1,4 +1,5 @@
-import { FC } from 'react'
+import { FC, FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { TextField, Form, Button } from '../../components'
 import {
   loginValidationRule,
@@ -8,10 +9,18 @@ import { loginValidator } from '../../validators'
 import { Link } from 'react-router-dom'
 import { ROUTE_PATH } from '../../utils/constants'
 import styles from './styles.module.css'
+import { login } from '../../utils/api'
+import { LoginData } from '../../utils/type'
 
 const Login: FC = () => {
-  const handleSubmit = () => {
-    console.log('success')
+  const navigate = useNavigate()
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.target as HTMLFormElement)
+    const data = Object.fromEntries(formData.entries()) as LoginData
+
+    login(data).then(() => navigate(ROUTE_PATH.HOME))
   }
 
   return (
@@ -19,7 +28,7 @@ const Login: FC = () => {
       <div className={styles.wrapper}>
         <div className={styles.form}>
           <h1 className={styles.heading}>Вход</h1>
-          <Form validator={loginValidator} onSubmit={handleSubmit}>
+          <Form validator={loginValidator} onSubmit={e => handleSubmit(e)}>
             <TextField
               label="Логин"
               name="login"

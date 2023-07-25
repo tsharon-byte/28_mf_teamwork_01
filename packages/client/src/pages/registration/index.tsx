@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, FormEvent } from 'react'
 import styles from './styles.module.css'
 import { TextField, Form, Button } from '../../components'
 import {
@@ -6,14 +6,23 @@ import {
   loginValidationRule,
   nameValidationRule,
   passwordValidationRule,
+  phoneValidationRule,
 } from '../../validation-rules'
 import { registrationValidator } from '../../validators'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ROUTE_PATH } from '../../utils/constants'
+import { registration } from '../../utils/api'
+import { RegistrationData } from '../../utils/type'
 
 const Registration: FC = () => {
-  const handleSubmit = () => {
-    console.log('success')
+  const navigate = useNavigate()
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.target as HTMLFormElement)
+    const data = Object.fromEntries(formData.entries()) as RegistrationData
+
+    registration(data).then(() => navigate(ROUTE_PATH.HOME))
   }
 
   return (
@@ -23,10 +32,15 @@ const Registration: FC = () => {
           <h1 className={styles.heading}>Регистрация</h1>
           <Form validator={registrationValidator} onSubmit={handleSubmit}>
             <TextField
-              label="Почта"
-              name="email"
-              type="email"
-              validationRules={[emailValidationRule]}
+              label="Имя"
+              name="first_name"
+              validationRules={[nameValidationRule]}
+              required
+            />
+            <TextField
+              label="Фамилия"
+              name="second_name"
+              validationRules={[nameValidationRule]}
               required
             />
             <TextField
@@ -36,9 +50,17 @@ const Registration: FC = () => {
               required
             />
             <TextField
-              label="Имя"
-              name="name"
-              validationRules={[nameValidationRule]}
+              label="Почта"
+              name="email"
+              type="email"
+              validationRules={[emailValidationRule]}
+              required
+            />
+            <TextField
+              label="Телефон"
+              name="phone"
+              type="tel"
+              validationRules={[phoneValidationRule]}
               required
             />
             <TextField
