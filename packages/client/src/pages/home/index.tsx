@@ -15,7 +15,7 @@ const Home: FC = () => {
         gap="40px"
         ml="40px"
         mb="400px">
-        <Title>Boomberman</Title>
+        <Title>Bomberman</Title>
         <Button
           component={NavLink}
           to="/game"
