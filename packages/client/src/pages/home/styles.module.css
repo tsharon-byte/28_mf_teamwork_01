@@ -11,3 +11,12 @@
   height: 100vh;
   position: relative;
 }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: absolute;
+  top: 128px;
+  left: 0px;
+}

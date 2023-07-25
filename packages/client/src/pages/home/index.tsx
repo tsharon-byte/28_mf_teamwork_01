@@ -8,13 +8,7 @@ import styles from './styles.module.css'
 const Home: FC = () => {
   return (
     <PageLayout pageClassName={styles.page}>
-      <Box
-        display="flex"
-        flexDirection="column"
-        mr="auto"
-        gap="40px"
-        ml="40px"
-        mb="400px">
+      <Box className={styles.content}>
         <Title>Bomberman</Title>
         <Button
           component={NavLink}
