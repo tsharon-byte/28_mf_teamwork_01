@@ -53,7 +53,7 @@ class Sprite {
     this.handleKeyDown = this.handleKeyDown.bind(this)
   }
 
-  update() {
+  update = () => {
     this.tickCount++
 
     if (this.tickCount > this.ticksPerFrame) {
@@ -66,7 +66,7 @@ class Sprite {
     }
   }
 
-  render() {
+  render = () => {
     this.ctx.fillStyle = this.background
     this.ctx.fillRect(
       this.size + this.x0,
@@ -107,7 +107,7 @@ class Sprite {
     }
   }
 
-  start() {
+  start = () => {
     this.started = true
     if (!this.requestId) {
       this.requestId = window.requestAnimationFrame(this.loop)
@@ -115,7 +115,7 @@ class Sprite {
     }
   }
 
-  stop() {
+  stop = () => {
     this.started = false
     if (this.requestId) {
       window.cancelAnimationFrame(this.requestId)

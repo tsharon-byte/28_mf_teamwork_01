@@ -1,13 +1,13 @@
-.game {
+.bomberman {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  height: 100vh;
+  max-height: 100vh;
   justify-content: center;
   align-items: center;
 }
 
-.game_buttons {
+.bomberman__buttons {
   display: flex;
   justify-content: center;
 }
