@@ -1,4 +1,4 @@
-export type RegistrationData = {
+export type TRegistrationData = {
   first_name: string
   second_name: string
   login: string
@@ -7,7 +7,7 @@ export type RegistrationData = {
   phone: string
 }
 
-export type LoginData = {
+export type TLoginData = {
   login: string
   password: string
 }

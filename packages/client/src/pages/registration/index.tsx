@@ -11,18 +11,22 @@ import {
 import { registrationValidator } from '../../validators'
 import { Link, useNavigate } from 'react-router-dom'
 import { ROUTE_PATH } from '../../utils/constants'
-import { registration } from '../../utils/api'
-import { RegistrationData } from '../../utils/type'
+import { TRegistrationData } from '../../api/auth-api/type'
+import { registration } from '../../api/auth-api'
 
 const Registration: FC = () => {
   const navigate = useNavigate()
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries()) as TRegistrationData
 
-    const formData = new FormData(e.target as HTMLFormElement)
-    const data = Object.fromEntries(formData.entries()) as RegistrationData
-
-    registration(data).then(() => navigate(ROUTE_PATH.HOME))
+    registration(data)
+      .then(() => navigate(ROUTE_PATH.HOME))
+      .catch(error => {
+        if (error.response.data.reason === 'User already in system') {
+          navigate(ROUTE_PATH.HOME)
+        }
+      })
   }
 
   return (

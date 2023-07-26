@@ -1,4 +1,4 @@
-import { getUser } from '../../utils/api'
+import { getUser } from '../../api/auth-api'
 import { useNavigate } from 'react-router-dom'
 import { ROUTE_PATH } from '../../utils/constants'
 import { FC } from 'react'
@@ -10,7 +10,7 @@ const ProtectedRoute: FC = () => {
     navigate(ROUTE_PATH.LOGIN)
   })
 
-  return <></>
+  return null
 }
 
 export default ProtectedRoute

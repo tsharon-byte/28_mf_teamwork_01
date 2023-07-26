@@ -1,66 +1,57 @@
 import { API_URL } from './constants'
-import { LoginData, RegistrationData } from './type'
-
-const checkResponse = (res: Response) => {
-  return res.ok ? res : res.json().then((err: string) => Promise.reject(err))
-}
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 const request = (
-  url: RequestInfo | URL,
-  option: RequestInit = {}
-): Promise<Response> => {
-  return fetch(url, option).then(res => checkResponse(res))
+  endPoint: string,
+  config: AxiosRequestConfig = {}
+): Promise<AxiosResponse> => {
+  return axios({
+    ...config,
+    withCredentials: true,
+    url: `${API_URL}/${endPoint}`,
+  }).then(res => res)
 }
-
-const postRequest = (endPoint: string, options: RequestInit = {}) => {
-  const option = {
+export const postRequest = (
+  endPoint: string,
+  options: AxiosRequestConfig = {}
+) => {
+  const config = {
     ...options,
     method: 'POST',
-    credentials: 'include' as RequestCredentials,
-  }
+  } as AxiosRequestConfig
 
-  return request(`${API_URL}/${endPoint}`, option)
+  return request(endPoint, config)
 }
-
-const getRequest = (endPoint: string, options: RequestInit = {}) => {
-  const option = {
+export const getRequest = (
+  endPoint: string,
+  options: AxiosRequestConfig = {}
+) => {
+  const config = {
     ...options,
     method: 'GET',
-    credentials: 'include' as RequestCredentials,
-  }
+  } as AxiosRequestConfig
 
-  return request(`${API_URL}/${endPoint}`, option)
+  return request(endPoint, config)
 }
+export const putRequest = (
+  endPoint: string,
+  options: AxiosRequestConfig = {}
+) => {
+  const config = {
+    ...options,
+    method: 'PUT',
+  } as AxiosRequestConfig
 
-export const registration = (data: RegistrationData) => {
-  const body = JSON.stringify(data)
-  const options = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: body,
-  } as RequestInit
-
-  return postRequest('auth/signup', options)
+  return request(endPoint, config)
 }
+export const deleteRequest = (
+  endPoint: string,
+  options: AxiosRequestConfig = {}
+) => {
+  const config = {
+    ...options,
+    method: 'DELETE',
+  } as AxiosRequestConfig
 
-export const login = (data: LoginData) => {
-  const body = JSON.stringify(data)
-
-  const options = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: body,
-  } as RequestInit
-
-  return postRequest('auth/signin', options)
-}
-
-export const logout = () => {
-  return postRequest('auth/logout')
-}
-
-export const getUser = () => {
-  return getRequest('auth/user')
+  return request(endPoint, config)
 }
