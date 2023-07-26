@@ -50,6 +50,10 @@ const router = createBrowserRouter([
     path: ROUTE_PATH.ENDGAME,
     element: <EndGame />,
   },
+  {
+    path: ROUTE_PATH.ERROR,
+    element: <Page500 />,
+  },
 ])
 
 export default router
