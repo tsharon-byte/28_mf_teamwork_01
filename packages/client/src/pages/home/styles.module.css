@@ -19,4 +19,27 @@
   position: absolute;
   top: 128px;
   left: 0px;
+  align-items: center;
+}
+
+.startLink {
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1rem;
+  letter-spacing: 0.0625rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  border: 5px solid #fff;
+  padding: 27px 69px;
+}
+
+.link {
+  composes: startLink;
+  font-size: 1.5rem;
+  border: unset;
+  font-weight: 600;
 }

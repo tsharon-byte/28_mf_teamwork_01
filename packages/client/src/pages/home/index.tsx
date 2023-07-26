@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { Button, Box } from '@mui/material'
 import { PageLayout } from '../../layouts'
 import { Title } from '../../components'
@@ -19,6 +19,9 @@ const Home: FC = () => {
           className={styles.button}>
           Начать игру
         </Button>
+        <Link to="#" className={styles.link}>
+          Правила игры
+        </Link>
       </Box>
     </PageLayout>
   )
