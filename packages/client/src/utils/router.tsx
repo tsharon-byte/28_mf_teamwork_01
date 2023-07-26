@@ -10,6 +10,7 @@ import ForumPost from '../pages/forum-post'
 import EndGame from '../pages/end-game'
 import { ROUTE_PATH } from './constants'
 import ErrorPage from '../pages/error-page'
+import Page500 from '../pages/page-500'
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
     path: ROUTE_PATH.ENDGAME,
     element: <EndGame />,
+  },
+  {
+    path: ROUTE_PATH.ERROR,
+    element: <Page500 />,
   },
 ])
 

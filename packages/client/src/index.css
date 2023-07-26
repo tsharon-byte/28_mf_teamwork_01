@@ -42,6 +42,13 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Khand';
+  src: url('./assets/fonts/Khand-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   box-sizing: border-box;
