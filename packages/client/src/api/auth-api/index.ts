@@ -1,6 +1,6 @@
 import { TLoginData, TRegistrationData } from './type'
 import { AxiosRequestConfig } from 'axios'
-import { getRequest, postRequest } from '../../utils/api'
+import { getRequest, postRequest } from '../../utils/http-transport'
 
 export const registration = (data: TRegistrationData) => {
   const options = {

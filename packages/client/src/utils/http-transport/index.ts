@@ -1,4 +1,4 @@
-import { API_URL } from './constants'
+import { API_URL } from '../constants'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 const request = (
