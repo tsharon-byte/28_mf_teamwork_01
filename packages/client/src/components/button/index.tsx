@@ -1,6 +1,6 @@
 import { Button as MuiButton, ThemeProvider } from '@mui/material'
 import { FC } from 'react'
-import { ButtonFC } from './type'
+import { ButtonFC } from './types'
 import { createTheme } from '@mui/material/styles'
 
 const Button: FC<ButtonFC> = ({ name, type }) => {

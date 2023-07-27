@@ -1,27 +1,29 @@
-import { FC, useState } from 'react'
-import Menu from '../../components/menu'
+import { FC } from 'react'
+import { NavLink, Link } from 'react-router-dom'
+import { Button, Box } from '@mui/material'
+import { PageLayout } from '../../layouts'
+import { Title } from '../../components'
 import styles from './styles.module.css'
-import { Link } from 'react-router-dom'
-import { ROUTE_PATH } from '../../utils/constants'
 
 const Home: FC = () => {
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
-
   return (
-    <main className={styles.main}>
-      <Menu isAuthorized={isAuthorized} />
-      <div className={styles.headingBlock}>
-        <h1 className={styles.title}>BOMBERMAN</h1>
-        <Link
-          to={isAuthorized ? ROUTE_PATH.GAME : ROUTE_PATH.REGISTRATION}
-          className={styles.startLink}>
+    <PageLayout pageClassName={styles.page}>
+      <Box className={styles.content}>
+        <Title>Bomberman</Title>
+        <Button
+          component={NavLink}
+          to="/game"
+          variant="outlined"
+          size="large"
+          color="inherit"
+          className={styles.button}>
           Начать игру
-        </Link>
+        </Button>
         <Link to="#" className={styles.link}>
           Правила игры
         </Link>
-      </div>
-    </main>
+      </Box>
+    </PageLayout>
   )
 }
 

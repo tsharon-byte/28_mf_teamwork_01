@@ -1,11 +1,13 @@
 import { FC } from 'react'
-import { TextField, Form, Button } from '../../components'
+import { Link } from 'react-router-dom'
+import { Button } from '@mui/material'
+import { TextField, Form } from '../../components'
 import {
   loginValidationRule,
   passwordValidationRule,
 } from '../../validation-rules'
-import { loginValidator } from '../../validators'
-import { Link } from 'react-router-dom'
+import { registrationValidator } from '../../validators'
+import { ContentLayout } from '../../layouts'
 import { ROUTE_PATH } from '../../utils/constants'
 import styles from './styles.module.css'
 
@@ -15,37 +17,33 @@ const Login: FC = () => {
   }
 
   return (
-    <section className={styles.loginPage}>
-      <div className={styles.wrapper}>
-        <div className={styles.form}>
-          <h1 className={styles.heading}>Вход</h1>
-          <Form validator={loginValidator} onSubmit={handleSubmit}>
-            <TextField
-              label="Логин"
-              name="login"
-              validationRules={[loginValidationRule]}
-              required
-            />
-            <TextField
-              label="Пароль"
-              name="password"
-              type="password"
-              validationRules={[passwordValidationRule]}
-              required
-            />
-            <div className={styles.btn}>
-              <Button type="submit" name="Войти" />
-            </div>
-          </Form>
-          <div className={styles.textBlock}>
-            <span className={styles.text}>Нет аккаунта?</span>
-            <Link to={ROUTE_PATH.REGISTRATION} className={styles.link}>
-              Зарегистрироваться
-            </Link>
-          </div>
-        </div>
+    <ContentLayout navigation={false}>
+      <h1 className={styles.heading}>Вход</h1>
+      <Form validator={registrationValidator} onSubmit={handleSubmit}>
+        <TextField
+          label="Логин"
+          name="login"
+          validationRules={[loginValidationRule]}
+          required
+        />
+        <TextField
+          label="Пароль"
+          name="password"
+          type="password"
+          validationRules={[passwordValidationRule]}
+          required
+        />
+        <Button type="submit" variant="contained">
+          Войти
+        </Button>
+      </Form>
+      <div className={styles.textBlock}>
+        <span className={styles.text}>Нет аккаунта?</span>
+        <Link to={ROUTE_PATH.REGISTRATION} className={styles.link}>
+          Зарегистрироваться
+        </Link>
       </div>
-    </section>
+    </ContentLayout>
   )
 }
 

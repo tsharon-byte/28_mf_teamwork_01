@@ -1,30 +1,25 @@
-.main {
-  background-image: url('../../assets/images/bg-main.webp');
+.button {
+  margin: 0 200px !important;
+  font-size: 1.5rem !important;
+}
+
+.page {
+  background-image: url('home-page.png');
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100vw;
-  height: 100vh;
   position: relative;
 }
-.headingBlock {
+
+.content {
   display: flex;
   flex-direction: column;
+  gap: 40px;
+  position: absolute;
+  top: 128px;
+  left: 0px;
   align-items: center;
-  max-width: 780px;
-  row-gap: 24px;
-  position: relative;
-  left: 25%;
-  top: 25%;
-  transform: translate(-25%);
 }
-.title {
-  color: #fff;
-  font-family: 'Notable', sans-serif;
-  font-size: 6rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.25rem;
-}
+
 .startLink {
   color: #fff;
   font-family: 'Inter', sans-serif;
@@ -39,6 +34,7 @@
   border: 5px solid #fff;
   padding: 27px 69px;
 }
+
 .link {
   composes: startLink;
   font-size: 1.5rem;
