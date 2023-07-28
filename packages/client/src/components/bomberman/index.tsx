@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import './bomberman.css'
-import Sprite from '../../utils/Sprite'
+import Sprite from '../../utils/animation/Sprite'
 import { Button } from '@mui/material'
 import {
   drawBomber,
@@ -8,7 +8,9 @@ import {
   BOX_SIZE,
   GAME_COLUMNS,
   GAME_ROWS,
+  drawSprite,
 } from './helpers'
+import HeroSprite from '../../utils/animation/HeroSprite'
 
 const BETTY_SPRITE = 'img/betty.png'
 const BETTY2_SPRITE = 'img/betty2.png'
@@ -16,18 +18,18 @@ const GEORGE = 'img/george.png'
 
 const Bomberman: FC = () => {
   const ref = useRef(null)
-  let bomber: Sprite | undefined
-  let bomber2: Sprite | undefined
-  let bomber3: Sprite | undefined
+  const [bomber, setBomber] = useState<HeroSprite>()
+  const [sprite1, setSprite1] = useState<Sprite>()
+  const [sprite2, setSprite2] = useState<Sprite>()
 
   useEffect(() => {
     if (ref.current) {
       // @ts-ignore
       const ctx = ref.current.getContext('2d')
       drawBorder(ctx)
-      bomber = drawBomber(ctx, BETTY_SPRITE)
-      bomber2 = drawBomber(ctx, BETTY2_SPRITE, BOX_SIZE, 0)
-      bomber3 = drawBomber(ctx, GEORGE, BOX_SIZE, BOX_SIZE)
+      setBomber(drawBomber(ctx, BETTY_SPRITE))
+      setSprite1(drawSprite(ctx, BETTY2_SPRITE, BOX_SIZE, 0))
+      setSprite2(drawSprite(ctx, GEORGE, BOX_SIZE, BOX_SIZE))
     }
   }, [ref.current])
 
@@ -35,22 +37,22 @@ const Bomberman: FC = () => {
     if (bomber) {
       bomber.start()
     }
-    if (bomber2) {
-      bomber2.start()
+    if (sprite1) {
+      sprite1.start()
     }
-    if (bomber3) {
-      bomber3.start()
+    if (sprite2) {
+      sprite2.start()
     }
   }
   const stopGame = () => {
     if (bomber) {
       bomber.stop()
     }
-    if (bomber2) {
-      bomber2.stop()
+    if (sprite1) {
+      sprite1.stop()
     }
-    if (bomber3) {
-      bomber3.stop()
+    if (sprite2) {
+      sprite2.stop()
     }
   }
   return (

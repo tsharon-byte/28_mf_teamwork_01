@@ -1,9 +1,14 @@
-import Sprite from '../../utils/Sprite'
+import Sprite from '../../utils/animation/Sprite'
+import HeroSprite from '../../utils/animation/HeroSprite'
 
 //size in pixels of one box
 export const BOX_SIZE = 32
 export const GAME_COLUMNS = 31
 export const GAME_ROWS = 13
+const NUMBER_OF_FRAMES = 4
+const TICKS_PER_FRAME = 30
+const SPRITE_HEIGHT = 50
+const SPRITE_WIDTH = 192
 const WALL = 'img/tile_wall.png'
 const GRASS_COLOR = '#2E4701'
 
@@ -13,16 +18,36 @@ export const drawBomber = (
   x0 = 0,
   y0 = 0
 ) => {
-  const coinImage = new Image()
-  coinImage.src = src
-  return new Sprite({
-    // @ts-ignore
+  const image = new Image()
+  image.src = src
+  return new HeroSprite({
     ctx: ctx,
-    image: coinImage,
-    width: 192,
-    height: 50,
-    numberOfFrames: 4,
-    ticksPerFrame: 30,
+    image: image,
+    width: SPRITE_WIDTH,
+    height: SPRITE_HEIGHT,
+    numberOfFrames: NUMBER_OF_FRAMES,
+    ticksPerFrame: TICKS_PER_FRAME,
+    size: BOX_SIZE,
+    background: GRASS_COLOR,
+    x0,
+    y0,
+  })
+}
+export const drawSprite = (
+  ctx: CanvasRenderingContext2D,
+  src: string,
+  x0 = 0,
+  y0 = 0
+) => {
+  const image = new Image()
+  image.src = src
+  return new Sprite({
+    ctx: ctx,
+    image: image,
+    width: SPRITE_WIDTH,
+    height: SPRITE_HEIGHT,
+    numberOfFrames: NUMBER_OF_FRAMES,
+    ticksPerFrame: TICKS_PER_FRAME,
     size: BOX_SIZE,
     background: GRASS_COLOR,
     x0,
