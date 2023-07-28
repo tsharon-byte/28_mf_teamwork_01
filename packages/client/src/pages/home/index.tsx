@@ -7,7 +7,7 @@ import styles from './styles.module.css'
 
 const Home: FC = () => {
   return (
-    <PageLayout pageClassName={styles.page}>
+    <PageLayout pageClassName={styles.page} mainClassName={styles.main}>
       <Box className={styles.content}>
         <Title>Bomberman</Title>
         <Button

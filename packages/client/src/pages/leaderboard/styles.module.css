@@ -1,0 +1,19 @@
+.pointer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: absolute;
+  top: 10px;
+  left: -298px;
+}
+
+.pointerText {
+  font-family: 'Notable Regular', serif !important;
+  font-size: 1.5rem !important;
+  color: #fff9c4;
+}
+
+.pointerArrow {
+  margin-top: 4px;
+  color: #fff9c4;
+}

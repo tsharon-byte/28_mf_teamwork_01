@@ -1,5 +1,4 @@
 .button {
-  margin: 0 200px !important;
   font-size: 1.5rem !important;
 }
 
@@ -7,16 +6,19 @@
   background-image: url('home-page.png');
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.main {
   position: relative;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 20px;
   position: absolute;
-  top: 128px;
-  left: 0px;
+  top: 57px;
+  left: 80px;
   align-items: center;
 }
 
