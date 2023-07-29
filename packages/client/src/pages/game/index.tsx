@@ -1,7 +1,12 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
+import Bomberman from '../../components/bomberman'
+import './game.css'
 
 const Game: FC = () => {
-  return <div>Заглушка для игры</div>
+  return (
+    <div className="game">
+      <Bomberman />
+    </div>
+  )
 }
-
 export default Game
