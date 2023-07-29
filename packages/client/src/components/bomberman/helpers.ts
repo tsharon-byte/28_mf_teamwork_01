@@ -6,17 +6,49 @@ export const BOX_SIZE = 32
 export const GAME_COLUMNS = 31
 export const GAME_ROWS = 13
 const NUMBER_OF_FRAMES = 4
-const TICKS_PER_FRAME = 30
+const TICKS_PER_FRAME = 15
 const SPRITE_HEIGHT = 50
 const SPRITE_WIDTH = 192
 const WALL = 'img/tile_wall.png'
-const GRASS_COLOR = '#2E4701'
+const BRICK = 'img/tile_wood.png'
+const GRASS = 'img/tile_grass.png'
+
+export const EVIL_1_COORDINATES = [1, 13]
+export const EVIL_2_COORDINATES = [1, 17]
+
+const musicList = [
+  'audio/bomberman.mp3',
+  'audio/Darkman007_2021_Metaltoads_01_Title_Theme.mp3',
+]
+
+export const level1 = [
+  '###############################',
+  '#p     ** *  1 * 2 *  * * *   #',
+  '# # # #*# # #*#*# # # #*#*#*# #',
+  '#  x*     ***  *  1   * 2 * * #',
+  '# # # # # #*# # #*#*# # # # #*#',
+  '#f         x **  *  *   1     #',
+  '# # # # # # # # # #*# #*# # # #',
+  '#*  *      *  *      *        #',
+  '# # # # #*# # # #*#*# # # # # #',
+  '#*    **  *       *           #',
+  '# #*# # # # # # #*# # # # # # #',
+  '#           *   *  *          #',
+  '###############################',
+]
 
 export const drawBomber = (
   ctx: CanvasRenderingContext2D,
   src: string,
+  level: string[],
+  setLevel: (value: ((prevState: string[]) => string[]) | string[]) => void,
   x0 = 0,
-  y0 = 0
+  y0 = 0,
+  setCurrentPos: (
+    value:
+      | ((prevState: [number, number]) => [number, number])
+      | [number, number]
+  ) => void
 ) => {
   const image = new Image()
   image.src = src
@@ -28,56 +60,104 @@ export const drawBomber = (
     numberOfFrames: NUMBER_OF_FRAMES,
     ticksPerFrame: TICKS_PER_FRAME,
     size: BOX_SIZE,
-    background: GRASS_COLOR,
+    level,
+    setLevel,
     x0,
     y0,
+    setCurrentPos,
   })
 }
 export const drawSprite = (
   ctx: CanvasRenderingContext2D,
   src: string,
   x0 = 0,
-  y0 = 0
+  y0 = 0,
+  numberOfFrames = NUMBER_OF_FRAMES,
+  width = SPRITE_WIDTH,
+  height = SPRITE_HEIGHT,
+  ticksPerFrame = TICKS_PER_FRAME
 ) => {
   const image = new Image()
   image.src = src
   return new Sprite({
     ctx: ctx,
     image: image,
-    width: SPRITE_WIDTH,
-    height: SPRITE_HEIGHT,
-    numberOfFrames: NUMBER_OF_FRAMES,
-    ticksPerFrame: TICKS_PER_FRAME,
+    width,
+    height,
+    numberOfFrames,
+    ticksPerFrame,
     size: BOX_SIZE,
-    background: GRASS_COLOR,
     x0,
     y0,
   })
 }
 
-export const drawBorder = (ctx: CanvasRenderingContext2D) => {
+const drawItem = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  src: string
+) => {
   const image = new Image()
-  image.src = WALL
+  image.src = src
 
   image.onload = function () {
-    const borderPattern = ctx.createPattern(image, 'repeat')
-    if (ctx) {
-      // @ts-ignore
-      ctx.fillStyle = borderPattern
-      // Now draw same objects: first a rectangle
-      ctx.fillRect(
-        0,
-        0,
-        BOX_SIZE * (GAME_COLUMNS + 2),
-        BOX_SIZE * (GAME_ROWS + 2)
-      )
-      ctx.fillStyle = GRASS_COLOR
-      ctx.fillRect(
-        BOX_SIZE,
-        BOX_SIZE,
-        BOX_SIZE * GAME_COLUMNS,
-        BOX_SIZE * GAME_ROWS
-      )
+    ctx.drawImage(image, x, y)
+  }
+}
+
+export const drawWall = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number
+) => {
+  drawItem(ctx, x, y, WALL)
+}
+
+export const drawBrick = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number
+) => {
+  drawItem(ctx, x, y, BRICK)
+}
+
+export const drawGrass = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number
+) => {
+  drawItem(ctx, x, y, GRASS)
+}
+export const drawLevel = (level: string[], ctx: CanvasRenderingContext2D) => {
+  for (let j = 0; j < GAME_ROWS; j++) {
+    for (let i = 0; i < GAME_COLUMNS; i++) {
+      switch (level[j][i]) {
+        case '*':
+          drawBrick(ctx, BOX_SIZE * (i + 1), BOX_SIZE * (j + 1))
+          break
+        case '#':
+          drawWall(ctx, BOX_SIZE * (i + 1), BOX_SIZE * (j + 1))
+          break
+        default:
+          drawGrass(ctx, BOX_SIZE * (i + 1), BOX_SIZE * (j + 1))
+      }
     }
   }
+}
+
+export function noCollision(level: string[], newPosition: number[]) {
+  if (
+    newPosition[1] + 1 === EVIL_1_COORDINATES[1] &&
+    newPosition[0] + 1 === EVIL_1_COORDINATES[0]
+  ) {
+    return false
+  }
+  const mapValue = level[newPosition[0] + 1][newPosition[1] + 1]
+  return !(mapValue === '#' || mapValue === '*')
+}
+
+export const getRandomAudio = () => {
+  const randomIx = Math.floor(Math.random() * musicList.length)
+  return musicList[randomIx]
 }
