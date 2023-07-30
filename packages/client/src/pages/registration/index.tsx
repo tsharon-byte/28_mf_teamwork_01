@@ -13,20 +13,29 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ROUTE_PATH } from '../../utils/constants'
 import { TRegistrationData } from '../../api/auth-api/type'
 import { registration } from '../../api/auth-api'
+import { AxiosError } from 'axios'
 
 const Registration: FC = () => {
   const navigate = useNavigate()
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData.entries()) as TRegistrationData
 
-    registration(data)
-      .then(() => navigate(ROUTE_PATH.HOME))
-      .catch(error => {
-        if (error.response.data.reason === 'User already in system') {
-          navigate(ROUTE_PATH.HOME)
-        }
-      })
+    try {
+      const response = await registration(data)
+
+      if (response.data === 'OK') {
+        navigate(ROUTE_PATH.HOME)
+      }
+    } catch (error) {
+      if (
+        error instanceof AxiosError &&
+        error.response &&
+        error.response.data.reason === 'User already in system'
+      ) {
+        navigate(ROUTE_PATH.HOME)
+      }
+    }
   }
 
   return (

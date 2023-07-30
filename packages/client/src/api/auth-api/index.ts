@@ -1,27 +1,18 @@
 import { TLoginData, TRegistrationData } from './type'
-import { AxiosRequestConfig } from 'axios'
-import { getRequest, postRequest } from '../../utils/http-transport'
+import { axiosInstance } from '../../utils/http-transport'
 
-export const registration = (data: TRegistrationData) => {
-  const options = {
-    data,
-  } as AxiosRequestConfig
-
-  return postRequest('auth/signup', options)
+export const registration = async (data: TRegistrationData) => {
+  return axiosInstance.post('auth/signup', data)
 }
 
-export const login = (data: TLoginData) => {
-  const options = {
-    data,
-  } as AxiosRequestConfig
-
-  return postRequest('auth/signin', options)
+export const login = async (data: TLoginData) => {
+  return axiosInstance.post('auth/signin', data)
 }
 
-export const logout = () => {
-  return postRequest('auth/logout')
+export const logout = async () => {
+  return axiosInstance.post('auth/logout')
 }
 
-export const getUser = () => {
-  return getRequest('auth/user')
+export const getUser = async () => {
+  return axiosInstance.get('auth/user')
 }
