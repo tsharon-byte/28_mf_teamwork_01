@@ -11,6 +11,7 @@ import styles from './styles.module.css'
 import { TLoginData } from '../../api/auth-api/type'
 import { login } from '../../api/auth-api'
 import { AxiosError } from 'axios'
+import { ContentLayout } from '../../layouts'
 
 const Login: FC = () => {
   const navigate = useNavigate()

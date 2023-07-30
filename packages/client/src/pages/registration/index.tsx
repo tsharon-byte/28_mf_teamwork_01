@@ -14,6 +14,7 @@ import { ROUTE_PATH } from '../../utils/constants'
 import { TRegistrationData } from '../../api/auth-api/type'
 import { registration } from '../../api/auth-api'
 import { AxiosError } from 'axios'
+import { ContentLayout } from '../../layouts'
 
 const Registration: FC = () => {
   const navigate = useNavigate()
@@ -39,63 +40,61 @@ const Registration: FC = () => {
   }
 
   return (
-    <section className={styles.registrationPage}>
-      <div className={styles.wrapper}>
-        <div className={styles.form}>
-          <h1 className={styles.heading}>Регистрация</h1>
-          <Form validator={registrationValidator} onSubmit={handleSubmit}>
-            <TextField
-              label="Имя"
-              name="first_name"
-              validationRules={[nameValidationRule]}
-              required
-            />
-            <TextField
-              label="Фамилия"
-              name="second_name"
-              validationRules={[nameValidationRule]}
-              required
-            />
-            <TextField
-              label="Логин"
-              name="login"
-              validationRules={[loginValidationRule]}
-              required
-            />
-            <TextField
-              label="Почта"
-              name="email"
-              type="email"
-              validationRules={[emailValidationRule]}
-              required
-            />
-            <TextField
-              label="Телефон"
-              name="phone"
-              type="tel"
-              validationRules={[phoneValidationRule]}
-              required
-            />
-            <TextField
-              label="Пароль"
-              name="password"
-              type="password"
-              validationRules={[passwordValidationRule]}
-              required
-            />
-            <div className={styles.btn}>
-              <Button type="submit" name="Зарегистрироваться" />
-            </div>
-          </Form>
-          <div className={styles.textBlock}>
-            <span className={styles.text}>Уже зарегистрированы?</span>
-            <Link to={ROUTE_PATH.LOGIN} className={styles.link}>
-              Войти
-            </Link>
+    <ContentLayout navigation={false}>
+      <div className={styles.form}>
+        <h1 className={styles.heading}>Регистрация</h1>
+        <Form validator={registrationValidator} onSubmit={handleSubmit}>
+          <TextField
+            label="Имя"
+            name="first_name"
+            validationRules={[nameValidationRule]}
+            required
+          />
+          <TextField
+            label="Фамилия"
+            name="second_name"
+            validationRules={[nameValidationRule]}
+            required
+          />
+          <TextField
+            label="Логин"
+            name="login"
+            validationRules={[loginValidationRule]}
+            required
+          />
+          <TextField
+            label="Почта"
+            name="email"
+            type="email"
+            validationRules={[emailValidationRule]}
+            required
+          />
+          <TextField
+            label="Телефон"
+            name="phone"
+            type="tel"
+            validationRules={[phoneValidationRule]}
+            required
+          />
+          <TextField
+            label="Пароль"
+            name="password"
+            type="password"
+            validationRules={[passwordValidationRule]}
+            required
+          />
+          <div className={styles.btn}>
+            <Button type="submit" name="Зарегистрироваться" />
           </div>
+        </Form>
+        <div className={styles.textBlock}>
+          <span className={styles.text}>Уже зарегистрированы?</span>
+          <Link to={ROUTE_PATH.LOGIN} className={styles.link}>
+            Войти
+          </Link>
         </div>
       </div>
-    </section>
+    </ContentLayout>
   )
 }
 
