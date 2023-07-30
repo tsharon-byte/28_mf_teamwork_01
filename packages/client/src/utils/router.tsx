@@ -11,6 +11,7 @@ import EndGame from '../pages/end-game'
 import { ROUTE_PATH } from './constants'
 import ErrorPage from '../pages/error-page'
 import ProtectedRoute from '../components/protected-route'
+import Page500 from '../pages/page-500'
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
         element: <EndGame />,
       },
     ],
+  },
+  {
+    path: ROUTE_PATH.ERROR,
+    element: <Page500 />,
   },
 ])
 

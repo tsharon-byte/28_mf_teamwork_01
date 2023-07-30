@@ -1,0 +1,13 @@
+.bomberman {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  max-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.bomberman__buttons {
+  display: flex;
+  justify-content: center;
+}
