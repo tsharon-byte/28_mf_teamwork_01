@@ -66,6 +66,12 @@ const Bomberman: FC = () => {
       )
     }
   }, [ref.current, currentPos])
+  useEffect(() => {
+    if (audioRef.current) {
+      // @ts-ignore
+      audioRef.current.volume = 0.1
+    }
+  }, [audioRef.current])
   const playMusic = () => {
     // @ts-ignore
     audioRef.current.play()
