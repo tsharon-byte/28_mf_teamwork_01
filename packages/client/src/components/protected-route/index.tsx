@@ -8,7 +8,7 @@ const ProtectedRoute: FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    ;(async () => {
+    const request = async () => {
       try {
         await getUser()
       } catch (error) {
@@ -20,7 +20,9 @@ const ProtectedRoute: FC = () => {
           navigate(ROUTE_PATH.LOGIN)
         }
       }
-    })()
+    }
+
+    request()
   }, [])
 
   return null
