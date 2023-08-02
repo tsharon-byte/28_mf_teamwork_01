@@ -6,7 +6,11 @@ type SpriteOptions = {
   width: number
   height: number
   size: number
-  background: string
   x0?: number
   y0?: number
+  setCurrentPos?: (
+    value:
+      | ((prevState: [number, number]) => [number, number])
+      | [number, number]
+  ) => void
 }

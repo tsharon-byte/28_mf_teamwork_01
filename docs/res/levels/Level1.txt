@@ -14,18 +14,18 @@
 #           *   *  *          #
 ###############################
 
-# - Wall
-* - Brick
-x - Portal
+# - Стена
+* - Кирпич
+x - Портал
 
 Character:
-p - Bomber
+p - Бомбардировщик
 1 - Balloon
 2 - Oneal
 
 Items:
-b - Bomb Item
-f - Flame Item
-s - Speed Item
+b - Бомба
+f - Бонус Элемент пламени
+s - Бонус SpeedItem
 
 Персонажи, отличные от вышеперечисленных - Трава
