@@ -1,4 +1,4 @@
-import { drawGrass } from '../../components/bomberman/helpers'
+import { drawGrass } from './helpers'
 
 class Sprite {
   protected readonly ctx: CanvasRenderingContext2D

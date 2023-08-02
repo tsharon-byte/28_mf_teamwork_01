@@ -12,7 +12,7 @@ import {
   EVIL_2_COORDINATES,
   getRandomAudio,
   level1,
-} from './helpers'
+} from '../../utils/animation/helpers'
 import HeroSprite from '../../utils/animation/HeroSprite'
 import Sprite from '../../utils/animation/Sprite'
 

@@ -1,11 +1,6 @@
 import Sprite from './Sprite'
-import { FRAME_HEIGHT } from './constants'
-import {
-  BOX_SIZE,
-  drawSprite,
-  noCollision,
-  portalIsFound,
-} from '../../components/bomberman/helpers'
+import { FRAME_HEIGHT, GRASS_CHARACTER, WALL_CHARACTER } from './constants'
+import { BOX_SIZE, drawSprite, noCollision, portalIsFound } from './helpers'
 
 const BOMB_SPRITE = 'img/bomb.png'
 const FIRE_SPRITE = 'img/fire.png'
@@ -16,10 +11,13 @@ const FIRE_SPRITE_FRAMES = 6
 const FIRE_SPRITE_WIDTH = 228
 const FIRE_SPRITE_HEIGHT = 38
 const FIRE_TICKS_PER_FRAME = 10
+const FLAME_TIMEOUT = 1000
+const BOMB_TIMEOUT = 2000
+const FINISH_TIMEOUT = 200
 
 class HeroSprite extends Sprite {
   private _setCurrentPos: any
-  private level: string[]
+  private readonly level: string[]
   private setLevel: (
     value: ((prevState: string[]) => string[]) | string[]
   ) => void
@@ -33,7 +31,7 @@ class HeroSprite extends Sprite {
 
   drawFlame = (x: number, y: number) => {
     let flame
-    if (this.level[y][x] !== '#') {
+    if (this.level[y][x] !== WALL_CHARACTER) {
       flame = drawSprite(
         this.ctx,
         FIRE_SPRITE,
@@ -46,7 +44,7 @@ class HeroSprite extends Sprite {
       )
       flame.start()
       const temp = this.level[y].split('')
-      temp[x] = ' '
+      temp[x] = GRASS_CHARACTER
       this.level[y] = temp.join('')
     }
     return flame
@@ -95,8 +93,8 @@ class HeroSprite extends Sprite {
           alert('game over!')
           window.location.reload()
         }
-      }, 1000)
-    }, 2000)
+      }, FLAME_TIMEOUT)
+    }, BOMB_TIMEOUT)
   }
 
   handleKeyDown = (e: KeyboardEvent) => {
@@ -120,7 +118,7 @@ class HeroSprite extends Sprite {
       setTimeout(() => {
         alert('Победа!')
         window.location.reload()
-      }, 500)
+      }, FINISH_TIMEOUT)
     }
     if (noCollision(this.level, newPos)) {
       ;[this.dy, this.dx] = newPos

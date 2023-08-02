@@ -1,5 +1,6 @@
-import Sprite from '../../utils/animation/Sprite'
-import HeroSprite from '../../utils/animation/HeroSprite'
+import Sprite from './Sprite'
+import HeroSprite from './HeroSprite'
+import { BRICK_CHARACTER, PORTAL_CHARACTER, WALL_CHARACTER } from './constants'
 
 //size in pixels of one box
 export const BOX_SIZE = 32
@@ -144,13 +145,13 @@ export const drawLevel = (level: string[], ctx: CanvasRenderingContext2D) => {
   for (let j = 0; j < GAME_ROWS; j++) {
     for (let i = 0; i < GAME_COLUMNS; i++) {
       switch (level[j][i]) {
-        case '*':
+        case BRICK_CHARACTER:
           drawBrick(ctx, BOX_SIZE * (i + 1), BOX_SIZE * (j + 1))
           break
-        case '#':
+        case WALL_CHARACTER:
           drawWall(ctx, BOX_SIZE * (i + 1), BOX_SIZE * (j + 1))
           break
-        case 'x':
+        case PORTAL_CHARACTER:
           drawPortal(ctx, BOX_SIZE * (i + 1), BOX_SIZE * (j + 1))
           break
         default:
@@ -169,11 +170,11 @@ export function noCollision(level: string[], newPosition: number[]) {
   }
   const mapValue = level[newPosition[0] + 1][newPosition[1] + 1]
 
-  return !(mapValue === '#' || mapValue === '*')
+  return !(mapValue === WALL_CHARACTER || mapValue === BRICK_CHARACTER)
 }
 
 export const portalIsFound = (level: string[], newPosition: number[]) => {
-  return level[newPosition[0] + 1][newPosition[1] + 1] === 'x'
+  return level[newPosition[0] + 1][newPosition[1] + 1] === PORTAL_CHARACTER
 }
 
 export const getRandomAudio = () => {
