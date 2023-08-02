@@ -4,6 +4,7 @@ import App from './components/app'
 import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import { theme } from './theme'
 import './index.css'
+import { startServiceWorker } from './utils/service-worker/startServiceWorker'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ThemeProvider theme={theme}>
@@ -12,3 +13,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </React.StrictMode>
   </ThemeProvider>
 )
+
+startServiceWorker()
