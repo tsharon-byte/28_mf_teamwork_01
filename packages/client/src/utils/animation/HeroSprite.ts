@@ -95,7 +95,7 @@ class HeroSprite extends Sprite {
           alert('game over!')
           window.location.reload()
         }
-      }, 2000)
+      }, 1000)
     }, 2000)
   }
 

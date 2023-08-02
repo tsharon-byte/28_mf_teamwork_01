@@ -168,6 +168,7 @@ export function noCollision(level: string[], newPosition: number[]) {
     return false
   }
   const mapValue = level[newPosition[0] + 1][newPosition[1] + 1]
+
   return !(mapValue === '#' || mapValue === '*')
 }
 
