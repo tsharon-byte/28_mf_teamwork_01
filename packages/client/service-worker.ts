@@ -6,24 +6,36 @@ const timeout = 400
 
 const URLS = ['/index.html', '/src/main.tsx']
 
+const addCaches = async () => {
+  try {
+    const cache: Cache = await caches.open(`${version}${cacheName}`)
+
+    return cache.addAll(URLS)
+  } catch (error) {
+    console.error(error.message)
+  }
+}
+
 self.addEventListener('install', (event: ISWEvents) => {
-  event.waitUntil(
-    caches
-      .open(`${version}${cacheName}`)
-      .then((cache: Cache) => cache.addAll(URLS))
-  )
+  event.waitUntil(addCaches)
 })
 
+const checkCaches = async () => {
+  try {
+    const cacheNames = await caches.keys()
+
+    return await Promise.all(
+      cacheNames
+        .filter(name => name !== `${version}${cacheName}`)
+        .map(name => caches.delete(name))
+    )
+  } catch (error) {
+    console.error(error.message)
+  }
+}
+
 self.addEventListener('activate', (event: ISWEvents) => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames
-          .filter(name => name !== `${version}${cacheName}`)
-          .map(name => caches.delete(name))
-      )
-    })
-  )
+  event.waitUntil(checkCaches)
 })
 
 const getFromNetwork = (

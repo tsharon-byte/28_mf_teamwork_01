@@ -3,11 +3,9 @@ export const startServiceWorker = () => {
     window.addEventListener('load', () => {
       const registerRequest = async () => {
         try {
-          const res = await navigator.serviceWorker.register(
-            './service-worker.ts',
-            { scope: '/' }
-          )
-          console.log(res)
+          await navigator.serviceWorker.register('./service-worker.ts', {
+            scope: '/',
+          })
         } catch (error) {
           console.error('ServiceWorker registration failed: ', error)
         }
