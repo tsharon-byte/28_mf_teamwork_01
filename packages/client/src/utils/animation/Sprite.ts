@@ -1,5 +1,7 @@
+import { drawGrass } from './helpers'
+
 class Sprite {
-  private ctx: CanvasRenderingContext2D
+  protected readonly ctx: CanvasRenderingContext2D
   private readonly image: CanvasImageSource
   private frameIndex: number
   private tickCount: number
@@ -10,10 +12,11 @@ class Sprite {
   private requestId: number | undefined
   private started: boolean
   private readonly size: number
-  private readonly background: string
   private readonly x0: number
   private readonly y0: number
   protected sy: number
+  protected dx: number
+  protected dy: number
 
   constructor(options: SpriteOptions) {
     this.ctx = options.ctx
@@ -33,7 +36,8 @@ class Sprite {
     this.x0 = options.x0 || 0
     this.y0 = options.y0 || 0
     this.sy = 0
-    this.background = options.background
+    this.dx = 0
+    this.dy = 0
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
   }
@@ -52,12 +56,10 @@ class Sprite {
   }
 
   render = () => {
-    this.ctx.fillStyle = this.background
-    this.ctx.fillRect(
-      this.size + this.x0,
-      this.size + this.y0,
-      this.size,
-      this.size
+    drawGrass(
+      this.ctx,
+      this.size + this.x0 + this.dx * this.size,
+      this.size + this.y0 + this.dy * this.size
     )
     this.ctx.drawImage(
       this.image,
@@ -65,8 +67,8 @@ class Sprite {
       this.sy,
       this.width / this.numberOfFrames,
       this.height,
-      this.size + this.x0,
-      this.size + this.y0,
+      this.size + this.x0 + this.dx * this.size,
+      this.size + this.y0 + this.dy * this.size,
       this.size,
       this.size
     )
