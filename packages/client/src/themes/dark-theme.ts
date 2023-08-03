@@ -94,6 +94,10 @@ const darkTheme = createTheme({
                   color: '#fff9c4',
                 },
               },
+              '.MuiAvatar-root, .MuiCircularProgress-root': {
+                width: '36px !important',
+                height: '36px !important',
+              },
             },
           },
         },
