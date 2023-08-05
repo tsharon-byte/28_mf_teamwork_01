@@ -1,5 +1,5 @@
 import { FC, FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button, Form, TextField } from '../../components'
 import {
   loginValidationRule,
@@ -9,31 +9,16 @@ import { loginValidator } from '../../validators'
 import { ROUTE_PATH } from '../../utils/constants'
 import styles from './styles.module.css'
 import { TLoginData } from '../../api/auth-api/type'
-import { login } from '../../api/auth-api'
-import { AxiosError } from 'axios'
 import { ContentLayout } from '../../layouts'
+import { useAuth } from '../../hooks'
 
 const Login: FC = () => {
-  const navigate = useNavigate()
+  const { login } = useAuth()
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData.entries()) as TLoginData
-
-    try {
-      const response = await login(data)
-
-      if (response.data === 'OK') {
-        navigate(ROUTE_PATH.HOME)
-      }
-    } catch (error) {
-      if (
-        error instanceof AxiosError &&
-        error.response &&
-        error.response.data.reason === 'User already in system'
-      ) {
-        navigate(ROUTE_PATH.HOME)
-      }
-    }
+    login(data)
   }
 
   return (

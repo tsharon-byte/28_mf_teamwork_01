@@ -1,4 +1,4 @@
-import { IUser } from '../../types'
+import { IUser } from '../../store/slices/user-slice/types'
 import { IUserScore } from './types'
 
 const users: IUser[] = [
