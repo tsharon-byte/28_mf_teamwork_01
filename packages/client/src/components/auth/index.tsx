@@ -9,9 +9,11 @@ import { ROUTE_PATH } from '../../utils/constants'
 const Auth: FC = () => {
   const { loading, user } = useUser()
 
-  return loading ? (
-    <CircularProgress />
-  ) : user ? (
+  if (loading) {
+    return <CircularProgress />
+  }
+
+  return user ? (
     <Avatar
       alt={user.first_name}
       src={user.avatar && makeResourcePath(user.avatar)}

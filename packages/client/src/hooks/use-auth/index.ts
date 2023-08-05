@@ -10,58 +10,51 @@ import { ROUTE_PATH } from '../../utils/constants'
 const useAuth = () => {
   const navigate = useNavigate()
 
-  const login = useCallback((data: TLoginData) => {
-    loginRequest(data)
-      .then(response => {
-        switch (response.status) {
-          case 200: {
-            navigate(ROUTE_PATH.HOME)
-            break
-          }
-          case 400: {
-            if (response.data.reason === 'User already in system') {
-              navigate(ROUTE_PATH.HOME)
-            }
-            break
-          }
-          case 401: {
-            navigate(ROUTE_PATH.LOGIN)
-            break
-          }
-          case 500: {
-            navigate(ROUTE_PATH.ERROR)
-            break
-          }
-          default: {
-            throw new Error(`Необработанный код ответа ${response.status}`)
-          }
+  const login = useCallback(async (data: TLoginData) => {
+    try {
+      const response = await loginRequest(data)
+      switch (response.status) {
+        case 200: {
+          return navigate(ROUTE_PATH.HOME)
         }
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        case 400: {
+          if (response.data.reason === 'User already in system') {
+            return navigate(ROUTE_PATH.HOME)
+          }
+          throw new Error(`Bad request: ${response.data.reason}`)
+        }
+        case 401: {
+          return navigate(ROUTE_PATH.LOGIN)
+        }
+        case 500: {
+          return navigate(ROUTE_PATH.ERROR)
+        }
+        default: {
+          throw new Error(`Unprocessable response code: ${response.status}`)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
-  const logout = useCallback(() => {
-    logoutRequest()
-      .then(response => {
-        switch (response.status) {
-          case 200: {
-            navigate(ROUTE_PATH.HOME)
-            break
-          }
-          case 500: {
-            navigate(ROUTE_PATH.ERROR)
-            break
-          }
-          default: {
-            throw new Error(`Необработанный код ответа ${response.status}`)
-          }
+  const logout = useCallback(async () => {
+    try {
+      const response = await logoutRequest()
+      switch (response.status) {
+        case 200: {
+          return navigate(ROUTE_PATH.HOME)
         }
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        case 500: {
+          return navigate(ROUTE_PATH.ERROR)
+        }
+        default: {
+          throw new Error(`Unprocessable response code: ${response.status}`)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
   return { login, logout }

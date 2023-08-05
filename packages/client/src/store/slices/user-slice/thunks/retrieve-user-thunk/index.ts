@@ -5,11 +5,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 const retrieveUserThunk = createAsyncThunk(
   '/user/retrieveUserThunk',
-  (_, thunkAPI) =>
-    axiosInstance
-      .get<IUser>(RETRIEVE_USER_URL)
-      .then(respose => respose.data)
-      .catch(() => thunkAPI.rejectWithValue('Не удалось получить пользователя'))
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get<IUser>(RETRIEVE_USER_URL)
+      return response.data
+    } catch (error) {
+      thunkAPI.rejectWithValue('Не удалось получить пользователя')
+    }
+  }
 )
 
 export default retrieveUserThunk
