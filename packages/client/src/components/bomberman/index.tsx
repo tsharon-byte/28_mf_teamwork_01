@@ -1,4 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
+import FullscreenIcon from '@mui/icons-material/Fullscreen'
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 import './bomberman.css'
 import { Button } from '@mui/material'
 import {
@@ -15,6 +17,7 @@ import {
 } from '../../utils/animation/helpers'
 import HeroSprite from '../../utils/animation/HeroSprite'
 import Sprite from '../../utils/animation/Sprite'
+import { toggleFullScreen } from '../../utils/utils'
 
 const BETTY_SPRITE = 'img/betty.png'
 const BETTY2_SPRITE = 'img/betty2.png'
@@ -23,6 +26,7 @@ const GEORGE = 'img/george.png'
 const Bomberman: FC = () => {
   const ref = useRef(null)
   const audioRef = useRef(null)
+  const [isFullScreen, setFullScreen] = useState<boolean>(false)
   const [bomber, setBomber] = useState<HeroSprite>()
   const [evil1, setEvil1] = useState<Sprite>()
   const [evil2, setEvil2] = useState<Sprite>()
@@ -98,6 +102,10 @@ const Bomberman: FC = () => {
     window.location.reload()
     stopMusic()
   }
+  const handleFullScreenClick = () => {
+    toggleFullScreen()
+    setFullScreen(!isFullScreen)
+  }
   return (
     <div className="bomberman">
       <canvas
@@ -109,6 +117,9 @@ const Bomberman: FC = () => {
       <div className="bomberman__buttons">
         <Button onClick={startGame}>Начать Игру</Button>
         <Button onClick={stopGame}>Окончить Игру</Button>
+        <Button onClick={handleFullScreenClick}>
+          {!isFullScreen ? <FullscreenIcon /> : <FullscreenExitIcon />}
+        </Button>
       </div>
     </div>
   )
