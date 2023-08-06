@@ -1,0 +1,8 @@
+.profile__header {
+  height: 142px;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  display: flex;
+  padding: 52px 29px 60px 29px;
+}

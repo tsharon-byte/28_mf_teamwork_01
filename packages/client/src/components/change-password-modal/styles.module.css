@@ -1,0 +1,15 @@
+.modal__box {
+  position: absolute;
+  background: #171813;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  min-height: 320px;
+  min-width: 630px;
+  padding: 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

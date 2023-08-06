@@ -17,3 +17,8 @@ export interface IUserState {
   user: Nullable<IUser>
   error: Nullable<string>
 }
+
+export interface IPasswordData {
+  oldPassword: string
+  newPassword: string
+}

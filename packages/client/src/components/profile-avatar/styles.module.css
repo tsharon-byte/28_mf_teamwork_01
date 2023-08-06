@@ -1,0 +1,12 @@
+.profile__avatar {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
