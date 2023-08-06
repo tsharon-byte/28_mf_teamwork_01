@@ -1,10 +1,10 @@
 import { ISWEvents } from './src/types'
 
 const cacheName = '::bomberman'
-const version = 'v0.0.2'
+const version = 'v0.0.3'
 const timeout = 400
 
-const URLS = ['/index.html', '/src/main.tsx']
+const URLS = ['/index.html']
 
 const addCaches = async () => {
   try {

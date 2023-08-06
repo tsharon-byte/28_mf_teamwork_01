@@ -3,7 +3,7 @@ export const startServiceWorker = () => {
     window.addEventListener('load', () => {
       const registerRequest = async () => {
         try {
-          await navigator.serviceWorker.register('./service-worker.ts', {
+          await navigator.serviceWorker.register('./service-worker.js', {
             scope: '/',
           })
         } catch (error) {

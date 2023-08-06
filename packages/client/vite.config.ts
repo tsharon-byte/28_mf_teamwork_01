@@ -12,4 +12,18 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      input: {
+        app: './index.html',
+        serviceWorker: './service-worker.ts',
+      },
+      output: {
+        entryFileNames: chunkInfo =>
+          chunkInfo.name === 'serviceWorker'
+            ? '[name].js'
+            : 'assets/js/[name].[hash].js',
+      },
+    },
+  },
 })
