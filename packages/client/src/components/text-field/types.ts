@@ -1,5 +1,10 @@
-import type { TextFieldProps, TextFieldVariants } from '@mui/material'
+import type {
+  InputAdornmentTypeMap,
+  TextFieldProps,
+  TextFieldVariants,
+} from '@mui/material'
 import type { ValidationRule } from '../../validation-rules'
+import { OverridableComponent } from '@mui/material/OverridableComponent'
 
 type TextFieldFC = <Variant extends TextFieldVariants>(
   props: {
@@ -9,6 +14,7 @@ type TextFieldFC = <Variant extends TextFieldVariants>(
      */
     variant?: Variant
     validationRules?: ValidationRule[]
+    inputProps?: OverridableComponent<InputAdornmentTypeMap>
   } & Omit<TextFieldProps, 'variant'>
 ) => JSX.Element
 

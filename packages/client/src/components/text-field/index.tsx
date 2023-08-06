@@ -9,6 +9,7 @@ const TextField: TextFieldFC = ({
   onBlur,
   error,
   helperText,
+  inputProps,
   ...props
 }) => {
   const [hasError, setHasError] = useState(error)
@@ -46,6 +47,7 @@ const TextField: TextFieldFC = ({
       onBlur={handleBlur}
       error={hasError}
       helperText={errorText}
+      inputProps={inputProps}
     />
   )
 }
