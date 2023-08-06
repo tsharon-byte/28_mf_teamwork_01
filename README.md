@@ -57,6 +57,9 @@
 Откройте issue, я приду :)
 
 ## Автодеплой статики на vercel
+
+[BOMBERMAN](https://28-mf-teamwork-01-client.vercel.app/)
+
 Зарегистрируйте аккаунт на [vercel](https://vercel.com/)
 Следуйте [инструкции](https://vitejs.dev/guide/static-deploy.html#vercel-for-git)
 В качестве `root directory` укажите `packages/client`
