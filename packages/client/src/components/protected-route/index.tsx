@@ -1,5 +1,5 @@
 import { getUser } from '../../api/auth-api'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { ROUTE_PATH } from '../../utils/constants'
 import { FC, useEffect } from 'react'
 import { AxiosError } from 'axios'
@@ -25,7 +25,7 @@ const ProtectedRoute: FC = () => {
     request()
   }, [])
 
-  return null
+  return <Outlet />
 }
 
 export default ProtectedRoute
