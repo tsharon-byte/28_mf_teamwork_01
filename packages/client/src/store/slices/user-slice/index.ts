@@ -53,6 +53,7 @@ const userSlice = createSlice({
       })
       .addCase(changePasswordThunk.fulfilled, state => {
         state.loading = false
+        state.error = null
       })
       .addCase(changePasswordThunk.rejected, (state, action) => {
         if (action.payload === 'Password is incorrect') {

@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { IUser } from '../../store/slices/user-slice/types'
+import { IUser } from '../../../store/slices/user-slice/types'
 
 export type ProfileAvatarType = {
   handleMouseEnterAvatar: () => void

@@ -1,5 +1,5 @@
 import React, { memo, FC } from 'react'
-import TextField from '../text-field'
+import TextField from '../../text-field'
 import { Button, InputAdornment, Typography } from '@mui/material'
 import { StyledEditIcon } from '../styled-edit-icon'
 import { ProfileInfoType } from './types'

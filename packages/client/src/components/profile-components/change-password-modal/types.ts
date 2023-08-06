@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { IPasswordData } from '../../store/slices/user-slice/types'
+import { IPasswordData } from '../../../store/slices/user-slice/types'
 
 export type ChangePasswordModalType = {
   isOpenModal: boolean

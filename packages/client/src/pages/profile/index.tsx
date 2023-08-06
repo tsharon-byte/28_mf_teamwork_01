@@ -1,20 +1,18 @@
 import { ChangeEvent, FC, useCallback, useRef, useState } from 'react'
 import { Button } from '@mui/material'
 import { ContentLayout } from '../../layouts'
-
 import { useAuth, useUser } from '../../hooks'
-
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   changeAvatarThunk,
   changePasswordThunk,
 } from '../../store/slices/user-slice/thunks'
 import { shallowEqual } from 'react-redux'
-import { ProfileHeader } from '../../components/profile-header'
+import { ProfileHeader } from '../../components/profile-components/profile-header'
 import { useNavigate } from 'react-router-dom'
-import { ProfileAvatar } from '../../components/profile-avatar'
-import { ChangePasswordModal } from '../../components/change-password-modal'
-import { ProfileInfo } from '../../components/profile-info'
+import { ProfileAvatar } from '../../components/profile-components/profile-avatar'
+import { ChangePasswordModal } from '../../components/profile-components/change-password-modal'
+import { ProfileInfo } from '../../components/profile-components/profile-info'
 
 const Profile: FC = () => {
   const navigate = useNavigate()
@@ -45,7 +43,6 @@ const Profile: FC = () => {
     handleMouseEnterAvatar: useCallback(() => setIsHoverAvatar(true), []),
     handleMouseLeaveAvatar: useCallback(() => setIsHoverAvatar(false), []),
     handleUploadFile: useCallback(() => {
-      console.log('hi')
       if (inputRef.current) {
         inputRef.current.click()
       }

@@ -4,7 +4,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import styles from './styles.module.css'
-import { makeResourcePath } from '../../helpers'
+import { makeResourcePath } from '../../../helpers'
 import { Avatar } from '@mui/material'
 
 export const ProfileAvatar: FC<ProfileAvatarType> = memo(

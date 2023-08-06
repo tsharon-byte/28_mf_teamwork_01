@@ -1,10 +1,11 @@
 import { Modal, Box, Typography, Button } from '@mui/material'
 import React, { memo, FC } from 'react'
-import { Form } from 'react-router-dom'
-import { passwordValidationRule } from '../../validation-rules'
+
+import { passwordValidationRule } from '../../../validation-rules'
 import { ChangePasswordModalType } from './types'
 import styles from './styles.module.css'
-import TextField from '../text-field'
+import TextField from '../../text-field'
+import Form from '../../form'
 
 export const ChangePasswordModal: FC<ChangePasswordModalType> = memo(props => {
   const {
@@ -54,7 +55,7 @@ export const ChangePasswordModal: FC<ChangePasswordModalType> = memo(props => {
             variant="contained"
             type="button"
             onClick={hanldeCloseModal}>
-            Отмена
+            Закрыть
           </Button>
         </Form>
       </Box>
