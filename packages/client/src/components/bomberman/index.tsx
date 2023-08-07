@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import FullscreenIcon from '@mui/icons-material/Fullscreen'
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 import './bomberman.css'
-import { Button } from '@mui/material'
+import { Button, Fab } from '@mui/material'
 import {
   drawBomber,
   BOX_SIZE,
@@ -113,9 +113,13 @@ const Bomberman: FC = () => {
       <div className="bomberman__buttons">
         <Button onClick={startGame}>Начать Игру</Button>
         <Button onClick={stopGame}>Окончить Игру</Button>
-        <Button onClick={toggleFullScreen}>
+        <Fab
+          onClick={toggleFullScreen}
+          aria-label="full screen mode"
+          color="primary"
+          size="small">
           {!fullScreenFlag ? <FullscreenIcon /> : <FullscreenExitIcon />}
-        </Button>
+        </Fab>
       </div>
     </div>
   )
