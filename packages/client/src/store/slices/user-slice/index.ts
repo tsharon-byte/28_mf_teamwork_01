@@ -56,10 +56,8 @@ const userSlice = createSlice({
         state.error = null
       })
       .addCase(changePasswordThunk.rejected, (state, action) => {
-        if (action.payload === 'Password is incorrect') {
-          state.error = 'Введен неверный пароль'
-        } else {
-          state.error = 'Произошла ошибка'
+        if (typeof action.payload === 'string') {
+          state.error = action.payload
         }
       })
   },

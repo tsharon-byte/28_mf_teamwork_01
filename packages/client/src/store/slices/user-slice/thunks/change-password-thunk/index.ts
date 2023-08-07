@@ -2,7 +2,7 @@ import { axiosInstance } from '../../../../../utils/http-transport'
 import { CHANGE_PASSWORD_URL } from '../../../../../constants/urls'
 
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { IPasswordData } from '../../types'
+import { IErrorChangePassword, IPasswordData } from '../../types'
 
 const changePasswordThunk = createAsyncThunk(
   '/user/changePasswordThunk',
@@ -14,10 +14,13 @@ const changePasswordThunk = createAsyncThunk(
       })
       return response.data
     } catch (error) {
-      const errorMessage =
-        (error as { response?: { data?: { reason?: string } } })?.response?.data
-          ?.reason || 'Не удалось изменить пароль'
-      return thunkAPI.rejectWithValue(errorMessage)
+      const errorMessage = (error as IErrorChangePassword)?.response?.data
+        ?.reason
+      if (errorMessage === 'Password is incorrect') {
+        return thunkAPI.rejectWithValue('Введен неверный пароль')
+      } else {
+        return thunkAPI.rejectWithValue('Произошла ошибка')
+      }
     }
   }
 )

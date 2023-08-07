@@ -22,3 +22,7 @@ export interface IPasswordData {
   oldPassword: string
   newPassword: string
 }
+
+export interface IErrorChangePassword {
+  response: { data?: { reason?: string } }
+}
