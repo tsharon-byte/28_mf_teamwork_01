@@ -6,5 +6,16 @@ import Navigation from './navigation'
 import Title from './title'
 import Button from './button'
 import Auth from './auth'
+import StyledLink from './styled-link'
 
-export { App, TextField, Form, Error, Navigation, Title, Button, Auth }
+export {
+  App,
+  TextField,
+  Form,
+  Error,
+  Navigation,
+  Title,
+  Button,
+  Auth,
+  StyledLink,
+}
