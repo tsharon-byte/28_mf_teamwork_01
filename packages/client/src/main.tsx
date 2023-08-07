@@ -5,6 +5,8 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import { theme } from './theme'
 import App from './components/app'
 import './index.css'
+import { startServiceWorker } from './utils/service-worker/startServiceWorker'
+import * as process from 'process'
 import store from './store'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -16,3 +18,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </React.StrictMode>
   </ThemeProvider>
 )
+
+if (process.env.NODE_ENV === 'production') {
+  startServiceWorker()
+}
