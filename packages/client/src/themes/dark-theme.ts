@@ -139,6 +139,27 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiModal: {
+      styleOverrides: {
+        root: {
+          '.modal__container': {
+            backgroundColor: '#171813',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid #ffffff',
+            borderRadius: '8px',
+            maxHeight: 'max-content',
+            minWidth: '670px',
+            padding: '40px 24px',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          },
+        },
+      },
+    },
   },
 })
 

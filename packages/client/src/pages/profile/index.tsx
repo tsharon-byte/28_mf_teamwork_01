@@ -46,17 +46,20 @@ const Profile: FC = () => {
       if (inputRef.current) {
         inputRef.current.click()
       }
-    }, []),
-    handleChangeAvatar: useCallback((e: ChangeEvent<HTMLInputElement>) => {
-      const target = e.currentTarget
-      if (target.files === null) {
-        return
-      }
-      const formData = new FormData()
-      formData.append('avatar', target.files[0])
+    }, [inputRef]),
+    handleChangeAvatar: useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
+        const target = e.currentTarget
+        if (target.files === null) {
+          return
+        }
+        const formData = new FormData()
+        formData.append('avatar', target.files[0])
 
-      dispatch(changeAvatarThunk(formData))
-    }, []),
+        dispatch(changeAvatarThunk(formData))
+      },
+      [dispatch]
+    ),
   }
 
   if (!user) {
