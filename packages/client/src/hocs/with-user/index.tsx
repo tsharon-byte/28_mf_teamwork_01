@@ -1,4 +1,4 @@
-import { cloneElement, isValidElement, useMemo } from 'react'
+import { useMemo } from 'react'
 import { CircularProgress, Tooltip } from '@mui/material'
 import { ErrorOutline } from '@mui/icons-material'
 import TWithUserHOC, { ExtractFCPropsType } from './types'
@@ -8,12 +8,7 @@ import isUserDependentProp from './helpers'
 const withUser: TWithUserHOC =
   () =>
   WrappedComponent =>
-  ({
-    errorComponent = null,
-    defaultComponent = null,
-    errorPropName,
-    ...props
-  }) => {
+  ({ errorComponent = null, defaultComponent = null, ...props }) => {
     const { loading, user, error } = useUser()
 
     const wrappedComponentProps = useMemo(
@@ -33,16 +28,12 @@ const withUser: TWithUserHOC =
     }
 
     if (error) {
-      return isValidElement(errorComponent) ? (
-        errorPropName ? (
-          cloneElement(errorComponent, { errorPropName: error })
-        ) : (
-          errorComponent
+      return (
+        errorComponent || (
+          <Tooltip title={error}>
+            <ErrorOutline color="error" />
+          </Tooltip>
         )
-      ) : (
-        <Tooltip title={error}>
-          <ErrorOutline color="error" />
-        </Tooltip>
       )
     }
 
