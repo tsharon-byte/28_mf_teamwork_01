@@ -3,7 +3,7 @@ import type { Validator } from '../../validators'
 
 interface IFormProps extends FormHTMLAttributes<HTMLFormElement> {
   validator?: Validator
-  ref: ForwardedRef<HTMLFormElement>
+  ref?: ForwardedRef<HTMLFormElement>
 }
 
 export default IFormProps
