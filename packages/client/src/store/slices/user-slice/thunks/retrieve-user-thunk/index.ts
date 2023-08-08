@@ -10,7 +10,7 @@ const retrieveUserThunk = createAsyncThunk(
       const response = await axiosInstance.get<IUser>(RETRIEVE_USER_URL)
       return response.data
     } catch (error) {
-      thunkAPI.rejectWithValue('Не удалось получить пользователя')
+      return thunkAPI.rejectWithValue('Не удалось получить пользователя')
     }
   }
 )
