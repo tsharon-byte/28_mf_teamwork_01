@@ -24,7 +24,7 @@ const Page404: FC = () => {
           GAME OVER
         </Typography>
       </Box>
-      <StyledLink href="/" text="Вернуться в главное меню" />
+      <StyledLink to="/" text="Вернуться в главное меню" />
     </Box>
   )
 }
