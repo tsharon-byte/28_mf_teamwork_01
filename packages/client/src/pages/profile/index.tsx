@@ -25,42 +25,40 @@ const Profile: FC = () => {
   const [password, setPassword] = useState({ oldPassword: '', newPassword: '' })
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const callbacks = {
-    handleBackNavigate: useCallback(() => navigate(-1 || '/'), []),
-    handleSubmit: useCallback(() => {
-      dispatch(changePasswordThunk(password))
-    }, [dispatch, password]),
-    handleChangePassword: useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value
-        const name = e.target.name
-        setPassword(prevState => ({ ...prevState, [name]: value }))
-      },
-      [setPassword]
-    ),
-    handleOpenModal: useCallback(() => setIsOpenModal(true), []),
-    hanldeCloseModal: useCallback(() => setIsOpenModal(false), []),
-    handleMouseEnterAvatar: useCallback(() => setIsHoverAvatar(true), []),
-    handleMouseLeaveAvatar: useCallback(() => setIsHoverAvatar(false), []),
-    handleUploadFile: useCallback(() => {
-      if (inputRef.current) {
-        inputRef.current.click()
+  const handleBackNavigate = useCallback(() => navigate(-1 || '/'), [])
+  const handleSubmit = useCallback(() => {
+    dispatch(changePasswordThunk(password))
+  }, [dispatch, password])
+  const handleChangePassword = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value
+      const name = e.target.name
+      setPassword(prevState => ({ ...prevState, [name]: value }))
+    },
+    [setPassword]
+  )
+  const handleOpenModal = useCallback(() => setIsOpenModal(true), [])
+  const hanldeCloseModal = useCallback(() => setIsOpenModal(false), [])
+  const handleMouseEnterAvatar = useCallback(() => setIsHoverAvatar(true), [])
+  const handleMouseLeaveAvatar = useCallback(() => setIsHoverAvatar(false), [])
+  const handleUploadFile = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.click()
+    }
+  }, [inputRef])
+  const handleChangeAvatar = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const target = e.currentTarget
+      if (target.files === null) {
+        return
       }
-    }, [inputRef]),
-    handleChangeAvatar: useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        const target = e.currentTarget
-        if (target.files === null) {
-          return
-        }
-        const formData = new FormData()
-        formData.append('avatar', target.files[0])
+      const formData = new FormData()
+      formData.append('avatar', target.files[0])
 
-        dispatch(changeAvatarThunk(formData))
-      },
-      [dispatch]
-    ),
-  }
+      dispatch(changeAvatarThunk(formData))
+    },
+    [dispatch]
+  )
 
   if (!user) {
     return null
@@ -69,27 +67,27 @@ const Profile: FC = () => {
   return (
     <ContentLayout
       navigation={false}
-      header={<ProfileHeader callback={callbacks.handleBackNavigate} />}>
+      header={<ProfileHeader callback={handleBackNavigate} />}>
       <ProfileAvatar
-        handleMouseEnterAvatar={callbacks.handleMouseEnterAvatar}
-        handleMouseLeaveAvatar={callbacks.handleMouseLeaveAvatar}
-        handleUploadFile={callbacks.handleUploadFile}
-        handleChangeAvatar={callbacks.handleChangeAvatar}
+        handleMouseEnterAvatar={handleMouseEnterAvatar}
+        handleMouseLeaveAvatar={handleMouseLeaveAvatar}
+        handleUploadFile={handleUploadFile}
+        handleChangeAvatar={handleChangeAvatar}
         isHoverAvatar={isHoverAvatar}
         ref={inputRef}
         user={user}
       />
-      <ProfileInfo user={user} handleOpenModal={callbacks.handleOpenModal} />
+      <ProfileInfo user={user} handleOpenModal={handleOpenModal} />
       <Button variant="contained" onClick={logout} sx={{ minWidth: 300 }}>
         Выйти
       </Button>
       <ChangePasswordModal
         isOpenModal={isOpenModal}
-        handleSubmit={callbacks.handleSubmit}
+        handleSubmit={handleSubmit}
         password={password}
-        handleChangePassword={callbacks.handleChangePassword}
+        handleChangePassword={handleChangePassword}
         error={error}
-        hanldeCloseModal={callbacks.hanldeCloseModal}
+        hanldeCloseModal={hanldeCloseModal}
       />
     </ContentLayout>
   )

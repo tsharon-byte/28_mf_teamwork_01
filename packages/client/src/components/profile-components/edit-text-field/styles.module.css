@@ -1,3 +1,13 @@
 .textField {
   min-width: 550px !important;
 }
+
+.done {
+  transition: 0.45s ease-out;
+}
+
+.done:hover {
+  transition: 0.25 ease-in;
+  cursor: pointer;
+  color: #ffd54f;
+}

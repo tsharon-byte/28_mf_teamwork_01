@@ -4,5 +4,6 @@ export type EditTextFieldType = {
   mainColor?: string
   hoverColor?: string
   position?: 'end' | 'start'
-  placeholder: string
+  name: string
+  label?: string
 }

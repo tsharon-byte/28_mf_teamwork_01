@@ -11,6 +11,7 @@ import { InputAdornment } from '@mui/material'
 import { StyledEditIcon } from '../../icons/styled-edit-icon'
 import { EditTextFieldType } from './types'
 import styles from './styles.module.css'
+import DoneIcon from '@mui/icons-material/Done'
 
 export const EditTextField: FC<EditTextFieldType> = memo(
   ({
@@ -19,20 +20,18 @@ export const EditTextField: FC<EditTextFieldType> = memo(
     mainColor = '#FFFFFF',
     hoverColor = '#FFD54F',
     position = 'end',
-    placeholder,
+    label,
+    name,
   }) => {
     const [currentValue, setCurrentValue] = useState<string>(value)
     const [isEditing, setIsEditing] = useState(false)
-    const fieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+    const textFieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
     const callbacks = {
       hanldeChange: useCallback(
         (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
           if (isEditing) {
             const { value } = e.currentTarget
             setCurrentValue(value)
-            if (fieldRef.current) {
-              fieldRef.current.focus()
-            }
             if (callback) {
               callback(currentValue)
             }
@@ -42,22 +41,30 @@ export const EditTextField: FC<EditTextFieldType> = memo(
       ),
       handleEditMode: useCallback(() => {
         setIsEditing(prevIsEditing => !prevIsEditing)
-      }, [setIsEditing]),
+        if (textFieldRef.current) {
+          textFieldRef.current.focus()
+        }
+      }, [setIsEditing, textFieldRef]),
     }
     return (
       <TextField
+        inputRef={textFieldRef}
         className={styles.textField}
-        name="email"
+        name={name}
+        label={label}
         value={currentValue}
         onChange={callbacks.hanldeChange}
-        placeholder={placeholder}
         InputProps={{
           endAdornment: (
             <InputAdornment
               position={position}
               style={{ color: mainColor }}
               onClick={callbacks.handleEditMode}>
-              <StyledEditIcon mainColor={mainColor} hoverColor={hoverColor} />
+              {isEditing ? (
+                <DoneIcon className={styles.done} />
+              ) : (
+                <StyledEditIcon mainColor={mainColor} hoverColor={hoverColor} />
+              )}
             </InputAdornment>
           ),
         }}
