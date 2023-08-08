@@ -1,5 +1,5 @@
 .title {
-  font-family: Notable;
+  font-family: Notable !important;
   font-size: 128px;
   font-weight: 400;
   letter-spacing: 0em;

@@ -1,20 +1,24 @@
 import { FC } from 'react'
-import { ContentLayout } from '../../layouts'
-import { EndGameLink } from '../../components/end-game-components/end-game-link'
 import { EndGameTitle } from '../../components/end-game-components/end-game-title'
 import { StyledLink } from '../../components'
+import explosionImg from '../../assets/images/explosion.svg'
+import styled from '@emotion/styled'
+import { EndGameLayout } from '../../components/end-game-components/end-game-layout'
+
+const Image = styled('img')({})
 
 const EndGame: FC = () => {
   return (
-    <>
-      <ContentLayout navigation={false}>
-        <EndGameTitle text="Игра завершена" />
-        <EndGameLink>
-          <StyledLink text="Повторить" to="/game" />
+    <EndGameLayout
+      header={<Image src={explosionImg} alt="Взрыв" />}
+      footer={
+        <>
           <StyledLink text="Вернуться на главную страницу" to="/" />
-        </EndGameLink>
-      </ContentLayout>
-    </>
+          <StyledLink text="Повторить" to="/game" />
+        </>
+      }>
+      <EndGameTitle text="GAME OVER" />
+    </EndGameLayout>
   )
 }
 
