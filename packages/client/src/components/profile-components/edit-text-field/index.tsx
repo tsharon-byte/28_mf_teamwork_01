@@ -1,4 +1,11 @@
-import React, { ChangeEvent, FC, memo, useCallback, useState } from 'react'
+import React, {
+  ChangeEvent,
+  FC,
+  memo,
+  useCallback,
+  useRef,
+  useState,
+} from 'react'
 import TextField from '../../text-field'
 import { InputAdornment } from '@mui/material'
 import { StyledEditIcon } from '../../icons/styled-edit-icon'
@@ -12,15 +19,20 @@ export const EditTextField: FC<EditTextFieldType> = memo(
     mainColor = '#FFFFFF',
     hoverColor = '#FFD54F',
     position = 'end',
+    placeholder,
   }) => {
     const [currentValue, setCurrentValue] = useState<string>(value)
     const [isEditing, setIsEditing] = useState(false)
+    const fieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
     const callbacks = {
       hanldeChange: useCallback(
         (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
           if (isEditing) {
             const { value } = e.currentTarget
             setCurrentValue(value)
+            if (fieldRef.current) {
+              fieldRef.current.focus()
+            }
             if (callback) {
               callback(currentValue)
             }
@@ -38,6 +50,7 @@ export const EditTextField: FC<EditTextFieldType> = memo(
         name="email"
         value={currentValue}
         onChange={callbacks.hanldeChange}
+        placeholder={placeholder}
         InputProps={{
           endAdornment: (
             <InputAdornment

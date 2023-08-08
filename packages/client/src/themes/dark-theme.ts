@@ -139,10 +139,17 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#ffffff80',
+        },
+      },
+    },
     MuiModal: {
       styleOverrides: {
         root: {
-          '.modal__container': {
+          form: {
             backgroundColor: '#171813',
             display: 'flex',
             alignItems: 'center',
