@@ -8,7 +8,12 @@ import isUserDependentProp from './helpers'
 const withUser: TWithUserHOC =
   () =>
   WrappedComponent =>
-  ({ errorComponent = null, defaultComponent = null, ...props }) => {
+  ({
+    errorComponent = null,
+    defaultComponent = null,
+    errorPropName,
+    ...props
+  }) => {
     const { loading, user, error } = useUser()
 
     const wrappedComponentProps = useMemo(
@@ -29,7 +34,11 @@ const withUser: TWithUserHOC =
 
     if (error) {
       return isValidElement(errorComponent) ? (
-        cloneElement(errorComponent, { error })
+        errorPropName ? (
+          cloneElement(errorComponent, { errorPropName: error })
+        ) : (
+          errorComponent
+        )
       ) : (
         <Tooltip title={error}>
           <ErrorOutline color="error" />

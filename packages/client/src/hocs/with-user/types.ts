@@ -5,6 +5,7 @@ import { Nullable } from '../../types'
 interface IWithUserProps {
   errorComponent?: Nullable<ReactElement>
   defaultComponent?: Nullable<ReactElement>
+  errorPropName?: string
 }
 
 export type TUserDependentProp<P, K extends keyof P> = (user: IUser) => P[K]
