@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import Bomberman from '../../components/bomberman'
-import './game.css'
+import { ContentLayout } from '../../layouts'
 
 const Game: FC = () => {
   return (
-    <div className="game">
+    <ContentLayout>
       <Bomberman />
-    </div>
+    </ContentLayout>
   )
 }
 export default Game
