@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUserState, IUser } from './types'
+import { IUserState, IUser, IError } from './types'
 import { retrieveUserThunk } from './thunks'
 
 const initialState: IUserState = {
@@ -29,7 +29,7 @@ const userSlice = createSlice({
       )
       .addCase(
         retrieveUserThunk.rejected.type,
-        (state, action: PayloadAction<string>) => {
+        (state, action: PayloadAction<IError>) => {
           state.loading = false
           state.user = null
           state.error = action.payload
