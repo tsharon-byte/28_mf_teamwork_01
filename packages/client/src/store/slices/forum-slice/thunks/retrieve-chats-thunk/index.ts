@@ -3,16 +3,6 @@ import { RETRIEVE_CHATS_URL } from '../../../../../constants/urls'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { ChatType } from '../../types'
 
-interface RetrieveChatsParams {
-  offset?: number
-  limit?: number
-  title?: string
-}
-const defaultParams = {
-  offset: 0,
-  limit: 30,
-  title: '',
-}
 const retrieveChatsThunk = createAsyncThunk(
   '/chats/retrieveChatsThunk',
   async (_, thunkAPI) => {

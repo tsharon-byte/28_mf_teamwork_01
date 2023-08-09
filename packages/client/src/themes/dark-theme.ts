@@ -139,6 +139,14 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#171813',
+          padding: '2px 4px',
+        },
+      },
+    },
   },
 })
 
