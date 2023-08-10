@@ -14,5 +14,10 @@ export interface IUser {
 export interface IUserState {
   loading: boolean
   user: Nullable<IUser>
-  error: Nullable<string>
+  error: Nullable<IError>
+}
+
+export interface IError {
+  status: number
+  message: string
 }
