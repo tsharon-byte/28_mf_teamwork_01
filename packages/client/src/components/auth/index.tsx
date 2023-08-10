@@ -1,35 +1,32 @@
 import React, { FC } from 'react'
-import { Button, Avatar, CircularProgress } from '@mui/material'
+import { Button, Avatar, AvatarProps } from '@mui/material'
 import { Login } from '@mui/icons-material'
-import { NavLink } from 'react-router-dom'
+import { NavLink, NavLinkProps } from 'react-router-dom'
 import { makeResourcePath } from '../../helpers'
-import { useUser } from '../../hooks'
 import { ROUTE_PATH } from '../../utils/constants'
+import withUser from '../../hocs/with-user'
 
-const Auth: FC = () => {
-  const { loading, user } = useUser()
+const WithUserAvatar = withUser<
+  AvatarProps & { component: typeof NavLink } & NavLinkProps
+>()(Avatar)
 
-  if (loading) {
-    return <CircularProgress />
-  }
-
-  return user ? (
-    <Avatar
-      alt={user.first_name}
-      src={user.avatar && makeResourcePath(user.avatar)}
-      component={NavLink}
-      to={ROUTE_PATH.PROFILE}
-    />
-  ) : (
-    <Button
-      component={NavLink}
-      to={ROUTE_PATH.LOGIN}
-      variant="outlined"
-      color="inherit"
-      startIcon={<Login />}>
-      Войти
-    </Button>
-  )
-}
+const Auth: FC = () => (
+  <WithUserAvatar
+    alt={user => user.first_name}
+    src={user => user.avatar && makeResourcePath(user.avatar)}
+    component={NavLink}
+    to={ROUTE_PATH.PROFILE}
+    errorComponent={
+      <Button
+        component={NavLink}
+        to={ROUTE_PATH.LOGIN}
+        variant="outlined"
+        color="inherit"
+        startIcon={<Login />}>
+        Войти
+      </Button>
+    }
+  />
+)
 
 export default Auth

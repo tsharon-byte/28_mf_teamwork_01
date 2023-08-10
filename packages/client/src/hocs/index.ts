@@ -1,3 +1,4 @@
-import withIcon from './withIcon'
+import withIcon from './with-icon'
+import withUser from './with-user'
 
-export { withIcon }
+export { withIcon, withUser }
