@@ -3,14 +3,14 @@ import { drawGrass } from './helpers'
 class Sprite {
   protected readonly ctx: CanvasRenderingContext2D
   private readonly image: CanvasImageSource
-  private frameIndex: number
-  private tickCount: number
-  private readonly ticksPerFrame: number
-  private readonly numberOfFrames: number
+  protected frameIndex: number
+  protected tickCount: number
+  protected readonly ticksPerFrame: number
+  protected readonly numberOfFrames: number
   private readonly width: number
   private readonly height: number
-  private requestId: number | undefined
-  private started: boolean
+  protected requestId: number | undefined
+  protected started: boolean
   private readonly size: number
   private readonly x0: number
   private readonly y0: number
