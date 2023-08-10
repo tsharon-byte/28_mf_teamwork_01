@@ -20,15 +20,19 @@ const Profile: FC = () => {
   const { logout } = useAuth()
   const { user } = useUser()
   const { error } = useAppSelector(state => state.user, shallowEqual)
-  const [isHoverAvatar, setIsHoverAvatar] = useState(false)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [password, setPassword] = useState({ oldPassword: '', newPassword: '' })
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleBackNavigate = useCallback(() => navigate(-1 || '/'), [])
-  const handleSubmit = useCallback(() => {
+  const handleChangePasswordSubmit = useCallback(() => {
     dispatch(changePasswordThunk(password))
+      .unwrap()
+      .then(() => {
+        setIsOpenModal(false)
+      })
   }, [dispatch, password])
+
   const handleChangePassword = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value
@@ -39,8 +43,6 @@ const Profile: FC = () => {
   )
   const handleOpenModal = useCallback(() => setIsOpenModal(true), [])
   const hanldeCloseModal = useCallback(() => setIsOpenModal(false), [])
-  const handleMouseEnterAvatar = useCallback(() => setIsHoverAvatar(true), [])
-  const handleMouseLeaveAvatar = useCallback(() => setIsHoverAvatar(false), [])
   const handleUploadFile = useCallback(() => {
     if (inputRef.current) {
       inputRef.current.click()
@@ -69,11 +71,8 @@ const Profile: FC = () => {
       navigation={false}
       header={<ProfileHeader callback={handleBackNavigate} />}>
       <ProfileAvatar
-        handleMouseEnterAvatar={handleMouseEnterAvatar}
-        handleMouseLeaveAvatar={handleMouseLeaveAvatar}
         handleUploadFile={handleUploadFile}
         handleChangeAvatar={handleChangeAvatar}
-        isHoverAvatar={isHoverAvatar}
         ref={inputRef}
         user={user}
       />
@@ -83,7 +82,7 @@ const Profile: FC = () => {
       </Button>
       <ChangePasswordModal
         isOpenModal={isOpenModal}
-        handleSubmit={handleSubmit}
+        handleSubmit={handleChangePasswordSubmit}
         password={password}
         handleChangePassword={handleChangePassword}
         error={error}
