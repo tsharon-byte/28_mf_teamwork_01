@@ -12,7 +12,7 @@ const retrieveUserThunk = createAsyncThunk(
       return response.data
     } catch (error) {
       if (isAxiosError(error)) {
-        thunkAPI.rejectWithValue({
+        return thunkAPI.rejectWithValue({
           status: error.response?.status,
           message: error.response?.data?.reason,
         })
