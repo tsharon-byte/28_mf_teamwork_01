@@ -7,4 +7,6 @@ pre-commit:
     prettier:
       glob: '*.{ts,tsx,css}'
       run: yarn prettier -w {staged_files}
+    typescript:
+      run: npm run type-check:client
       stage_fixed: true
