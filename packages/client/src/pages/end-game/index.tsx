@@ -5,7 +5,7 @@ import explosionImg from '../../assets/images/explosion.svg'
 import styled from '@emotion/styled'
 import { EndGameLayout } from '../../components/end-game-components/end-game-layout'
 
-const Image = styled('img')({})
+const Image = styled('img')({ height: 100 })
 
 const EndGame: FC = () => {
   return (
