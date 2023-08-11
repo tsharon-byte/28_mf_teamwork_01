@@ -70,6 +70,13 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          color: 'black',
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {
