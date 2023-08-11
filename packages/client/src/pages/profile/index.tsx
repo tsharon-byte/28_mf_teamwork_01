@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, useCallback, useRef, useState } from 'react'
+import {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useCallback,
+  useRef,
+  useState,
+} from 'react'
 import { Button } from '@mui/material'
 import { ContentLayout } from '../../layouts'
 import { useAuth, useUser } from '../../hooks'
@@ -25,13 +32,17 @@ const Profile: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleBackNavigate = useCallback(() => navigate(-1 || '/'), [])
-  const handleChangePasswordSubmit = useCallback(() => {
-    dispatch(changePasswordThunk(password))
-      .unwrap()
-      .then(() => {
-        setIsOpenModal(false)
-      })
-  }, [dispatch, password])
+  const handleChangePasswordSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      dispatch(changePasswordThunk(password))
+        .unwrap()
+        .then(() => {
+          setIsOpenModal(false)
+        })
+    },
+    [dispatch, password]
+  )
 
   const handleChangePassword = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +53,7 @@ const Profile: FC = () => {
     [setPassword]
   )
   const handleOpenModal = useCallback(() => setIsOpenModal(true), [])
-  const hanldeCloseModal = useCallback(() => setIsOpenModal(false), [])
+  const handleCloseModal = useCallback(() => setIsOpenModal(false), [])
   const handleUploadFile = useCallback(() => {
     if (inputRef.current) {
       inputRef.current.click()
@@ -86,7 +97,7 @@ const Profile: FC = () => {
         password={password}
         handleChangePassword={handleChangePassword}
         error={error}
-        hanldeCloseModal={hanldeCloseModal}
+        handleCloseModal={handleCloseModal}
       />
     </ContentLayout>
   )

@@ -1,3 +1,5 @@
+import { ValidationRule } from '../../../validation-rules'
+
 export type EditTextFieldType = {
   value: string | undefined
   callback?: (value: string) => void
@@ -6,4 +8,5 @@ export type EditTextFieldType = {
   position?: 'end' | 'start'
   name: string
   label?: string
+  validationRules?: ValidationRule[]
 }

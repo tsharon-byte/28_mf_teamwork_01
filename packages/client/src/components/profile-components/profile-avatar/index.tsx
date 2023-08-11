@@ -21,10 +21,7 @@ export const ProfileAvatar: FC<ProfileAvatarType> = memo(
           <>
             <FileUploadIcon
               onClick={handleUploadFile}
-              sx={{
-                cursor: 'pointer',
-                ':hover': { color: '#FCD448' },
-              }}
+              className={styles.icon}
             />
             <input
               className={styles.input}
@@ -36,23 +33,11 @@ export const ProfileAvatar: FC<ProfileAvatarType> = memo(
           </>
         )}
         <Avatar
-          sx={{
-            width: 150,
-            height: 150,
-            bgcolor: '#FFFFFF',
-            ':hover': { bgcolor: '#FCD448' },
-          }}
+          className={styles.avatar}
           sizes="md"
           alt={user.first_name}
           src={user.avatar && makeResourcePath(user.avatar)}></Avatar>
-        {isHoverAvatar && (
-          <DeleteOutlineIcon
-            sx={{
-              cursor: 'pointer',
-              ':hover': { color: '#FCD448' },
-            }}
-          />
-        )}
+        {isHoverAvatar && <DeleteOutlineIcon className={styles.icon} />}
       </div>
     )
   })

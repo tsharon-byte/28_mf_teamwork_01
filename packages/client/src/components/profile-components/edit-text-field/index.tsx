@@ -22,6 +22,7 @@ export const EditTextField: FC<EditTextFieldType> = memo(
     position = 'end',
     label,
     name,
+    validationRules,
   }) => {
     const [currentValue, setCurrentValue] = useState<string>(value)
     const [isEditing, setIsEditing] = useState(false)
@@ -41,10 +42,10 @@ export const EditTextField: FC<EditTextFieldType> = memo(
       ),
       handleEditMode: useCallback(() => {
         setIsEditing(prevIsEditing => !prevIsEditing)
-        if (textFieldRef.current) {
+        if (textFieldRef.current && !isEditing) {
           textFieldRef.current.focus()
         }
-      }, [setIsEditing, textFieldRef]),
+      }, [setIsEditing, textFieldRef, isEditing]),
     }
     return (
       <TextField
@@ -54,6 +55,7 @@ export const EditTextField: FC<EditTextFieldType> = memo(
         label={label}
         value={currentValue}
         onChange={callbacks.hanldeChange}
+        validationRules={validationRules}
         InputProps={{
           endAdornment: (
             <InputAdornment

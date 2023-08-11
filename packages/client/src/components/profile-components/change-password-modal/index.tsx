@@ -14,21 +14,18 @@ export const ChangePasswordModal: FC<ChangePasswordModalType> = memo(
     password,
     handleChangePassword,
     error,
-    hanldeCloseModal,
+    handleCloseModal,
   }) => {
     const formRef = useRef<HTMLFormElement>(null)
     return (
-      <Modal open={isOpenModal} onClose={hanldeCloseModal}>
+      <Modal open={isOpenModal} onClose={handleCloseModal}>
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Box className={styles.modal__box}>
+          <Box className={styles.box}>
             <Typography variant="h5">Изменение пароля</Typography>
-            <CloseIcon
-              onClick={hanldeCloseModal}
-              className={styles.modal__close_button}
-            />
+            <CloseIcon onClick={handleCloseModal} className={styles.close} />
           </Box>
           <TextField
-            className={styles.modal__text_field}
+            className={styles.field}
             label="Старый пароль"
             name="oldPassword"
             value={password.oldPassword}
@@ -38,7 +35,7 @@ export const ChangePasswordModal: FC<ChangePasswordModalType> = memo(
             required
           />
           <TextField
-            className={styles.modal__text_field}
+            className={styles.field}
             label="Новый пароль"
             name="newPassword"
             value={password.newPassword}
@@ -50,19 +47,16 @@ export const ChangePasswordModal: FC<ChangePasswordModalType> = memo(
           <Typography variant="body1" color="error">
             {error?.message}
           </Typography>
-          <Box className={styles.modal__box}>
+          <Box className={styles.box}>
             <Button
               variant="contained"
               color="secondary"
               type="button"
-              className={styles.modal__button}
-              onClick={hanldeCloseModal}>
+              className={styles.button}
+              onClick={handleCloseModal}>
               Отмена
             </Button>
-            <Button
-              variant="contained"
-              type="submit"
-              className={styles.modal__button}>
+            <Button variant="contained" type="submit" className={styles.button}>
               Изменить пароль
             </Button>
           </Box>
