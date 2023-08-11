@@ -105,6 +105,7 @@ const Bomberman: FC = () => {
   return (
     <div className="bomberman">
       <canvas
+        data-testid="canvas"
         ref={ref}
         width={BOX_SIZE * (GAME_COLUMNS + 1)}
         height={BOX_SIZE * (GAME_ROWS + 1)}
