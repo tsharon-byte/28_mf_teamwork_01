@@ -24,7 +24,7 @@ const Page500: FC = () => {
           Internal Server Error
         </Typography>
       </Box>
-      <StyledLink href="/" text="Вернуться в главное меню" />
+      <StyledLink to="/" text="Вернуться в главное меню" />
     </Box>
   )
 }

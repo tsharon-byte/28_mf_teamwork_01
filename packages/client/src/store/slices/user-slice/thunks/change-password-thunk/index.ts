@@ -17,9 +17,15 @@ const changePasswordThunk = createAsyncThunk(
       const errorMessage = (error as IErrorChangePassword)?.response?.data
         ?.reason
       if (errorMessage === 'Password is incorrect') {
-        return thunkAPI.rejectWithValue('Введен неверный пароль')
+        return thunkAPI.rejectWithValue({
+          status: 401,
+          message: 'Введен неверный пароль',
+        })
       } else {
-        return thunkAPI.rejectWithValue('Произошла ошибка')
+        return thunkAPI.rejectWithValue({
+          status: 500,
+          message: 'Произошла ошибка',
+        })
       }
     }
   }

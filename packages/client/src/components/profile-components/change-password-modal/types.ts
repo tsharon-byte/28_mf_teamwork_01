@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { IPasswordData } from '../../../store/slices/user-slice/types'
+import { IError, IPasswordData } from '../../../store/slices/user-slice/types'
 import { Nullable } from '../../../types'
 
 export type ChangePasswordModalType = {
@@ -7,6 +7,6 @@ export type ChangePasswordModalType = {
   handleSubmit: () => void
   password: IPasswordData
   handleChangePassword: (e: ChangeEvent<HTMLInputElement>) => void
-  error: Nullable<string>
+  error: Nullable<IError>
   hanldeCloseModal: () => void
 }

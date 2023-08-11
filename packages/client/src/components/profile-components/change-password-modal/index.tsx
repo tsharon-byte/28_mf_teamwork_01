@@ -1,5 +1,5 @@
 import { Modal, Box, Typography, Button } from '@mui/material'
-import React, { memo, FC, forwardRef, useRef } from 'react'
+import React, { memo, FC, useRef } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { passwordValidationRule } from '../../../validation-rules'
 import { ChangePasswordModalType } from './types'
@@ -48,7 +48,7 @@ export const ChangePasswordModal: FC<ChangePasswordModalType> = memo(
             required
           />
           <Typography variant="body1" color="error">
-            {error}
+            {error?.message}
           </Typography>
           <Box className={styles.modal__box}>
             <Button

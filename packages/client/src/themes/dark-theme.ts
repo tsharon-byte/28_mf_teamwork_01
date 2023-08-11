@@ -167,6 +167,17 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        h1: {
+          color: '#FFFFFF',
+          fontFamily: 'Notable',
+          fontSize: '128px',
+          fontWeight: 400,
+          padding: 16,
+        },
+      },
+    },
   },
 })
 
