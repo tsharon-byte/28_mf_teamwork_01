@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IUserState, IUser, IError } from './types'
-import { retrieveUserThunk } from './thunks'
+import {
+  retrieveUserThunk,
+  changeAvatarThunk,
+  changePasswordThunk,
+} from './thunks'
 
 const initialState: IUserState = {
   loading: false,
@@ -32,6 +36,29 @@ const userSlice = createSlice({
         (state, action: PayloadAction<IError>) => {
           state.loading = false
           state.user = null
+          state.error = action.payload
+        }
+      )
+      .addCase(
+        changeAvatarThunk.fulfilled.type,
+        (state, action: PayloadAction<IUser>) => {
+          if (state.user) {
+            state.user.avatar = action.payload.avatar
+          }
+        }
+      )
+      .addCase(changePasswordThunk.pending, state => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(changePasswordThunk.fulfilled, state => {
+        state.loading = false
+        state.error = null
+      })
+      .addCase(
+        changePasswordThunk.rejected.type,
+        (state, action: PayloadAction<IError>) => {
+          state.loading = false
           state.error = action.payload
         }
       )

@@ -3,5 +3,5 @@ export interface ISWEvents extends Event {
   request: string
   respondWith: (arg: Promise<Response>) => void
 }
-  
+
 export type Nullable<T> = T | null

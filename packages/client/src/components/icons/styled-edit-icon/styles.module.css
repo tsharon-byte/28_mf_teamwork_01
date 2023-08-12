@@ -1,0 +1,8 @@
+.icon {
+  transition: color 0.45s ease-out;
+}
+
+.icon:hover {
+  cursor: pointer;
+  transition: color 0.25s ease-in;
+}
