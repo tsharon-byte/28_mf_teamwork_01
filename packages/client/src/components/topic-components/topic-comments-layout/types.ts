@@ -1,7 +1,14 @@
 import { ReactNode } from 'react'
 
 export type TopicCommentsLayoutType = {
-  comments: { id: string; text: string }[]
+  comments: CommentType[]
   header: ReactNode
   footer: ReactNode
+}
+
+export type CommentType = {
+  id: string
+  text: string
+  author: string
+  date: string
 }

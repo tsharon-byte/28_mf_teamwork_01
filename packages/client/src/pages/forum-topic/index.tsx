@@ -14,13 +14,16 @@ import { retrieveChatsThunk } from '../../store/slices/forum-slice/thunks'
 import { CircularProgress, Typography } from '@mui/material'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
 import { TopicCommentstLayout } from '../../components/topic-components/topic-comments-layout'
+import { useUser } from '../../hooks'
+import { CommentType } from '../../components/topic-components/topic-comments-layout/types'
 
 const ForumTopic: FC = () => {
   const params = useParams()
   const { topicId } = params
   const { chats, loading, currentChat } = useAppSelector(forumSelector)
+  const { user } = useUser()
   const [message, setMessage] = useState('')
-  const [comments, setComments] = useState<{ id: string; text: string }[]>([])
+  const [comments, setComments] = useState<CommentType[]>([])
   const dispatch = useAppDispatch()
   useEffect(() => {
     if (chats.length === 0) {
@@ -41,16 +44,28 @@ const ForumTopic: FC = () => {
   )
   const handleKeyDown: KeyboardEventHandler = useCallback(
     e => {
-      // if (e.key === 'Enter') {
-      //   e.preventDefault()
-      //   handleAddComment()
-      // }
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault()
+        handleAddComment()
+      }
     },
     [comments, message]
   )
   const handleAddComment = useCallback(() => {
-    if (message.trim() !== '') {
-      const newComment = { id: crypto.randomUUID(), text: message }
+    if (message.trim() !== '' && user) {
+      const date = new Date().toLocaleString('ru-Ru', {
+        hour: 'numeric',
+        minute: 'numeric',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+      const newComment = {
+        id: crypto.randomUUID(),
+        text: message,
+        author: user.login || '',
+        date,
+      }
       setComments([...comments, newComment])
       setMessage('')
     }

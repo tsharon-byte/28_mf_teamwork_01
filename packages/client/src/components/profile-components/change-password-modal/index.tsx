@@ -1,6 +1,6 @@
 import { Modal, Box, Typography, Button } from '@mui/material'
 import React, { memo, FC, useRef } from 'react'
-import CloseIcon from '@mui/icons-material/Close'
+import { CloseIcon } from '../../icons/close-icon'
 import { passwordValidationRule } from '../../../validation-rules'
 import { ChangePasswordModalType } from './types'
 import styles from './styles.module.css'
@@ -22,7 +22,7 @@ export const ChangePasswordModal: FC<ChangePasswordModalType> = memo(
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Box className={styles.box}>
             <Typography variant="h5">Изменение пароля</Typography>
-            <CloseIcon onClick={handleCloseModal} className={styles.close} />
+            <CloseIcon callback={handleCloseModal} />
           </Box>
           <TextField
             className={styles.field}

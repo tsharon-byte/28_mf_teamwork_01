@@ -1,12 +1,14 @@
-import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react'
-import { ContentLayout } from '../../layouts'
 import {
-  Button,
-  CircularProgress,
-  InputAdornment,
-  TextField,
-} from '@mui/material'
-import { Add } from '@mui/icons-material'
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import { ContentLayout } from '../../layouts'
+import { Button, CircularProgress, Typography } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   createChatThunk,
@@ -15,11 +17,12 @@ import {
 import { forumSelector } from '../../store/slices/forum-slice/selectors'
 import StyledLink from '../../components/styled-link'
 import { ROUTE_PATH } from '../../utils/constants'
+import { CreateTopicModal } from '../../components/forum-components/create-topic-modal'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
-  const { chats, loading } = useAppSelector(forumSelector)
-  const [isNewInput, setIsNewInput] = useState(false)
+  const { chats, loading, error } = useAppSelector(forumSelector)
+  const [isOpenModal, setIsOpenModal] = useState(false)
   const [chatName, setChatName] = useState('')
   useEffect(() => {
     dispatch(retrieveChatsThunk())
@@ -34,25 +37,31 @@ const Forum: FC = () => {
   )
 
   const handleCancel = useCallback(() => {
-    setIsNewInput(false)
+    setIsOpenModal(false)
     setChatName('')
-  }, [setIsNewInput, setChatName])
+  }, [setIsOpenModal, setChatName])
 
-  const handleCreateChat = useCallback(() => {
-    if (chatName.trim() !== '') {
-      dispatch(createChatThunk(chatName))
-        .then(() => {
-          setChatName('')
-          setIsNewInput(false)
-        })
-        .then(() => {
-          dispatch(retrieveChatsThunk())
-        })
-    }
-  }, [chatName])
-
+  const handleCreateChatSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      if (chatName.trim() !== '') {
+        dispatch(createChatThunk(chatName))
+          .then(() => {
+            setChatName('')
+            setIsOpenModal(false)
+          })
+          .then(() => {
+            dispatch(retrieveChatsThunk())
+          })
+      }
+    },
+    [chatName]
+  )
+  const handleOpenModal = () => setIsOpenModal(true)
+  const handleCloseModal = useCallback(() => setIsOpenModal(false), [])
   return (
-    <ContentLayout>
+    <ContentLayout
+      header={<Typography variant="h1">Список топиков</Typography>}>
       {loading ? (
         <CircularProgress />
       ) : (
@@ -69,41 +78,19 @@ const Forum: FC = () => {
           })}
         </>
       )}
-      {!isNewInput && (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => setIsNewInput(true)}>
+      {!isOpenModal && (
+        <Button variant="contained" color="secondary" onClick={handleOpenModal}>
           Создать топик
         </Button>
       )}
-      {isNewInput && (
-        <>
-          <TextField
-            sx={{ width: 600 }}
-            onChange={handleChange}
-            label="Создать новый топик"
-            focused
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Add
-                    sx={{
-                      cursor: 'pointer',
-                      color: '#FFFFFF',
-                      ':hover': '#FCD448',
-                    }}
-                    onClick={handleCreateChat}
-                  />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button variant="contained" color="secondary" onClick={handleCancel}>
-            Отменить
-          </Button>
-        </>
-      )}
+      <CreateTopicModal
+        isOpenModal={isOpenModal}
+        handleCancel={handleCancel}
+        handleCloseModal={handleCloseModal}
+        handleChange={handleChange}
+        handleCreateChatSubmit={handleCreateChatSubmit}
+        error={error}
+      />
     </ContentLayout>
   )
 }

@@ -175,6 +175,7 @@ const darkTheme = createTheme({
           fontSize: '128px',
           fontWeight: 400,
           padding: 16,
+          textAlign: 'center',
         },
       },
     },
