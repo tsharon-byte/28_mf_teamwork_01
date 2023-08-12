@@ -5,14 +5,14 @@ export enum IconPosition {
   right = 'right',
 }
 
-type TWithProps = {
+type TWithIconProps = {
   icon: ReactNode
   iconPosition?: keyof typeof IconPosition
   rootClassName?: string
 }
 
 type TWithIconHOC = <P>() => (
-  WrappedComponent: FC<Omit<TWithProps & P, keyof TWithProps>>
-) => (props: TWithProps & P) => ReactElement
+  WrappedComponent: FC<Omit<TWithIconProps & P, keyof TWithIconProps>>
+) => (props: TWithIconProps & P) => ReactElement
 
 export default TWithIconHOC

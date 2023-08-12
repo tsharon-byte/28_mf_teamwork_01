@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.sentence {
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+.button {
+  font-size: 16px !important;
+  line-height: 20px !important;
+  color: #ffffff !important;
+  text-transform: none !important;
+}

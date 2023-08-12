@@ -139,6 +139,45 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#ffffff80',
+        },
+      },
+    },
+    MuiModal: {
+      styleOverrides: {
+        root: {
+          form: {
+            backgroundColor: '#171813',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid #ffffff',
+            borderRadius: '8px',
+            maxHeight: 'max-content',
+            minWidth: '670px',
+            padding: '40px 24px',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          },
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h1: {
+          color: '#FFFFFF',
+          fontFamily: 'Notable',
+          fontSize: '128px',
+          fontWeight: 400,
+          padding: 16,
+        },
+      },
+    },
     MuiPaper: {
       styleOverrides: {
         root: {

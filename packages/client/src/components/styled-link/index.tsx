@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { StyledLinkProps } from './type'
+import { StyledLinkProps } from './types'
 import styles from './styles.module.css'
 import { Typography } from '@mui/material'
 import { Link } from 'react-router-dom'

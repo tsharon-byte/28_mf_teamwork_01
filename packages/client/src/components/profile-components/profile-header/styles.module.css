@@ -1,0 +1,18 @@
+.header {
+  height: 62px;
+  width: 100%;
+  display: flex;
+  padding: 0px 29px 42px 29px;
+}
+
+.arrow {
+  width: 40px !important;
+  height: 40px !important;
+  transition: 0.45s ease-out;
+}
+
+.arrow:hover {
+  transition: 0.25s ease-in;
+  cursor: pointer;
+  opacity: 0.5;
+}
