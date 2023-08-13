@@ -30,7 +30,11 @@ const StyledDialog = ({
       open={open}>
       <DialogTitle>
         {title}
-        <IconButton aria-label="close" onClick={handleClose} className="close">
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          className="close"
+          size="large">
           <CloseIcon />
         </IconButton>
       </DialogTitle>

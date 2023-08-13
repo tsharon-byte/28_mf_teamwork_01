@@ -56,6 +56,21 @@ const darkTheme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        '*::-webkit-scrollbar': {
+          width: '4px',
+          height: '4px',
+        },
+        '*::-webkit-scrollbar-track': {
+          margin: '16px 0',
+        },
+        '*::-webkit-scrollbar-thumb': {
+          backgroundColor: 'white',
+          borderRadius: '1px',
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
@@ -73,7 +88,25 @@ const darkTheme = createTheme({
     MuiDialog: {
       styleOverrides: {
         paper: {
-          color: 'black',
+          backgroundColor: '#313131',
+          minWidth: '600px',
+        },
+      },
+    },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          color: '#ffd700',
+          fontFamily: 'Notable Regular',
+          fontSize: '32px',
+        },
+      },
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#212121',
+          color: '#afafaf',
         },
       },
     },

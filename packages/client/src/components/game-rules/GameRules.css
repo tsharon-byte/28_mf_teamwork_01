@@ -15,16 +15,17 @@
 }
 
 .paper {
-  min-width: 50%;
+  min-width: 324px;
   height: 233px;
-  width: 350px;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: #afafaf solid 5px;
 }
 
 .poster {
-  width: 100%;
+  width: 350px;
+  overflow: hidden;
   object-fit: cover;
 }

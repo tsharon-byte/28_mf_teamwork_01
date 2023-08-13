@@ -1,7 +1,7 @@
 export const gameRulesArray = [
   {
     id: '1',
-    image: '/img/b_hero.png',
+    image: '/img/b_hero1.png',
     alt: 'Картинка Бомбермена',
     title: 'Бомбардировщик - главный герой игры.',
   },
