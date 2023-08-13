@@ -24,28 +24,23 @@ const StyledDialog = ({
   children,
 }: StyledDialogProps) => {
   return (
-    <div>
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}>
-        <DialogTitle>
-          {title}
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            className="close">
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent dividers>{children}</DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Понятно
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby="customized-dialog-title"
+      open={open}>
+      <DialogTitle>
+        {title}
+        <IconButton aria-label="close" onClick={handleClose} className="close">
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent dividers>{children}</DialogContent>
+      <DialogActions>
+        <Button autoFocus onClick={handleClose}>
+          Понятно
+        </Button>
+      </DialogActions>
+    </Dialog>
   )
 }
 export default StyledDialog
