@@ -1,0 +1,6 @@
+.close {
+  position: absolute !important;
+  right: 8px;
+  top: 8px !important;
+  color: #ffd700 !important;
+}
