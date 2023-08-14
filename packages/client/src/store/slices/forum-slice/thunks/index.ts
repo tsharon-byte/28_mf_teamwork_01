@@ -1,4 +1,4 @@
-import retrieveChatsThunk from './retrieve-chats-thunk/index'
+import getChatListThunk from './get-chat-list-thunk/index'
 import createChatThunk from './create-chat-thunk'
 
-export { retrieveChatsThunk, createChatThunk }
+export { getChatListThunk, createChatThunk }

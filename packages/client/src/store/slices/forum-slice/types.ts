@@ -1,3 +1,13 @@
+import { Nullable } from '../../../types'
+import { IError } from '../user-slice/types'
+
+export type ForumInitialState = {
+  chats: ChatType[] | []
+  loading: boolean
+  error: Nullable<IError>
+  currentChat: Nullable<ChatType>
+}
+
 export type ChatType = {
   id: number
   title: string

@@ -7,30 +7,25 @@ import {
   useState,
 } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { forumSelector } from '../../store/slices/forum-slice/selectors'
+import { useAppDispatch } from '../../store/hooks'
 import { getCurrentChat } from '../../store/slices/forum-slice/actions'
-import { retrieveChatsThunk } from '../../store/slices/forum-slice/thunks'
 import { CircularProgress, Typography } from '@mui/material'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
-import { TopicCommentstLayout } from '../../components/topic-components/topic-comments-layout'
+import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
 import { useUser } from '../../hooks'
-import { CommentType } from '../../components/topic-components/topic-comments-layout/types'
+import { CommentType } from '../../components/topic-components/topic-comment-list/types'
+import { useChats } from '../../hooks'
 
 const ForumTopic: FC = () => {
   const params = useParams()
   const { topicId } = params
-  const { chats, loading, currentChat } = useAppSelector(forumSelector)
+  const { chats, loading, currentChat } = useChats()
   const { user } = useUser()
   const [message, setMessage] = useState('')
   const [comments, setComments] = useState<CommentType[]>([])
   const dispatch = useAppDispatch()
   useEffect(() => {
-    if (chats.length === 0) {
-      dispatch(retrieveChatsThunk()).then(() => {
-        dispatch(getCurrentChat(topicId))
-      })
-    } else {
+    if (chats.length !== 0 && topicId) {
       dispatch(getCurrentChat(topicId))
     }
   }, [chats, topicId, dispatch])
@@ -75,7 +70,7 @@ const ForumTopic: FC = () => {
     return null
   }
   return (
-    <TopicCommentstLayout
+    <TopicCommentList
       comments={comments}
       header={
         loading ? (

@@ -2,16 +2,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 600px;
+  width: 100%;
 }
 
 .field {
-  min-width: 600px;
+  width: 100%;
 }
 
 .buttons {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 12px;
+}
+
+.button {
+  min-width: 285px !important;
+  margin: 0 auto !important;
 }

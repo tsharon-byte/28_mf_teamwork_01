@@ -7,5 +7,5 @@ export type CreateTopicModalType = {
   handleCreateChatSubmit: (e: FormEvent<HTMLFormElement>) => void
   handleCancel: () => void
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void
-  error: Nullable<string>
+  error: Nullable<string | undefined>
 }

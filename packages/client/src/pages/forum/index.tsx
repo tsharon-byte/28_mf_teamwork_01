@@ -1,32 +1,18 @@
-import {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react'
 import { ContentLayout } from '../../layouts'
 import { Button, CircularProgress, Typography } from '@mui/material'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import {
-  createChatThunk,
-  retrieveChatsThunk,
-} from '../../store/slices/forum-slice/thunks'
-import { forumSelector } from '../../store/slices/forum-slice/selectors'
+import { useAppDispatch } from '../../store/hooks'
+import { createChatThunk } from '../../store/slices/forum-slice/thunks'
 import StyledLink from '../../components/styled-link'
 import { ROUTE_PATH } from '../../utils/constants'
 import { CreateTopicModal } from '../../components/forum-components/create-topic-modal'
+import { useChats } from '../../hooks'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
-  const { chats, loading, error } = useAppSelector(forumSelector)
+  const { chats, loading, error } = useChats()
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [chatName, setChatName] = useState('')
-  useEffect(() => {
-    dispatch(retrieveChatsThunk())
-  }, [dispatch])
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,14 +31,10 @@ const Forum: FC = () => {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       if (chatName.trim() !== '') {
-        dispatch(createChatThunk(chatName))
-          .then(() => {
-            setChatName('')
-            setIsOpenModal(false)
-          })
-          .then(() => {
-            dispatch(retrieveChatsThunk())
-          })
+        dispatch(createChatThunk(chatName)).then(() => {
+          setChatName('')
+          setIsOpenModal(false)
+        })
       }
     },
     [chatName]
@@ -89,7 +71,7 @@ const Forum: FC = () => {
         handleCloseModal={handleCloseModal}
         handleChange={handleChange}
         handleCreateChatSubmit={handleCreateChatSubmit}
-        error={error}
+        error={error?.message}
       />
     </ContentLayout>
   )

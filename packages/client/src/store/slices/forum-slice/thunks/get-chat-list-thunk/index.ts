@@ -4,14 +4,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { ChatType } from '../../types'
 import { isAxiosError } from 'axios'
 
-const createChatThunk = createAsyncThunk(
-  '/chats/createChatThunk',
-  async (title: string, thunkAPI) => {
+const getChatListThunk = createAsyncThunk(
+  '/chats/getChatListThunk',
+  async (_, thunkAPI) => {
     try {
-      console.log(title)
-      const response = await axiosInstance.post<ChatType[]>(CHAT_LIST_URL, {
-        title,
-      })
+      const response = await axiosInstance.get<ChatType[]>(CHAT_LIST_URL)
       return response.data
     } catch (error) {
       if (isAxiosError(error)) {
@@ -21,10 +18,10 @@ const createChatThunk = createAsyncThunk(
         })
       }
       return thunkAPI.rejectWithValue({
-        message: 'Не удалось создать чат',
+        message: 'Не удалось получить список чатов',
       })
     }
   }
 )
 
-export default createChatThunk
+export default getChatListThunk

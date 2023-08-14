@@ -1,10 +1,10 @@
 import React, { memo, FC, useRef, useEffect } from 'react'
-import { TopicCommentsLayoutType } from './types'
+import { TopicCommentListType } from './types'
 import styles from './styles.module.css'
 import { ContentLayout } from '../../../layouts'
 import { TopicCommentItem } from '../topic-comment-item'
 
-export const TopicCommentstLayout: FC<TopicCommentsLayoutType> = memo(
+export const TopicCommentList: FC<TopicCommentListType> = memo(
   ({ comments, header, footer }) => {
     const endCommentRef = useRef<HTMLDivElement>(null)
     useEffect(() => {

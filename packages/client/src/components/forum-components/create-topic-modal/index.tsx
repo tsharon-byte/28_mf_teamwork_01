@@ -1,10 +1,11 @@
-import React, { FC, memo, useRef } from 'react'
+import React, { FC, memo } from 'react'
 import { Box, Button, Modal, Typography } from '@mui/material'
 import Form from '../../form'
 import { CreateTopicModalType } from './types'
-import { CloseIcon } from '../../icons/close-icon'
 import TextField from '../../text-field'
 import styles from './styles.module.css'
+import IconButton from '@mui/material/IconButton'
+import { Close } from '@mui/icons-material'
 
 export const CreateTopicModal: FC<CreateTopicModalType> = memo(
   ({
@@ -15,31 +16,35 @@ export const CreateTopicModal: FC<CreateTopicModalType> = memo(
     handleChange,
     error,
   }) => {
-    const formRef = useRef<HTMLFormElement>(null)
     return (
       <Modal open={isOpenModal} onClose={handleCloseModal}>
-        <Form ref={formRef} onSubmit={handleCreateChatSubmit}>
+        <Form onSubmit={handleCreateChatSubmit}>
           <Box className={styles.box}>
-            <Typography variant="h5">Изменение пароля</Typography>
-            <CloseIcon callback={handleCloseModal} />
+            <Typography variant="h5">Создание темы для обсуждения</Typography>
+            <IconButton size="large" color="inherit" onClick={handleCloseModal}>
+              <Close />
+            </IconButton>
           </Box>
           <TextField
             className={styles.field}
             onChange={handleChange}
-            label="Создать новый топик"
+            label="Создание темы"
             focused
           />
-          <Typography variant="body1" color="error">
-            {error}
-          </Typography>
+          {error && (
+            <Typography variant="body1" color="error">
+              {error}
+            </Typography>
+          )}
           <Box className={styles.buttons}>
             <Button
               variant="contained"
               color="secondary"
-              onClick={handleCancel}>
+              onClick={handleCancel}
+              className={styles.button}>
               Отменить
             </Button>
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" className={styles.button}>
               Создать топик
             </Button>
           </Box>

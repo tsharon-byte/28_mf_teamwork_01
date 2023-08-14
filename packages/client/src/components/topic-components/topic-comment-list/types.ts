@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export type TopicCommentsLayoutType = {
+export type TopicCommentListType = {
   comments: CommentType[]
   header: ReactNode
   footer: ReactNode

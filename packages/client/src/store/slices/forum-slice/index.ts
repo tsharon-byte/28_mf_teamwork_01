@@ -1,28 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { retrieveChatsThunk, createChatThunk } from './thunks'
-import { ChatType } from './types'
-import { Nullable } from '../../../types'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { getChatListThunk, createChatThunk } from './thunks'
+import { ChatType, ForumInitialState } from './types'
+import { IError } from '../user-slice/types'
 
-interface InitialState {
-  chats: ChatType[] | []
-  loading: boolean
-  error: Nullable<string>
-  success: boolean
-  currentChat: Nullable<ChatType>
-}
-
-const initialState: InitialState = {
+const initialState: ForumInitialState = {
   chats: [],
   loading: false,
   error: null,
-  success: false,
   currentChat: null,
 }
+
 const forumSlice = createSlice({
   name: 'forum',
   initialState,
   reducers: {
-    getCurrentChat(state, { payload }) {
+    getCurrentChat(state, { payload }: PayloadAction<string>) {
       const currentId = Number(payload)
       const chat = state.chats.find(chat => chat.id === currentId)
       if (chat) {
@@ -32,30 +24,36 @@ const forumSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(retrieveChatsThunk.fulfilled, (state, { payload }) => {
-        state.chats = payload
-        state.loading = false
-      })
-      .addCase(retrieveChatsThunk.pending, state => {
+      .addCase(
+        getChatListThunk.fulfilled,
+        (state, { payload }: PayloadAction<ChatType[]>) => {
+          state.chats = payload
+          state.loading = false
+        }
+      )
+      .addCase(getChatListThunk.pending, state => {
         state.loading = true
       })
-      .addCase(retrieveChatsThunk.rejected, (state, { error }) => {
-        state.loading = false
-        if (error) {
-          state.error = error as string
+      .addCase(
+        getChatListThunk.rejected.type,
+        (state, { payload }: PayloadAction<IError>) => {
+          state.loading = false
+          state.error = payload
         }
-      })
+      )
       .addCase(createChatThunk.fulfilled, state => {
         state.loading = false
-        state.success = true
       })
       .addCase(createChatThunk.pending, state => {
         state.loading = true
       })
-      .addCase(createChatThunk.rejected, (state, { payload }) => {
-        state.loading = false
-        state.error = payload as string
-      })
+      .addCase(
+        createChatThunk.rejected.type,
+        (state, { payload }: PayloadAction<IError>) => {
+          state.loading = false
+          state.error = payload
+        }
+      )
   },
 })
 
