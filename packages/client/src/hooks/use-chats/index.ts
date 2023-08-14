@@ -20,7 +20,7 @@ const useChats = () => {
           }
         })
     }
-  }, [chats, dispatch, error])
+  }, [])
 
   return {
     chats,
