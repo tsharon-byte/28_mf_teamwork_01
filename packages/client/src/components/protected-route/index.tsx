@@ -1,31 +1,12 @@
-import { getUser } from '../../api/auth-api'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, Navigate } from 'react-router-dom'
+import { FC } from 'react'
+import { useUser } from '../../hooks'
 import { ROUTE_PATH } from '../../utils/constants'
-import { FC, useEffect } from 'react'
-import { AxiosError } from 'axios'
 
 const ProtectedRoute: FC = () => {
-  const navigate = useNavigate()
+  const { user } = useUser()
 
-  useEffect(() => {
-    const request = async () => {
-      try {
-        await getUser()
-      } catch (error) {
-        if (
-          error instanceof AxiosError &&
-          error.response &&
-          error.response.data.reason === 'Cookie is not valid'
-        ) {
-          navigate(ROUTE_PATH.LOGIN)
-        }
-      }
-    }
-
-    request()
-  }, [])
-
-  return <Outlet />
+  return user ? <Outlet /> : <Navigate to={ROUTE_PATH.LOGIN} replace />
 }
 
 export default ProtectedRoute

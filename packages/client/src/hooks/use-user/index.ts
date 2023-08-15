@@ -8,8 +8,10 @@ const useUser = () => {
   const { loading, user, error } = useAppSelector(userSelector)
 
   useEffect(() => {
-    dispatch(retrieveUserThunk())
-  }, [])
+    if (!user) {
+      dispatch(retrieveUserThunk())
+    }
+  }, [user])
 
   return {
     loading,
