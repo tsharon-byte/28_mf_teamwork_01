@@ -21,12 +21,16 @@ class HeroSprite extends Sprite {
   private setLevel: (
     value: ((prevState: string[]) => string[]) | string[]
   ) => void
+  successCallback: () => void
+  gameOverCallback: () => void
 
   constructor(props: HeroSpriteOptions) {
     super(props)
     this._setCurrentPos = props.setCurrentPos
     this.level = props.level
     this.setLevel = props.setLevel
+    this.successCallback = props.successCallback
+    this.gameOverCallback = props.gameOverCallback
   }
 
   drawFlame = (x: number, y: number) => {
@@ -90,8 +94,7 @@ class HeroSprite extends Sprite {
           (bombX - 1 <= this.dx && bombX + 1 >= this.dx && bombY === this.dy) ||
           (bombY - 1 <= this.dy && bombY + 1 >= this.dy && bombX === this.dx)
         ) {
-          alert('game over!')
-          window.location.reload()
+          this.gameOverCallback()
         }
       }, FLAME_TIMEOUT)
     }, BOMB_TIMEOUT)
@@ -116,8 +119,7 @@ class HeroSprite extends Sprite {
     }
     if (portalIsFound(this.level, newPos)) {
       setTimeout(() => {
-        alert('Победа!')
-        window.location.reload()
+        this.successCallback()
       }, FINISH_TIMEOUT)
     }
     if (noCollision(this.level, newPos)) {

@@ -49,7 +49,9 @@ const Bomberman: FC = () => {
           setLevel,
           currentPos[0],
           currentPos[1],
-          setCurrentPos
+          setCurrentPos,
+          successCallback,
+          gameOverCallback
         )
       )
       setEvil1(
@@ -101,6 +103,17 @@ const Bomberman: FC = () => {
   const stopGame = () => {
     window.location.reload()
     stopMusic()
+  }
+
+  const successCallback = () => {
+    stopMusic()
+    alert('Победа!')
+    window.location.reload()
+  }
+  const gameOverCallback = () => {
+    stopMusic()
+    alert('Вы убиты!')
+    window.location.reload()
   }
   return (
     <div className="bomberman">
