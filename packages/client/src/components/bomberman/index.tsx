@@ -18,6 +18,8 @@ import {
 import HeroSprite from '../../utils/animation/HeroSprite'
 import Sprite from '../../utils/animation/Sprite'
 import useFullScreen from '../../utils/useFullScreen'
+import StyledDialog from '../dialog/StyledDialog'
+import EndGame from '../end-game/EndGame'
 
 const BETTY_SPRITE = 'img/betty.png'
 const BETTY2_SPRITE = 'img/betty2.png'
@@ -35,6 +37,9 @@ const Bomberman: FC = () => {
     BOX_SIZE,
     BOX_SIZE,
   ])
+
+  const [open, setOpen] = useState<boolean>(false)
+  const [isSuccess, setSuccess] = useState<boolean>(false)
 
   useEffect(() => {
     if (ref.current) {
@@ -107,13 +112,17 @@ const Bomberman: FC = () => {
 
   const successCallback = () => {
     stopMusic()
-    alert('Победа!')
-    window.location.reload()
+    setSuccess(true)
+    setOpen(true)
   }
   const gameOverCallback = () => {
     stopMusic()
-    alert('Вы убиты!')
+    setSuccess(false)
+    setOpen(true)
+  }
+  const handleCloseDialog = () => {
     window.location.reload()
+    setOpen(false)
   }
   return (
     <div className="bomberman">
@@ -135,6 +144,12 @@ const Bomberman: FC = () => {
           {!fullScreenFlag ? <FullscreenIcon /> : <FullscreenExitIcon />}
         </Fab>
       </div>
+      <StyledDialog
+        open={open}
+        title="Игра окончена"
+        handleClose={handleCloseDialog}>
+        <EndGame isSuccess={isSuccess} />
+      </StyledDialog>
     </div>
   )
 }
