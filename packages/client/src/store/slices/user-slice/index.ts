@@ -5,6 +5,11 @@ import {
   changeAvatarThunk,
   changePasswordThunk,
 } from './thunks'
+import {
+  getFromLocalStorage,
+  setToStorage,
+} from '../../../utils/localStorageHelper'
+import { Nullable } from '../../../types'
 
 const initialState: IUserState = {
   loading: false,
@@ -12,14 +17,27 @@ const initialState: IUserState = {
   error: null,
 }
 
+const USER_IN_LOCAL_STORAGE = 'user'
+
+const getUserFromStorage = () => {
+  const state = { ...initialState }
+  state.user = getFromLocalStorage(USER_IN_LOCAL_STORAGE)
+  return state
+}
+
+const setUserToStorage = (user: Nullable<IUser>) => {
+  setToStorage(USER_IN_LOCAL_STORAGE, JSON.stringify(user))
+}
+
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: getUserFromStorage(),
   reducers: {
     resetUser(state) {
       state.loading = initialState.loading
       state.user = initialState.user
       state.error = initialState.error
+      setUserToStorage(state.user)
     },
   },
   extraReducers: builder => {
@@ -28,6 +46,7 @@ const userSlice = createSlice({
         state.loading = true
         state.user = null
         state.error = null
+        setUserToStorage(state.user)
       })
       .addCase(
         retrieveUserThunk.fulfilled.type,
@@ -35,6 +54,7 @@ const userSlice = createSlice({
           state.loading = false
           state.user = action.payload
           state.error = null
+          setUserToStorage(state.user)
         }
       )
       .addCase(
@@ -43,6 +63,7 @@ const userSlice = createSlice({
           state.loading = false
           state.user = null
           state.error = action.payload
+          setUserToStorage(state.user)
         }
       )
       .addCase(
@@ -50,6 +71,7 @@ const userSlice = createSlice({
         (state, action: PayloadAction<IUser>) => {
           if (state.user) {
             state.user.avatar = action.payload.avatar
+            setUserToStorage(state.user)
           }
         }
       )
