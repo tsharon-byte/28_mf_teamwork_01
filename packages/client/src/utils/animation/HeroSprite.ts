@@ -30,7 +30,13 @@ class HeroSprite extends Sprite {
     this.level = props.level
     this.setLevel = props.setLevel
     this.successCallback = props.successCallback
+      ? props.successCallback
+      : // eslint-disable-next-line @typescript-eslint/no-empty-function
+        () => {}
     this.gameOverCallback = props.gameOverCallback
+      ? props.gameOverCallback
+      : // eslint-disable-next-line @typescript-eslint/no-empty-function
+        () => {}
   }
 
   drawFlame = (x: number, y: number) => {

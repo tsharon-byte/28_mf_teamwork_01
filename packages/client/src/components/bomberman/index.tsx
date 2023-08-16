@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 import FullscreenIcon from '@mui/icons-material/Fullscreen'
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
+import VolumeOffIcon from '@mui/icons-material/VolumeOff'
 import './bomberman.css'
 import { Button, Fab } from '@mui/material'
 import {
@@ -91,6 +92,17 @@ const Bomberman: FC = () => {
     // @ts-ignore
     audioRef.current.pause()
   }
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      const audio: HTMLAudioElement = audioRef.current
+      if (audio && audio.paused && audio.readyState != 0) {
+        audio.play()
+      } else {
+        audio.pause()
+        audio.currentTime = 0
+      }
+    }
+  }
 
   const startGame = () => {
     if (bomber) {
@@ -136,6 +148,13 @@ const Bomberman: FC = () => {
       <div className="bomberman__buttons">
         <Button onClick={startGame}>Начать Игру</Button>
         <Button onClick={stopGame}>Окончить Игру</Button>
+        <Button
+          onClick={toggleMusic}
+          aria-label="mute music"
+          color="primary"
+          size="small">
+          <VolumeOffIcon />
+        </Button>
         <Fab
           onClick={toggleFullScreen}
           aria-label="full screen mode"
