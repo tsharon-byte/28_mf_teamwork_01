@@ -1,4 +1,5 @@
 class MockedHeroSprite {}
+
 class MockedSprite {}
 
 import {

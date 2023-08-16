@@ -15,7 +15,7 @@ import { useAuth } from '../../hooks'
 const Login: FC = () => {
   const { login } = useAuth()
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData.entries()) as TLoginData
     login(data)

@@ -45,7 +45,7 @@ const getFromNetwork = (
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(reject, timeout)
 
-    fetch(request).then(res => {
+    fetch(request, { cache: 'no-store' }).then(res => {
       clearTimeout(timeoutId)
 
       const responseClone = res.clone()

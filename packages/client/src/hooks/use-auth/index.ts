@@ -3,61 +3,72 @@ import { useNavigate } from 'react-router-dom'
 import {
   logout as logoutRequest,
   login as loginRequest,
+  registration as registrationRequest,
 } from '../../api/auth-api'
-import { TLoginData } from '../../api/auth-api/type'
+import { TLoginData, TRegistrationData } from '../../api/auth-api/type'
 import { ROUTE_PATH } from '../../utils/constants'
+import { isAxiosError } from 'axios'
+import { toast } from 'react-toastify'
+import { useAppDispatch } from '../../store/hooks'
+import { userSlice } from '../../store/slices'
 
 const useAuth = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  const registration = useCallback(async (data: TRegistrationData) => {
+    try {
+      const response = await registrationRequest(data)
+
+      if (response && response.status === 200) {
+        return navigate(ROUTE_PATH.HOME)
+      }
+    } catch (error) {
+      if (isAxiosError(error) && error.response) {
+        if (error.response.data.reason === 'User already in system') {
+          return navigate(ROUTE_PATH.HOME)
+        } else {
+          toast.error(error.response.data.reason)
+        }
+      }
+    }
+  }, [])
 
   const login = useCallback(async (data: TLoginData) => {
     try {
       const response = await loginRequest(data)
-      switch (response.status) {
-        case 200: {
-          return navigate(ROUTE_PATH.HOME)
-        }
-        case 400: {
-          if (response.data.reason === 'User already in system') {
-            return navigate(ROUTE_PATH.HOME)
-          }
-          throw new Error(`Bad request: ${response.data.reason}`)
-        }
-        case 401: {
-          return navigate(ROUTE_PATH.LOGIN)
-        }
-        case 500: {
-          return navigate(ROUTE_PATH.ERROR)
-        }
-        default: {
-          throw new Error(`Unprocessable response code: ${response.status}`)
-        }
+
+      if (response && response.status === 200) {
+        return navigate(ROUTE_PATH.HOME)
       }
     } catch (error) {
-      console.log(error)
+      if (isAxiosError(error) && error.response) {
+        if (error.response.data.reason === 'User already in system') {
+          return navigate(ROUTE_PATH.HOME)
+        } else {
+          toast.error(error.response.data.reason)
+        }
+      }
     }
   }, [])
 
   const logout = useCallback(async () => {
+    navigate(ROUTE_PATH.HOME)
     try {
       const response = await logoutRequest()
-      switch (response.status) {
-        case 200: {
-          return navigate(ROUTE_PATH.HOME)
-        }
-        case 500: {
-          return navigate(ROUTE_PATH.ERROR)
-        }
-        default: {
-          throw new Error(`Unprocessable response code: ${response.status}`)
-        }
+      
+      if (response && response.status === 200) {
+        return dispatch(userSlice.actions.resetUser())
       }
+      
     } catch (error) {
-      console.log(error)
+      if (isAxiosError(error) && error.response) {
+        toast.error(error.response.data.reason)
+      }
     }
   }, [])
 
-  return { login, logout }
+  return { login, logout, registration }
 }
 
 export default useAuth
