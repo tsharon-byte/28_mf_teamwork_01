@@ -1,11 +1,11 @@
-import { Modal, Box, Typography, Button } from '@mui/material'
+import { Modal, Box, Typography, Button, IconButton } from '@mui/material'
 import React, { memo, FC, useRef } from 'react'
-import CloseIcon from '@mui/icons-material/Close'
 import { passwordValidationRule } from '../../../validation-rules'
 import { ChangePasswordModalType } from './types'
 import styles from './styles.module.css'
 import TextField from '../../text-field'
 import Form from '../../form'
+import { Close } from '@mui/icons-material'
 
 export const ChangePasswordModal: FC<ChangePasswordModalType> = memo(
   ({
@@ -22,7 +22,9 @@ export const ChangePasswordModal: FC<ChangePasswordModalType> = memo(
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Box className={styles.box}>
             <Typography variant="h5">Изменение пароля</Typography>
-            <CloseIcon onClick={handleCloseModal} className={styles.close} />
+            <IconButton size="large" color="inherit" onClick={handleCloseModal}>
+              <Close />
+            </IconButton>
           </Box>
           <TextField
             className={styles.field}

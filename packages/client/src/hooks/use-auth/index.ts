@@ -9,8 +9,11 @@ import { TLoginData, TRegistrationData } from '../../api/auth-api/type'
 import { ROUTE_PATH } from '../../utils/constants'
 import { isAxiosError } from 'axios'
 import { toast } from 'react-toastify'
+import { useAppDispatch } from '../../store/hooks'
+import { userSlice } from '../../store/slices'
 
 const useAuth = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const registration = useCallback(async (data: TRegistrationData) => {
@@ -50,12 +53,14 @@ const useAuth = () => {
   }, [])
 
   const logout = useCallback(async () => {
+    navigate(ROUTE_PATH.HOME)
     try {
       const response = await logoutRequest()
-
+      
       if (response && response.status === 200) {
-        return navigate(ROUTE_PATH.HOME)
+        return dispatch(userSlice.actions.resetUser())
       }
+      
     } catch (error) {
       if (isAxiosError(error) && error.response) {
         toast.error(error.response.data.reason)
