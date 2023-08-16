@@ -227,6 +227,22 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          color: '#FFFFFF',
+        },
+
+        select: {
+          '&': {
+            boxShadow: '0 0 0 2px #FFFFFF',
+            color: '#FFFFFF80',
+            borderColor: '#FFFFFF',
+            minWidth: 236,
+          },
+        },
+      },
+    },
   },
 })
 

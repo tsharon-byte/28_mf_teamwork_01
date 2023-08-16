@@ -1,12 +1,14 @@
 .comment {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 8px;
+  gap: 36px;
+  padding: 18px 30px 10px 30px !important;
+  border-top: 1px solid #ffffff80;
+  background: #212121 !important;
 }
 
 .text {
+  color: #ffffff80;
   hyphens: auto;
   word-break: break-all;
   white-space: pre-wrap;
@@ -15,4 +17,36 @@
 .date {
   font-size: 10px;
   line-height: 12px;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 13px;
+}
+
+.date {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #ffffff;
+}
+
+.button {
+  width: max-content;
+  text-transform: none !important;
+  padding: 0 !important;
+  font-family: Inter !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+}
+
+.avatar {
+  width: 70px !important;
+  height: 70px !important;
+  background: #ffffc7 !important;
 }

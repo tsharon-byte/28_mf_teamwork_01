@@ -29,7 +29,6 @@ export const CreateTopicModal: FC<CreateTopicModalType> = memo(
             className={styles.field}
             onChange={handleChange}
             label="Создание темы"
-            focused
           />
           {error && (
             <Typography variant="body1" color="error">
