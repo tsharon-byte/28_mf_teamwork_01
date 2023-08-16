@@ -6,8 +6,11 @@ import {
 } from '../../api/auth-api'
 import { TLoginData } from '../../api/auth-api/type'
 import { ROUTE_PATH } from '../../utils/constants'
+import { useAppDispatch } from '../../store/hooks'
+import { userSlice } from '../../store/slices'
 
 const useAuth = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const login = useCallback(async (data: TLoginData) => {
@@ -39,11 +42,12 @@ const useAuth = () => {
   }, [])
 
   const logout = useCallback(async () => {
+    navigate(ROUTE_PATH.HOME)
     try {
       const response = await logoutRequest()
       switch (response.status) {
         case 200: {
-          return navigate(ROUTE_PATH.HOME)
+          return dispatch(userSlice.actions.resetUser())
         }
         case 500: {
           return navigate(ROUTE_PATH.ERROR)

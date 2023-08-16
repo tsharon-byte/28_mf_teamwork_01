@@ -15,7 +15,13 @@ const initialState: IUserState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    resetUser(state) {
+      state.loading = initialState.loading
+      state.user = initialState.user
+      state.error = initialState.error
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(retrieveUserThunk.pending.type, state => {
