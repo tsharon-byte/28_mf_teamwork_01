@@ -50,7 +50,11 @@ export const drawBomber = (
     value:
       | ((prevState: [number, number]) => [number, number])
       | [number, number]
-  ) => void
+  ) => void,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  successCallback: () => void = () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  gameOverCallback: () => void = () => {}
 ) => {
   const image = new Image()
   image.src = src
@@ -67,6 +71,8 @@ export const drawBomber = (
     x0,
     y0,
     setCurrentPos,
+    successCallback,
+    gameOverCallback,
   })
 }
 export const drawSprite = (

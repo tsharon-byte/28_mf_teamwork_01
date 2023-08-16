@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 import FullscreenIcon from '@mui/icons-material/Fullscreen'
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
+import VolumeOffIcon from '@mui/icons-material/VolumeOff'
 import './bomberman.css'
 import { Button, Fab } from '@mui/material'
 import {
@@ -18,6 +19,8 @@ import {
 import HeroSprite from '../../utils/animation/HeroSprite'
 import Sprite from '../../utils/animation/Sprite'
 import useFullScreen from '../../utils/useFullScreen'
+import StyledDialog from '../dialog/StyledDialog'
+import EndGame from '../end-game/EndGame'
 
 const BETTY_SPRITE = 'img/betty.png'
 const BETTY2_SPRITE = 'img/betty2.png'
@@ -36,6 +39,9 @@ const Bomberman: FC = () => {
     BOX_SIZE,
   ])
 
+  const [open, setOpen] = useState<boolean>(false)
+  const [isSuccess, setSuccess] = useState<boolean>(false)
+
   useEffect(() => {
     if (ref.current) {
       // @ts-ignore
@@ -49,7 +55,9 @@ const Bomberman: FC = () => {
           setLevel,
           currentPos[0],
           currentPos[1],
-          setCurrentPos
+          setCurrentPos,
+          successCallback,
+          gameOverCallback
         )
       )
       setEvil1(
@@ -84,6 +92,17 @@ const Bomberman: FC = () => {
     // @ts-ignore
     audioRef.current.pause()
   }
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      const audio: HTMLAudioElement = audioRef.current
+      if (audio && audio.paused && audio.readyState != 0) {
+        audio.play()
+      } else {
+        audio.pause()
+        audio.currentTime = 0
+      }
+    }
+  }
 
   const startGame = () => {
     if (bomber) {
@@ -102,6 +121,21 @@ const Bomberman: FC = () => {
     window.location.reload()
     stopMusic()
   }
+
+  const successCallback = () => {
+    stopMusic()
+    setSuccess(true)
+    setOpen(true)
+  }
+  const gameOverCallback = () => {
+    stopMusic()
+    setSuccess(false)
+    setOpen(true)
+  }
+  const handleCloseDialog = () => {
+    window.location.reload()
+    setOpen(false)
+  }
   return (
     <div className="bomberman">
       <canvas
@@ -114,6 +148,13 @@ const Bomberman: FC = () => {
       <div className="bomberman__buttons">
         <Button onClick={startGame}>Начать Игру</Button>
         <Button onClick={stopGame}>Окончить Игру</Button>
+        <Button
+          onClick={toggleMusic}
+          aria-label="mute music"
+          color="primary"
+          size="small">
+          <VolumeOffIcon />
+        </Button>
         <Fab
           onClick={toggleFullScreen}
           aria-label="full screen mode"
@@ -122,6 +163,12 @@ const Bomberman: FC = () => {
           {!fullScreenFlag ? <FullscreenIcon /> : <FullscreenExitIcon />}
         </Fab>
       </div>
+      <StyledDialog
+        open={open}
+        title="Игра окончена"
+        handleClose={handleCloseDialog}>
+        <EndGame isSuccess={isSuccess} />
+      </StyledDialog>
     </div>
   )
 }
