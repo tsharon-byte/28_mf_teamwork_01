@@ -1,0 +1,14 @@
+.field {
+  width: 50%;
+}
+
+.icon {
+  color: #ffffff;
+  transition: 0.45s ease-out;
+}
+
+.icon:hover {
+  transition: 0.25s ease-in;
+  color: #fcd448;
+  cursor: pointer;
+}

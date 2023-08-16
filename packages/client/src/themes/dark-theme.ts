@@ -215,6 +215,15 @@ const darkTheme = createTheme({
           fontSize: '128px',
           fontWeight: 400,
           padding: 16,
+          textAlign: 'center',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#171813',
+          padding: '2px 4px',
         },
       },
     },

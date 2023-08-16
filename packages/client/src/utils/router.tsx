@@ -6,7 +6,7 @@ import Profile from '../pages/profile'
 import Game from '../pages/game'
 import Leaderboard from '../pages/leaderboard'
 import Forum from '../pages/forum'
-import ForumPost from '../pages/forum-post'
+import ForumTopic from '../pages/forum-topic'
 import EndGame from '../pages/end-game'
 import { ROUTE_PATH } from './constants'
 import ErrorPage from '../pages/error-page'
@@ -47,8 +47,8 @@ const router = createBrowserRouter([
         element: <Forum />,
       },
       {
-        path: ROUTE_PATH.FORUM + '/:postId',
-        element: <ForumPost />,
+        path: ROUTE_PATH.FORUM + '/:topicId',
+        element: <ForumTopic />,
       },
       {
         path: ROUTE_PATH.ENDGAME,
