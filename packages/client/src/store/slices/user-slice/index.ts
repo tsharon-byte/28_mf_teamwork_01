@@ -5,6 +5,11 @@ import {
   changeAvatarThunk,
   changePasswordThunk,
 } from './thunks'
+import {
+  deleteUserFromStorage,
+  getUserFromStorage,
+  setUserToStorage,
+} from './helpers'
 
 const initialState: IUserState = {
   loading: false,
@@ -14,12 +19,13 @@ const initialState: IUserState = {
 
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: getUserFromStorage(initialState),
   reducers: {
     resetUser(state) {
       state.loading = initialState.loading
       state.user = initialState.user
       state.error = initialState.error
+      setUserToStorage(state.user)
     },
   },
   extraReducers: builder => {
@@ -28,6 +34,7 @@ const userSlice = createSlice({
         state.loading = true
         state.user = null
         state.error = null
+        deleteUserFromStorage()
       })
       .addCase(
         retrieveUserThunk.fulfilled.type,
@@ -35,6 +42,7 @@ const userSlice = createSlice({
           state.loading = false
           state.user = action.payload
           state.error = null
+          setUserToStorage(state.user)
         }
       )
       .addCase(
@@ -43,6 +51,7 @@ const userSlice = createSlice({
           state.loading = false
           state.user = null
           state.error = action.payload
+          deleteUserFromStorage()
         }
       )
       .addCase(
@@ -50,6 +59,7 @@ const userSlice = createSlice({
         (state, action: PayloadAction<IUser>) => {
           if (state.user) {
             state.user.avatar = action.payload.avatar
+            setUserToStorage(state.user)
           }
         }
       )

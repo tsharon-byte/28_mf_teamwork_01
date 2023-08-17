@@ -82,6 +82,11 @@ const darkTheme = createTheme({
           '& .MuiFormLabel-colorPrimary': {
             color: '#ffffff',
           },
+          input: {
+            '&:-webkit-autofill, &:-webkit-autofill:focus': {
+              transition: 'background-color 0s 600000s, color 0s 600000s',
+            },
+          },
         },
       },
     },

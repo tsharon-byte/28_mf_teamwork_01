@@ -3,7 +3,7 @@ import { AppBar, List, ListItem } from '@mui/material'
 import INavigationProps from './types'
 
 const Navigation: FC<INavigationProps> = ({ children }) => (
-  <AppBar component="nav" color="transparent">
+  <AppBar component="nav" color="transparent" position="relative">
     <List>
       {Children.map(children, item => (
         <ListItem>{item}</ListItem>

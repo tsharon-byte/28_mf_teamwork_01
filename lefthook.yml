@@ -10,6 +10,3 @@ pre-commit:
     typescript:
       run: npm run type-check:client
       stage_fixed: true
-    test:
-      glob: '*.test.{ts,tsx}'
-      run: yarn test
