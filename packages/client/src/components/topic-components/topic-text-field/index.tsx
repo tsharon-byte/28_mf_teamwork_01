@@ -1,6 +1,6 @@
 import React, { memo, FC } from 'react'
 import TextField from '../../text-field'
-import { InputAdornment } from '@mui/material'
+import { Avatar, InputAdornment } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 import { TopicTextFieldType } from './types'
 import styles from './styles.module.css'
@@ -8,10 +8,11 @@ import styles from './styles.module.css'
 export const TopicTextField: FC<TopicTextFieldType> = memo(
   ({
     message,
-    label = 'Введите сообщение',
+    placeholder = 'Добавить новый комментарий...',
     handleChange,
     handleAddComment,
     handleKeyDown,
+    avatar,
   }) => {
     return (
       <TextField
@@ -20,10 +21,16 @@ export const TopicTextField: FC<TopicTextFieldType> = memo(
         value={message}
         multiline
         rows={4}
-        label={label}
+        placeholder={placeholder}
+        autoComplete="off"
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Avatar className={styles.avatar} src={avatar || ''} />
+            </InputAdornment>
+          ),
           endAdornment: message && (
             <InputAdornment position="end">
               <SendIcon onClick={handleAddComment} className={styles.icon} />

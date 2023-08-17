@@ -6,15 +6,16 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../store/hooks'
 import { getCurrentChat } from '../../store/slices/forum-slice/actions'
-import { CircularProgress, Typography } from '@mui/material'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
 import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
 import { useUser } from '../../hooks'
 import { CommentType } from '../../components/topic-components/topic-comment-list/types'
 import { useChats } from '../../hooks'
+import { TopicHeader } from '../../components/topic-components/topic-header'
+import { makeResourcePath } from '../../helpers'
 
 const ForumTopic: FC = () => {
   const params = useParams()
@@ -24,6 +25,7 @@ const ForumTopic: FC = () => {
   const [message, setMessage] = useState('')
   const [comments, setComments] = useState<CommentType[]>([])
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   useEffect(() => {
     if (chats.length !== 0 && topicId) {
       dispatch(getCurrentChat(topicId))
@@ -48,39 +50,40 @@ const ForumTopic: FC = () => {
   )
   const handleAddComment = useCallback(() => {
     if (message.trim() !== '' && user) {
-      const date = new Date().toLocaleString('ru-Ru', {
-        hour: 'numeric',
-        minute: 'numeric',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      })
+      const date = new Date().toISOString().split('T')[0]
       const newComment = {
         id: crypto.randomUUID(),
         text: message,
         author: user.login || '',
         date,
+        avatar: user.avatar || '',
       }
       setComments([...comments, newComment])
       setMessage('')
     }
   }, [comments, message])
-
+  const handleNavigate = useCallback(() => {
+    navigate(-1)
+  }, [])
   if (!currentChat) {
     return null
   }
   return (
     <TopicCommentList
+      title={currentChat.title}
+      user={user}
       comments={comments}
       header={
-        loading ? (
-          <CircularProgress />
-        ) : (
-          <Typography variant="h5">{currentChat?.title}</Typography>
-        )
+        <TopicHeader
+          callback={handleNavigate}
+          loading={loading}
+          title="join the discussion"
+        />
       }
       footer={
         <TopicTextField
+          placeholder="Добавить новый комментарий..."
+          avatar={(user?.avatar && makeResourcePath(user.avatar)) || ''}
           message={message}
           handleAddComment={handleAddComment}
           handleChange={handleChange}

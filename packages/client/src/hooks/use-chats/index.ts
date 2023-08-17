@@ -9,7 +9,6 @@ const useChats = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { chats, currentChat, loading, error } = useAppSelector(forumSelector)
-
   useEffect(() => {
     if (chats.length === 0) {
       dispatch(getChatListThunk())

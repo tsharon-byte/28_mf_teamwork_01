@@ -1,0 +1,40 @@
+.item {
+  width: 100%;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  display: flex;
+  transition: 0.45s ease-out;
+  min-height: 177px;
+  max-width: 1364px;
+}
+
+.item:hover {
+  transition: 0.25s ease-in;
+  border-color: #fcd448;
+}
+
+.title {
+  transition: 0.45s ease-out;
+}
+
+.title:hover {
+  transition: 0.25s ease-in;
+  cursor: pointer;
+  color: #fcd448;
+  text-decoration: underline;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ffffff80;
+  min-width: 97px;
+  padding: 16px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  justify-content: space-between;
+}

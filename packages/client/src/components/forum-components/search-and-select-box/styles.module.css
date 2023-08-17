@@ -1,0 +1,9 @@
+.box {
+  width: 100%;
+  display: flex;
+  gap: 25px;
+  height: 65px;
+  align-items: center;
+  max-width: 1364px;
+  justify-content: space-between;
+}
