@@ -119,6 +119,7 @@ const Bomberman: FC = () => {
   }
   const stopGame = () => {
     window.location.reload()
+    stopMusic()
   }
 
   const successCallback = () => {

@@ -6,10 +6,10 @@ import {
   changePasswordThunk,
 } from './thunks'
 import {
-  getFromLocalStorage,
-  setToStorage,
-} from '../../../utils/localStorageHelper'
-import { Nullable } from '../../../types'
+  deleteUserFromStorage,
+  getUserFromStorage,
+  setUserToStorage,
+} from './helpers'
 
 const initialState: IUserState = {
   loading: false,
@@ -17,21 +17,9 @@ const initialState: IUserState = {
   error: null,
 }
 
-const USER_IN_LOCAL_STORAGE = 'user'
-
-const getUserFromStorage = () => {
-  const state = { ...initialState }
-  state.user = getFromLocalStorage(USER_IN_LOCAL_STORAGE)
-  return state
-}
-
-const setUserToStorage = (user: Nullable<IUser>) => {
-  setToStorage(USER_IN_LOCAL_STORAGE, JSON.stringify(user))
-}
-
 const userSlice = createSlice({
   name: 'user',
-  initialState: getUserFromStorage(),
+  initialState: getUserFromStorage(initialState),
   reducers: {
     resetUser(state) {
       state.loading = initialState.loading
@@ -46,7 +34,7 @@ const userSlice = createSlice({
         state.loading = true
         state.user = null
         state.error = null
-        setUserToStorage(state.user)
+        deleteUserFromStorage()
       })
       .addCase(
         retrieveUserThunk.fulfilled.type,
@@ -63,7 +51,7 @@ const userSlice = createSlice({
           state.loading = false
           state.user = null
           state.error = action.payload
-          setUserToStorage(state.user)
+          deleteUserFromStorage()
         }
       )
       .addCase(
