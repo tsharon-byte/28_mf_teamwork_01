@@ -8,7 +8,6 @@ const createChatThunk = createAsyncThunk(
   '/chats/createChatThunk',
   async (title: string, thunkAPI) => {
     try {
-      console.log(title)
       const response = await axiosInstance.post<ChatType[]>(CHAT_LIST_URL, {
         title,
       })
