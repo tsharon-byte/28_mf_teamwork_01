@@ -1,4 +1,4 @@
-import {
+import React, {
   ChangeEvent,
   FC,
   FormEvent,
@@ -7,10 +7,7 @@ import {
   useState,
 } from 'react'
 import { ContentLayout } from '../../layouts'
-import {
-  CircularProgress,
-  Typography,
-} from '@mui/material'
+import { CircularProgress } from '@mui/material'
 import { useAppDispatch } from '../../store/hooks'
 import {
   createChatThunk,
@@ -23,8 +20,8 @@ import { ForumFooter } from '../../components/forum-components/forum-footer'
 import { ForumImage } from '../../components/forum-components/forum-image'
 import { TopicItem } from '../../components/forum-components/topic-item'
 import { useNavigate } from 'react-router-dom'
-import { SearchInput } from '../../components/forum-components/search-input'
 import { SearchAndSelectBox } from '../../components/forum-components/search-and-select-box'
+import { Title } from '../../components'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
@@ -94,11 +91,7 @@ const Forum: FC = () => {
   return (
     <>
       <ContentLayout
-        header={
-          chats.length > 0 && (
-            <Typography variant="h1">any ideas for discussion?</Typography>
-          )
-        }
+        header={chats.length > 0 && <Title>any ideas for discussion?</Title>}
         footer={
           <ForumFooter
             isOpenModal={isOpenModal}
@@ -111,7 +104,7 @@ const Forum: FC = () => {
           <>
             {chats.length === 0 && (
               <>
-                <Typography variant="h1">No one discussion</Typography>
+                <Title>No one discussion</Title>
                 <ForumImage />
               </>
             )}
