@@ -3,15 +3,16 @@ import { Card, Typography, Box, Avatar } from '@mui/material'
 import { TopicItemType } from './types'
 import styles from './styles.module.css'
 import { getCountDaysAgo } from '../../../utils/get-count-days-ago'
+
 export const TopicItem: FC<TopicItemType> = memo(({ chat, handleNavigate }) => {
   const callback = () => handleNavigate(chat.id)
   return (
     <Card className={styles.item}>
-      {chat.last_message && (
-        <Box className={styles.info}>
-          <Typography variant="body1">{chat.last_message.time}</Typography>
-        </Box>
-      )}
+      {/*{chat.last_message && (*/}
+      {/*  <Box className={styles.info}>*/}
+      {/*    <Typography variant='body1'>{chat.last_message.time}</Typography>*/}
+      {/*  </Box>*/}
+      {/*)}*/}
       <Box className={styles.message}>
         <Typography className={styles.title} variant="h5" onClick={callback}>
           {chat.title}
