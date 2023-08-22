@@ -1,4 +1,5 @@
 import { Nullable } from '../../../types'
+import IError from '../../../helpers/prepare-error/types'
 
 export interface IUser {
   id: number
@@ -16,11 +17,6 @@ export interface IUserState {
   loading: boolean
   user: Nullable<IUser>
   error: Nullable<IError>
-}
-
-export interface IError {
-  status: number
-  message: string
 }
 
 export interface IPasswordData {

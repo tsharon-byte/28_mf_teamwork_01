@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent } from 'react'
-import { IError, IPasswordData } from '../../../store/slices/user-slice/types'
+import { IPasswordData } from '../../../store/slices/user-slice/types'
 import { Nullable } from '../../../types'
+import IError from '../../../helpers/prepare-error/types'
 
 export type ChangePasswordModalType = {
   isOpenModal?: boolean

@@ -20,6 +20,7 @@ import Sprite from '../../utils/animation/Sprite'
 import useFullScreen from '../../utils/useFullScreen'
 import StyledDialog from '../dialog/StyledDialog'
 import EndGame from '../end-game/EndGame'
+import useLeaderboard from '../../hooks/use-leaderboard'
 
 const BETTY_SPRITE = 'img/betty.png'
 const BETTY2_SPRITE = 'img/betty2.png'
@@ -40,6 +41,8 @@ const Bomberman: FC = () => {
 
   const [open, setOpen] = useState<boolean>(false)
   const [isSuccess, setSuccess] = useState<boolean>(false)
+
+  const { createLeaderboardRecord } = useLeaderboard()
 
   useEffect(() => {
     if (ref.current) {
@@ -114,6 +117,8 @@ const Bomberman: FC = () => {
     stopMusic()
     setSuccess(true)
     setOpen(true)
+    const score = Math.floor(Math.random() * 100)
+    createLeaderboardRecord(score)
   }
   const gameOverCallback = () => {
     stopMusic()

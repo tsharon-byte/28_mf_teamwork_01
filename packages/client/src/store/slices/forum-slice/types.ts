@@ -1,5 +1,5 @@
 import { Nullable } from '../../../types'
-import { IError } from '../user-slice/types'
+import IError from '../../../helpers/prepare-error/types'
 
 export type ForumInitialState = {
   chats: ChatType[] | []

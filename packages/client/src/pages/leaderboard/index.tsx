@@ -9,84 +9,112 @@ import {
   TableBody,
   Typography,
   Box,
+  CircularProgress,
 } from '@mui/material'
 import { TrendingFlat } from '@mui/icons-material'
 import { TypographyProps } from '@mui/material'
-import { userScores, currentUser } from './mockData'
 import { withIcon } from '../../hocs'
-import { UserIcon, BombIcon } from '../../icons'
+import { UserIcon, BombIcon, PodiumIcon } from '../../icons'
 import styles from './styles.module.css'
+import useLeaderboard from '../../hooks/use-leaderboard'
+import { useUser } from '../../hooks'
 
 const WithIconTypography = withIcon<TypographyProps>()(Typography)
 
 const Leaderboard: FC = () => {
+  const { loading, leaderboard, infiniteScroll } = useLeaderboard()
+  const { user } = useUser()
+
   return (
     <ContentLayout
       header={
-        <Title mb="17px" mt="17px">
-          Add your name to history
-        </Title>
-      }>
-      <Table sx={{ minWidth: 650 }}>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Typography textAlign="center">Место</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>Игрок</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>Счет</Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {userScores.map((userScore, i) => (
-            <TableRow
-              key={userScore.user.id}
-              sx={{
-                position:
-                  userScore.user.id === currentUser.id ? 'relative' : 'inherit',
-              }}>
+        loading || leaderboard.length ? (
+          <Title mb="17px" mt="17px">
+            Add your name to history
+          </Title>
+        ) : null
+      }
+      onScroll={infiniteScroll}>
+      {!leaderboard.length && loading ? (
+        <CircularProgress />
+      ) : leaderboard.length ? (
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead>
+            <TableRow>
               <TableCell>
-                <Typography textAlign="center">{i + 1}</Typography>
-                {userScore.user.id === currentUser.id && (
-                  <Box className={styles.pointer}>
-                    <Typography className={styles.pointerText}>
-                      you are here
-                    </Typography>
-                    <TrendingFlat
-                      fontSize="large"
-                      className={styles.pointerArrow}
-                    />
-                  </Box>
-                )}
+                <Typography textAlign="center">Место</Typography>
               </TableCell>
               <TableCell>
-                <WithIconTypography icon={<UserIcon />}>
-                  {userScore.user.display_name}
-                </WithIconTypography>
+                <Typography>Игрок</Typography>
               </TableCell>
               <TableCell>
-                {i < 3 ? (
-                  <WithIconTypography
-                    icon={
-                      <BombIcon
-                        color={i === 1 ? 'silver' : i === 2 ? 'bronze' : 'gold'}
-                      />
-                    }
-                    iconPosition="right">
-                    {userScore.score}
-                  </WithIconTypography>
-                ) : (
-                  <Typography>{userScore.score}</Typography>
-                )}
+                <Typography>Счет</Typography>
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {leaderboard.map((record, i) => (
+              <TableRow
+                key={record.user.id}
+                sx={{
+                  position:
+                    record.user.id === user?.id ? 'relative' : 'inherit',
+                }}>
+                <TableCell>
+                  <Typography textAlign="center">{i + 1}</Typography>
+                  {record.user.id === user?.id && (
+                    <Box className={styles.pointer}>
+                      <Typography className={styles.pointerText}>
+                        you are here
+                      </Typography>
+                      <TrendingFlat
+                        fontSize="large"
+                        className={styles.pointerArrow}
+                      />
+                    </Box>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <WithIconTypography icon={<UserIcon />}>
+                    {record.user.display_name}
+                  </WithIconTypography>
+                </TableCell>
+                <TableCell>
+                  {i < 3 ? (
+                    <WithIconTypography
+                      icon={
+                        <BombIcon
+                          color={
+                            i === 1 ? 'silver' : i === 2 ? 'bronze' : 'gold'
+                          }
+                        />
+                      }
+                      iconPosition="right">
+                      {record.score}
+                    </WithIconTypography>
+                  ) : (
+                    <Typography>{record.score}</Typography>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+            {loading && (
+              <TableRow>
+                <TableCell colSpan={3} align="center">
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      ) : (
+        <>
+          <Title mb="17px" mt="17px">
+            no one result
+          </Title>
+          <PodiumIcon size={400} />
+        </>
+      )}
     </ContentLayout>
   )
 }
