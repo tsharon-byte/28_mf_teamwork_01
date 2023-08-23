@@ -20,13 +20,13 @@ import Sprite from '../../utils/animation/Sprite'
 import useFullScreen from '../../utils/useFullScreen'
 import StyledDialog from '../dialog/StyledDialog'
 import EndGame from '../end-game/EndGame'
-import useLeaderboard from '../../hooks/use-leaderboard'
+import IBombermanProps from './types'
 
 const BETTY_SPRITE = 'img/betty.png'
 const BETTY2_SPRITE = 'img/betty2.png'
 const GEORGE = 'img/george.png'
 
-const Bomberman: FC = () => {
+const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
   const ref = useRef(null)
   const audioRef = useRef(null)
   const [fullScreenFlag, toggleFullScreen] = useFullScreen()
@@ -41,8 +41,6 @@ const Bomberman: FC = () => {
 
   const [open, setOpen] = useState<boolean>(false)
   const [isSuccess, setSuccess] = useState<boolean>(false)
-
-  const { createLeaderboardRecord } = useLeaderboard()
 
   useEffect(() => {
     if (ref.current) {
@@ -117,8 +115,7 @@ const Bomberman: FC = () => {
     stopMusic()
     setSuccess(true)
     setOpen(true)
-    const score = Math.floor(Math.random() * 100)
-    createLeaderboardRecord(score)
+    onSuccess?.()
   }
   const gameOverCallback = () => {
     stopMusic()

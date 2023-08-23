@@ -1,7 +1,7 @@
 import { useCallback, useEffect, UIEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ROUTE_PATH } from '../../utils/constants'
 import { toast } from 'react-toastify'
+import { ROUTE_PATH } from '../../utils/constants'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import leaderboardSelector from '../../store/slices/leaderboard-slice/selectors/leaderboard-selector'
 import {
@@ -9,19 +9,25 @@ import {
   createLeaderboardRecordThunk,
 } from '../../store/slices/leaderboard-slice/thunks'
 
-const useLeaderboard = () => {
+const useLeaderboard = (retrieveLeaderboardOnMount = true) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { loading, leaderboard, error, hasMore } =
     useAppSelector(leaderboardSelector)
 
   useEffect(() => {
-    !leaderboard.length && dispatch(retrieveLeaderboardThunk())
-  }, [])
+    retrieveLeaderboardOnMount && retrieveLeaderboard()
+  }, [retrieveLeaderboardOnMount])
 
-  const createLeaderboardRecord = useCallback(async (score: number) => {
-    dispatch(createLeaderboardRecordThunk(score))
-  }, [])
+  const retrieveLeaderboard = useCallback(
+    () => dispatch(retrieveLeaderboardThunk()),
+    []
+  )
+
+  const createLeaderboardRecord = useCallback(
+    (score: number) => dispatch(createLeaderboardRecordThunk(score)),
+    []
+  )
 
   useEffect(() => {
     if (error) {
@@ -46,6 +52,7 @@ const useLeaderboard = () => {
     leaderboard,
     error,
     hasMore,
+    retrieveLeaderboard,
     createLeaderboardRecord,
     infiniteScroll,
   }

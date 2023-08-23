@@ -76,7 +76,7 @@ const Leaderboard: FC = () => {
                 </TableCell>
                 <TableCell>
                   <WithIconTypography icon={<UserIcon />}>
-                    {record.user.display_name}
+                    {record.user.display_name || record.user.login}
                   </WithIconTypography>
                 </TableCell>
                 <TableCell>
