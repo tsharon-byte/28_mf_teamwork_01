@@ -1,3 +1,3 @@
 export default interface IBombermanProps {
-    onSuccess?: () => void
+  onSuccess?: () => void
 }

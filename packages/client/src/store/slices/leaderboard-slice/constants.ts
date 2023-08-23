@@ -1,1 +1,0 @@
-export const LEADERBOARD_BATCH_SIZE = 10
