@@ -9,6 +9,6 @@ export interface ILeaderboardRecord {
 }
 
 export interface IUserScore {
-    user: IUser
-    score: number
+  user: IUser
+  score: number
 }

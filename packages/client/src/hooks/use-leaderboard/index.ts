@@ -8,7 +8,7 @@ import {
   LEADERBOARD_RECORD_CREATE_URL,
   TEAM_NAME,
   RATING_FIELD_NAME,
-  LEADERBOARD_BATCH_SIZE
+  LEADERBOARD_BATCH_SIZE,
 } from './constants'
 import { prepareError } from '../../helpers'
 import IError from '../../helpers/prepare-error/types'
@@ -31,10 +31,13 @@ const useLeaderboard = (retrieveLeaderboardOnMount = true) => {
   const retrieveLeaderboardPending = () => {
     requestPending()
     setHasMore(false)
-    !cursor && setLeaderboard([]) 
+    !cursor && setLeaderboard([])
   }
 
-  const retrieveLeaderboardFulfilled = (cursor: number, results: IUserScore[]) => {
+  const retrieveLeaderboardFulfilled = (
+    cursor: number,
+    results: IUserScore[]
+  ) => {
     setLoading(false)
     if (!cursor) {
       setLeaderboard(results)
@@ -103,13 +106,14 @@ const useLeaderboard = (retrieveLeaderboardOnMount = true) => {
           }
         )
         if (response.status === 200) {
-          retrieveLeaderboard()
+          toast.success('Ваш результат обновился на доске лидеров')
         }
+        setLoading(false)
       } catch (error) {
-        return requestRejected(prepareError(error))
+        requestRejected(prepareError(error))
       }
     } else {
-      return requestRejected({
+      requestRejected({
         status: 401,
         message: 'Unauthorized',
       })
