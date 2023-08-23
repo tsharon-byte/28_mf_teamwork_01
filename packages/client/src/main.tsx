@@ -8,12 +8,16 @@ import './index.css'
 import { startServiceWorker } from './utils/service-worker/startServiceWorker'
 import * as process from 'process'
 import store from './store'
+import { BrowserRouter } from 'react-router-dom'
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
   <ThemeProvider theme={theme}>
     <React.StrictMode>
       <Provider store={store}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Provider>
     </React.StrictMode>
   </ThemeProvider>
