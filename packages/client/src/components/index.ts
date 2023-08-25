@@ -7,6 +7,7 @@ import Title from './title'
 import Button from './button'
 import Auth from './auth'
 import StyledLink from './styled-link'
+import YandexLogin from './yandex-login'
 
 export {
   App,
@@ -18,4 +19,5 @@ export {
   Button,
   Auth,
   StyledLink,
+  YandexLogin,
 }

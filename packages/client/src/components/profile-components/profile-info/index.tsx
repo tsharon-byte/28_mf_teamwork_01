@@ -32,7 +32,7 @@ export const ProfileInfo: FC<ProfileInfoType> = memo(props => {
         validationRules={[emailValidationRule]}
       />
       <EditTextField
-        value={user.phone}
+        value={user.phone || ''}
         name="phone"
         label="Телефон"
         validationRules={[phoneValidationRule]}

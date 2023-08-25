@@ -1,6 +1,7 @@
 import { FC, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Form, TextField } from '../../components'
+import { Button } from '@mui/material'
+import { Form, TextField } from '../../components'
 import {
   loginValidationRule,
   passwordValidationRule,
@@ -11,6 +12,7 @@ import styles from './styles.module.css'
 import { TLoginData } from '../../api/auth-api/type'
 import { ContentLayout } from '../../layouts'
 import { useAuth } from '../../hooks'
+import { YandexLogin } from '../../components'
 
 const Login: FC = () => {
   const { login } = useAuth()
@@ -41,10 +43,14 @@ const Login: FC = () => {
                 validationRules={[passwordValidationRule]}
                 required
               />
-              <div className={styles.btn}>
-                <Button type="submit" name="Войти" />
-              </div>
+              <Button
+                type="submit"
+                className={styles.button}
+                variant="contained">
+                Войти
+              </Button>
             </Form>
+            <YandexLogin />
             <div className={styles.textBlock}>
               <span className={styles.text}>Нет аккаунта?</span>
               <Link to={ROUTE_PATH.REGISTRATION} className={styles.link}>
