@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { axiosInstance } from '../../utils/http-transport'
@@ -17,10 +17,10 @@ const useOAuth = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [searchParams] = useSearchParams()
-  const [clientId, setClientId] = useState<string>()
+  const [clientId, setClientId] = useState<string>('')
   const { user } = useUser()
 
-  const yandexLogin = async () => {
+  const yandexLogin = useCallback(async () => {
     const code = searchParams.get('code')
     if (!user && code) {
       try {
@@ -39,9 +39,9 @@ const useOAuth = () => {
         toast.error(err.message)
       }
     }
-  }
+  }, [])
 
-  const retrieveClientId = async () => {
+  const retrieveClientId = useCallback(async () => {
     try {
       const response = await axiosInstance.get(
         `${CLIENT_ID_RETRIEVE_URL}?redirect_uri=${REDIRECT_URI}`
@@ -54,7 +54,7 @@ const useOAuth = () => {
       err.status === 500 && navigate(ROUTE_PATH.ERROR)
       toast.error(err.message)
     }
-  }
+  }, [])
 
   return {
     clientId,
