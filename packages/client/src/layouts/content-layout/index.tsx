@@ -14,12 +14,15 @@ const ContentLayout: FC<IContentLayoutProps> = ({
   mainClassName,
   footerClassName,
   pageClassNames,
+  onScroll,
 }) => (
   <PageLayout navigation={navigation} {...pageClassNames}>
     {header && (
       <Box className={classNames(styles.header, headerClassName)}>{header}</Box>
     )}
-    <Box className={classNames(styles.main, mainClassName)}>{children}</Box>
+    <Box className={classNames(styles.main, mainClassName)} onScroll={onScroll}>
+      {children}
+    </Box>
     {footer && (
       <Box className={classNames(styles.footer, footerClassName)}>{footer}</Box>
     )}

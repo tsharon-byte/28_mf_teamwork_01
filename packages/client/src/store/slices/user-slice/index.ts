@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUserState, IUser, IError } from './types'
+import { IUserState, IUser } from './types'
+import IError from '../../../helpers/prepare-error/types'
 import {
   retrieveUserThunk,
   changeAvatarThunk,

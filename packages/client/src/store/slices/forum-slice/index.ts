@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { getChatListThunk, createChatThunk } from './thunks'
 import { ChatType, ForumInitialState } from './types'
-import { IError } from '../user-slice/types'
+import IError from '../../../helpers/prepare-error/types'
 
 const initialState: ForumInitialState = {
   chats: [],
