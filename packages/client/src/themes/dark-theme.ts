@@ -248,6 +248,13 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          color: '#ffffff',
+        },
+      },
+    },
   },
 })
 

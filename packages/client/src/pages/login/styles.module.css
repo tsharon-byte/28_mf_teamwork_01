@@ -1,6 +1,9 @@
 .form {
   width: 310px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .heading {
@@ -8,11 +11,9 @@
   font-size: 2rem;
   font-weight: 400;
   line-height: 1.25rem;
-  margin-bottom: 5rem;
 }
 
 .textBlock {
-  margin-top: 1.25rem;
   display: flex;
   justify-content: space-between;
 }
@@ -26,4 +27,9 @@
   composes: text;
   color: #fff;
   text-decoration: none;
+}
+
+.button {
+  width: calc(100% / 3) !important;
+  margin: 0 auto !important;
 }
