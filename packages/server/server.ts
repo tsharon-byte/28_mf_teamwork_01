@@ -6,6 +6,7 @@ import type { ViteDevServer } from 'vite'
 import { createServer as createViteServer } from 'vite'
 import cors from 'cors'
 import { CLIENT_DIR, DIST_DIR, DIST_SSR_DIR, SERVER_DIR } from './assets/dir'
+import { ENVS } from './assets/env'
 
 export const createServer = async () => {
   const app = express()
@@ -15,7 +16,7 @@ export const createServer = async () => {
 
   let vite: ViteDevServer
 
-  if (process.env.NODE_ENV === 'development') {
+  if (ENVS.__DEV__) {
     vite = await createViteServer({
       server: { middlewareMode: true },
       root: CLIENT_DIR,
@@ -32,7 +33,7 @@ export const createServer = async () => {
     let template, render
 
     try {
-      if (process.env.NODE_ENV === 'development') {
+      if (ENVS.__DEV__) {
         template = fs.readFileSync(
           path.resolve(CLIENT_DIR, 'index.html'),
           'utf-8'
@@ -57,7 +58,7 @@ export const createServer = async () => {
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
       }
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
+      if (ENVS.__DEV__) {
         vite.ssrFixStacktrace(error as Error)
       }
       next(error)
