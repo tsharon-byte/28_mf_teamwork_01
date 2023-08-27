@@ -33,11 +33,12 @@ export const createServer = async () => {
     let template, render
 
     try {
+      template = fs.readFileSync(
+        path.resolve(CLIENT_DIR, 'index.html'),
+        'utf-8'
+      )
+
       if (ENVS.__DEV__) {
-        template = fs.readFileSync(
-          path.resolve(CLIENT_DIR, 'index.html'),
-          'utf-8'
-        )
         template = await vite.transformIndexHtml(url, template)
 
         render = (
