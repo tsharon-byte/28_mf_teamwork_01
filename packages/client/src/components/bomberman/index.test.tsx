@@ -4,6 +4,10 @@ import Bomberman from './index'
 
 describe('test bomberman component', () => {
   beforeEach(() => {
+    window.AudioContext = jest.fn().mockImplementation(() => {
+      return {}
+    })
+
     render(<Bomberman />)
   })
 
