@@ -17,6 +17,7 @@ import Leaderboard from '../../pages/leaderboard'
 import Forum from '../../pages/forum'
 import ForumTopic from '../../pages/forum-topic'
 import EndGame from '../../pages/end-game'
+import Page500 from '../../pages/page-500'
 
 const App: FC = () => {
   return (
@@ -38,6 +39,7 @@ const App: FC = () => {
             />
             <Route path={ROUTE_PATH.ENDGAME} element={<EndGame />} />
           </Route>
+          <Route path={ROUTE_PATH.ERROR} element={<Page500 />} />
         </Route>
       </Routes>
       <ToastContainer />
