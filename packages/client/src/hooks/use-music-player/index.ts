@@ -1,16 +1,25 @@
 import { getRandomAudio } from '../../utils/animation/helpers'
-import axios from 'axios'
 
 const useMusicPlayer = () => {
   const audioContext: AudioContext = new AudioContext()
   let audioBuffer: AudioBuffer, source: AudioBufferSourceNode, destination
 
-  const loadSoundFile = async (url: string) => {
-    const res = await axios.get(url, {
-      responseType: 'arraybuffer',
-    })
-
-    audioBuffer = await audioContext.decodeAudioData(res.data)
+  const loadSoundFile = (url: string) => {
+    const request = new XMLHttpRequest()
+    request.open('GET', url, true)
+    request.responseType = 'arraybuffer'
+    request.onload = () => {
+      audioContext.decodeAudioData(
+        request.response,
+        response => {
+          audioBuffer = response
+        },
+        function () {
+          console.error('Request failed.')
+        }
+      )
+    }
+    request.send()
   }
 
   const playMusic = function () {
@@ -25,7 +34,6 @@ const useMusicPlayer = () => {
     source.start()
   }
 
-  // функция остановки воспроизведения
   const stopMusic = function () {
     source.stop()
   }
