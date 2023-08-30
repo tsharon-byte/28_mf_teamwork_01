@@ -22,7 +22,9 @@ const useAuth = () => {
       response.status === 200 && navigate(ROUTE_PATH.HOME)
     } catch (error) {
       const err = prepareError(error)
-      err.status === 400 && err.message === 'User already in system' && navigate(ROUTE_PATH.HOME)
+      err.status === 400 &&
+        err.message === 'User already in system' &&
+        navigate(ROUTE_PATH.HOME)
       err.status === 401 && navigate(ROUTE_PATH.LOGIN)
       err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
       toast.error(err.message)
@@ -35,7 +37,9 @@ const useAuth = () => {
       response.status === 200 && navigate(ROUTE_PATH.HOME)
     } catch (error) {
       const err = prepareError(error)
-      err.status === 400 && err.message === 'User already in system' && navigate(ROUTE_PATH.HOME)
+      err.status === 400 &&
+        err.message === 'User already in system' &&
+        navigate(ROUTE_PATH.HOME)
       err.status === 401 && navigate(ROUTE_PATH.LOGIN)
       err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
       toast.error(err.message)

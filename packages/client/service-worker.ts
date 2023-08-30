@@ -18,7 +18,7 @@ const addCaches = async () => {
   }
 }
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   event.waitUntil(addCaches)
 })
 
@@ -36,7 +36,7 @@ const checkCaches = async () => {
   }
 }
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   event.waitUntil(checkCaches)
 })
 
@@ -44,7 +44,7 @@ const getFromNetwork = (
   request: Request,
   timeout: number
 ): Promise<Response> => {
-  return new Promise((resolve, reject) => {
+  return new Promise<Response>((resolve, reject) => {
     const timeoutId = setTimeout(reject, timeout)
 
     fetch(request, { cache: 'no-store' }).then(res => {
@@ -68,7 +68,7 @@ const getFromCache = async (request: Request): Promise<Response> => {
   return result || Promise.reject('no-match')
 }
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   event.respondWith(
     getFromNetwork(event.request, timeout).catch(() =>
       getFromCache(event.request)
