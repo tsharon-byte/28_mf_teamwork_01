@@ -51,11 +51,17 @@ export const createServer = async () => {
           .render
       }
 
-      const appHTML = render(url)
+      const { appHTML, preloadedState } = render(url)
 
       if (template) {
-        const html = template.replace('<!--ssr-outlet-->', appHTML)
-
+        const html = template
+          .replace('<!--ssr-outlet-->', appHTML)
+          .replace(
+            '<!--preloaded-state-->',
+            `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
+              preloadedState
+            )}</script>`
+          )
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
       }
     } catch (error) {

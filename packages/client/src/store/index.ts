@@ -6,6 +6,8 @@ const store = configureStore({
     user: userSlice.reducer,
     forum: forumSlice.reducer,
   },
+  preloadedState: window.__PRELOADED_STATE__,
 })
 
+delete window.__PRELOADED_STATE__
 export default store

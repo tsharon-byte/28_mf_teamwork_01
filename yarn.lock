@@ -7187,11 +7187,6 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-yandex-login@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-yandex-login/-/react-yandex-login-1.0.2.tgz#8640fd14f1acd57690705c03cc2778734f29343d"
-  integrity sha512-/vjEv0X4CK3lcPSsGCBFJfI60lkmZLLLhH1hMSaK/iOVW98insJ0CahTiid732ZCKTlRM8R28pSeNm7ZXup4qg==
-
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
