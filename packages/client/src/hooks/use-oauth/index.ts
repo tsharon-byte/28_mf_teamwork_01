@@ -16,26 +16,30 @@ import { useUser } from '../../hooks'
 const useOAuth = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [clientId, setClientId] = useState<string>('')
   const { user } = useUser()
 
   const yandexLogin = useCallback(async () => {
     const code = searchParams.get('code')
+    searchParams.delete('code')
+    setSearchParams(searchParams)
     if (!user && code) {
       try {
         const response = await axiosInstance.post(YANDEX_LOGIN_URL, {
           code,
           redirect_uri: REDIRECT_URI,
         })
-        if (response.status === 200) {
-          navigate(ROUTE_PATH.HOME)
-          dispatch(retrieveUserThunk())
-        }
+        response.status === 200 && dispatch(retrieveUserThunk())
       } catch (error) {
+        console.log(error)
         const err = prepareError(error)
         err.status === 401 && navigate(ROUTE_PATH.LOGIN)
-        err.status === 500 && navigate(ROUTE_PATH.ERROR)
+        err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
+        // err.message === 'Network Error' && dispatch(retrieveUserThunk())
+        // if (err.message === 'Network Error') {
+        //   console.log(searchParams)
+        // }
         toast.error(err.message)
       }
     }
@@ -46,12 +50,10 @@ const useOAuth = () => {
       const response = await axiosInstance.get(
         `${CLIENT_ID_RETRIEVE_URL}?redirect_uri=${REDIRECT_URI}`
       )
-      if (response.status === 200) {
-        setClientId(response.data.service_id)
-      }
+      response.status === 200 && setClientId(response.data.service_id)
     } catch (error) {
       const err = prepareError(error)
-      err.status === 500 && navigate(ROUTE_PATH.ERROR)
+      err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
       toast.error(err.message)
     }
   }, [])

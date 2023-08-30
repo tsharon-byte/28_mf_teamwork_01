@@ -57,7 +57,7 @@ const useLeaderboard = (retrieveLeaderboardOnMount = true) => {
     setLoading(false)
     setError(error)
     error.status === 401 && navigate(ROUTE_PATH.LOGIN)
-    error.status === 500 && navigate(ROUTE_PATH.ERROR)
+    error.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
     toast.error(error.message)
   }
 

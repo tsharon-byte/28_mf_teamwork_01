@@ -17,6 +17,7 @@ import Leaderboard from '../../pages/leaderboard'
 import Forum from '../../pages/forum'
 import ForumTopic from '../../pages/forum-topic'
 import EndGame from '../../pages/end-game'
+import Page500 from '../../pages/page-500'
 
 const App: FC = () => {
   return (
@@ -27,6 +28,7 @@ const App: FC = () => {
           <Route path={ROUTE_PATH.HOME} element={<Home />} />
           <Route path={ROUTE_PATH.LOGIN} element={<Login />} />
           <Route path={ROUTE_PATH.REGISTRATION} element={<Registration />} />
+          <Route path={ROUTE_PATH.SERVER_ERROR} element={<Page500 />} />
           <Route element={<ProtectedRoute />}>
             <Route path={ROUTE_PATH.PROFILE} element={<Profile />} />
             <Route path={ROUTE_PATH.GAME} element={<Game />} />

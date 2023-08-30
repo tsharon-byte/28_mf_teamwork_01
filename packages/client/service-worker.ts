@@ -2,9 +2,11 @@ import { ISWEvents } from './src/types'
 
 const cacheName = '::bomberman'
 const version = 'v0.0.3'
-const timeout = 400
+const timeout = 1000
 
 const URLS = ['/index.html']
+
+declare const self: ServiceWorkerGlobalScope
 
 const addCaches = async () => {
   try {
@@ -12,11 +14,11 @@ const addCaches = async () => {
 
     return cache.addAll(URLS)
   } catch (error) {
-    console.error(error.message)
+    console.error(error instanceof Error ? error.message : error)
   }
 }
 
-self.addEventListener('install', (event: ISWEvents) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(addCaches)
 })
 
@@ -30,16 +32,16 @@ const checkCaches = async () => {
         .map(name => caches.delete(name))
     )
   } catch (error) {
-    console.error(error.message)
+    console.error(error instanceof Error ? error.message : error)
   }
 }
 
-self.addEventListener('activate', (event: ISWEvents) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(checkCaches)
 })
 
 const getFromNetwork = (
-  request: string,
+  request: Request,
   timeout: number
 ): Promise<Response> => {
   return new Promise((resolve, reject) => {
@@ -59,14 +61,14 @@ const getFromNetwork = (
   })
 }
 
-const getFromCache = async (request: string): Promise<Response> => {
+const getFromCache = async (request: Request): Promise<Response> => {
   const cache = await caches.open(`${version}${cacheName}`)
   const result = await cache.match(request)
 
   return result || Promise.reject('no-match')
 }
 
-self.addEventListener('fetch', (event: ISWEvents) => {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
     getFromNetwork(event.request, timeout).catch(() =>
       getFromCache(event.request)

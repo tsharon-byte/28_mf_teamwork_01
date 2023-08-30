@@ -8,6 +8,7 @@ export enum ROUTE_PATH {
   'FORUM' = '/forum',
   'ENDGAME' = '/end-game',
   'ERROR' = '/error',
+  'SERVER_ERROR' = '/server-error'
 }
 
 export const menu: Record<string, string> = {
