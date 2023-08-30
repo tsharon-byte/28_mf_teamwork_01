@@ -32,14 +32,9 @@ const useOAuth = () => {
         })
         response.status === 200 && dispatch(retrieveUserThunk())
       } catch (error) {
-        console.log(error)
         const err = prepareError(error)
         err.status === 401 && navigate(ROUTE_PATH.LOGIN)
         err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
-        // err.message === 'Network Error' && dispatch(retrieveUserThunk())
-        // if (err.message === 'Network Error') {
-        //   console.log(searchParams)
-        // }
         toast.error(err.message)
       }
     }

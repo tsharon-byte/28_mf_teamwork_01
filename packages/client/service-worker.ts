@@ -10,33 +10,27 @@ declare const self: ServiceWorkerGlobalScope
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(
-      `${version}${cacheName}`
-    ).then(
-      cache => cache.addAll(URLS)
-    ).catch(
-      error => console.error(
-        error instanceof Error
-          ? error.message
-          : error
+    caches
+      .open(`${version}${cacheName}`)
+      .then(cache => cache.addAll(URLS))
+      .catch(error =>
+        console.error(error instanceof Error ? error.message : error)
       )
-    )
   )
 })
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(
-      cacheNames => cacheNames
-        .filter(name => name !== `${version}${cacheName}`)
-        .map(name => caches.delete(name))
-    ).catch(
-      error => console.error(
-        error instanceof Error
-          ? error.message
-          : error
+    caches
+      .keys()
+      .then(cacheNames =>
+        cacheNames
+          .filter(name => name !== `${version}${cacheName}`)
+          .map(name => caches.delete(name))
       )
-    )
+      .catch(error =>
+        console.error(error instanceof Error ? error.message : error)
+      )
   )
 })
 
