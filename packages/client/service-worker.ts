@@ -1,5 +1,3 @@
-import { ISWEvents } from './src/types'
-
 const cacheName = '::bomberman'
 const version = 'v0.0.3'
 const timeout = 1000
@@ -69,3 +67,5 @@ self.addEventListener('fetch', event => {
     )
   )
 })
+
+export {}

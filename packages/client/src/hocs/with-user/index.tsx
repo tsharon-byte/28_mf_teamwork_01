@@ -31,7 +31,7 @@ const withUser: TWithUserHOC =
     }
 
     if (error) {
-      error.status === 500 && navigate(ROUTE_PATH.ERROR)
+      error.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
       return (
         errorComponent || (
           <Tooltip title={error.message}>

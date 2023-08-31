@@ -57,7 +57,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: ROUTE_PATH.ERROR,
+    path: ROUTE_PATH.SERVER_ERROR,
     element: <Page500 />,
   },
 ])

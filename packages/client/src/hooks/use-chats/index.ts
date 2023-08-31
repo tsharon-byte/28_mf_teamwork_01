@@ -15,7 +15,7 @@ const useChats = () => {
         .unwrap()
         .catch(() => {
           if (error?.status === 500) {
-            navigate(ROUTE_PATH.ERROR)
+            navigate(ROUTE_PATH.SERVER_ERROR)
           }
         })
     }
