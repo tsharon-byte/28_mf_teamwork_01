@@ -12,7 +12,6 @@ import {
   drawSprite,
   EVIL_1_COORDINATES,
   EVIL_2_COORDINATES,
-  getRandomAudio,
   level1,
 } from '../../utils/animation/helpers'
 import HeroSprite from '../../utils/animation/HeroSprite'
@@ -21,14 +20,13 @@ import useFullScreen from '../../utils/useFullScreen'
 import StyledDialog from '../dialog/StyledDialog'
 import EndGame from '../end-game/EndGame'
 import IBombermanProps from './types'
-
+import useMusicPlayer from '../../hooks/use-music-player'
 const BETTY_SPRITE = 'img/betty.png'
 const BETTY2_SPRITE = 'img/betty2.png'
 const GEORGE = 'img/george.png'
 
 const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
   const ref = useRef(null)
-  const audioRef = useRef(null)
   const [fullScreenFlag, toggleFullScreen] = useFullScreen()
   const [bomber, setBomber] = useState<HeroSprite>()
   const [evil1, setEvil1] = useState<Sprite>()
@@ -41,6 +39,8 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
 
   const [open, setOpen] = useState<boolean>(false)
   const [isSuccess, setSuccess] = useState<boolean>(false)
+
+  const [playMusic, stopMusic] = useMusicPlayer()
 
   useEffect(() => {
     if (ref.current) {
@@ -78,20 +78,6 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
       )
     }
   }, [ref.current, currentPos])
-  useEffect(() => {
-    if (audioRef.current) {
-      // @ts-ignore
-      audioRef.current.volume = 0.1
-    }
-  }, [audioRef.current])
-  const playMusic = () => {
-    // @ts-ignore
-    audioRef.current.play()
-  }
-  const stopMusic = () => {
-    // @ts-ignore
-    audioRef.current.pause()
-  }
 
   const startGame = () => {
     if (bomber) {
@@ -134,7 +120,6 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
         width={BOX_SIZE * (GAME_COLUMNS + 1)}
         height={BOX_SIZE * (GAME_ROWS + 1)}
       />
-      <audio ref={audioRef} src={getRandomAudio()} preload="auto" />
       <div className="bomberman__buttons">
         <Button onClick={startGame}>Начать Игру</Button>
         <Button onClick={stopGame}>Окончить Игру</Button>
