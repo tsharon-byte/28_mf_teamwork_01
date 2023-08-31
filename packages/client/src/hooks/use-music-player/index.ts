@@ -1,11 +1,12 @@
 import { getRandomAudio } from '../../utils/animation/helpers'
 import { toast } from 'react-toastify'
+import { useCallback } from 'react'
 
 const useMusicPlayer = () => {
   const audioContext: AudioContext = new AudioContext()
   let audioBuffer: AudioBuffer, source: AudioBufferSourceNode
 
-  const loadSoundFile = (url: string) => {
+  const loadSoundFile = useCallback((url: string) => {
     const request = new XMLHttpRequest()
     request.open('GET', url, true)
     request.responseType = 'arraybuffer'
@@ -21,9 +22,9 @@ const useMusicPlayer = () => {
       )
     }
     request.send()
-  }
+  }, [])
 
-  const playMusic = () => {
+  const playMusic = useCallback(() => {
     source = audioContext.createBufferSource()
 
     source.buffer = audioBuffer
@@ -33,11 +34,11 @@ const useMusicPlayer = () => {
     source.connect(destination)
 
     source.start()
-  }
+  }, [])
 
-  const stopMusic = () => {
+  const stopMusic = useCallback(() => {
     source.stop()
-  }
+  }, [])
 
   loadSoundFile(getRandomAudio())
 
