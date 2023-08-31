@@ -140,6 +140,23 @@ export const drawBrick = (
   drawItem(ctx, x, y, BRICK)
 }
 
+export const drawGrassBackground = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width = BOX_SIZE,
+  height = BOX_SIZE
+) => {
+  const image = new Image()
+  image.src = GRASS
+
+  image.onload = function () {
+    // @ts-ignore
+    ctx.fillStyle = ctx.createPattern(image, 'repeat')
+    ctx.fillRect(BOX_SIZE, BOX_SIZE, x - BOX_SIZE, y - BOX_SIZE)
+  }
+}
+
 export const drawGrass = (
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -148,6 +165,7 @@ export const drawGrass = (
   drawItem(ctx, x, y, GRASS)
 }
 export const drawLevel = (level: string[], ctx: CanvasRenderingContext2D) => {
+  drawGrassBackground(ctx, GAME_COLUMNS * BOX_SIZE, GAME_ROWS * BOX_SIZE)
   for (let j = 0; j < GAME_ROWS; j++) {
     for (let i = 0; i < GAME_COLUMNS; i++) {
       switch (level[j][i]) {
@@ -161,7 +179,6 @@ export const drawLevel = (level: string[], ctx: CanvasRenderingContext2D) => {
           drawPortal(ctx, BOX_SIZE * (i + 1), BOX_SIZE * (j + 1))
           break
         default:
-          drawGrass(ctx, BOX_SIZE * (i + 1), BOX_SIZE * (j + 1))
       }
     }
   }
