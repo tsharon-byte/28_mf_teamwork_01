@@ -1,8 +1,9 @@
 import { getRandomAudio } from '../../utils/animation/helpers'
+import { toast } from 'react-toastify'
 
 const useMusicPlayer = () => {
   const audioContext: AudioContext = new AudioContext()
-  let audioBuffer: AudioBuffer, source: AudioBufferSourceNode, destination
+  let audioBuffer: AudioBuffer, source: AudioBufferSourceNode
 
   const loadSoundFile = (url: string) => {
     const request = new XMLHttpRequest()
@@ -15,26 +16,26 @@ const useMusicPlayer = () => {
           audioBuffer = response
         },
         function () {
-          console.error('Request failed.')
+          toast.error('Не получилось загрузить аудио- файл')
         }
       )
     }
     request.send()
   }
 
-  const playMusic = function () {
+  const playMusic = () => {
     source = audioContext.createBufferSource()
 
     source.buffer = audioBuffer
 
-    destination = audioContext.destination
+    const destination = audioContext.destination
 
     source.connect(destination)
 
     source.start()
   }
 
-  const stopMusic = function () {
+  const stopMusic = () => {
     source.stop()
   }
 
