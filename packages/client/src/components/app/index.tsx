@@ -39,7 +39,7 @@ const App: FC = () => {
             />
             <Route path={ROUTE_PATH.ENDGAME} element={<EndGame />} />
           </Route>
-          <Route path={ROUTE_PATH.ERROR} element={<Page500 />} />
+          <Route path={ROUTE_PATH.SERVER_ERROR} element={<Page500 />} />
         </Route>
       </Routes>
       <ToastContainer />
