@@ -15,3 +15,9 @@ export const menu: Record<string, string> = {
   'Доска лидеров': ROUTE_PATH.LEADERBOARD,
   Форум: ROUTE_PATH.FORUM,
 }
+
+export const isBrowser = !!(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+)
