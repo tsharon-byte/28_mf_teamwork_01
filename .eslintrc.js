@@ -13,9 +13,10 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 11,
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'import'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
     'no-empty': 'off',
+    'import/no-cycle': 'error',
   },
 }
