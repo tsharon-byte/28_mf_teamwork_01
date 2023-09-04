@@ -64,7 +64,7 @@ export const createServer = async () => {
             '<!--preloaded-state-->',
             `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
               preloadedState
-            )}</script>`
+            ).replace(/</g, '\\u003c')}</script>`
           )
 
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
