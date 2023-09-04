@@ -18,5 +18,6 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 1,
     'no-empty': 'off',
     'import/no-cycle': 'error',
+    '@typescript-eslint/no-var-requires': 'off'
   },
 }

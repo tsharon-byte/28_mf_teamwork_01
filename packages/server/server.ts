@@ -26,6 +26,8 @@ export const createServer = async () => {
     app.use(vite.middlewares)
   } else {
     app.use('/assets', express.static(path.resolve(DIST_DIR, 'assets')))
+    app.use('/img', express.static(path.resolve(DIST_DIR, 'img')))
+    app.use('/audio', express.static(path.resolve(DIST_DIR, 'audio')))
   }
 
   app.use('*', async (req, res, next) => {
@@ -33,12 +35,11 @@ export const createServer = async () => {
     let template, render
 
     try {
-      template = fs.readFileSync(
-        path.resolve(CLIENT_DIR, 'index.html'),
-        'utf-8'
-      )
-
       if (ENVS.__DEV__) {
+        template = fs.readFileSync(
+          path.resolve(CLIENT_DIR, 'index.html'),
+          'utf-8'
+        )
         template = await vite.transformIndexHtml(url, template)
 
         render = (
@@ -47,14 +48,24 @@ export const createServer = async () => {
           )
         ).render
       } else {
+        template = fs.readFileSync(
+          path.resolve(DIST_DIR, 'index.html'),
+          'utf-8'
+        )
         render = (await import(path.resolve(DIST_SSR_DIR, 'entry.server.cjs')))
           .render
       }
 
-      const appHTML = render(url)
-
+      const { appHTML, preloadedState } = await render(url)
       if (template) {
-        const html = template.replace('<!--ssr-outlet-->', appHTML)
+        const html = template
+          .replace('<!--ssr-outlet-->', appHTML)
+          .replace(
+            '<!--preloaded-state-->',
+            `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
+              preloadedState
+            ).replace(/</g, '\\u003c')}</script>`
+          )
 
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
       }

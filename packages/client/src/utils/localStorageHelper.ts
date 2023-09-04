@@ -1,5 +1,9 @@
+import { isBrowser } from './constants'
+
 export const getFromLocalStorage = (name: string) => {
-  const valueFromLocalStorage = localStorage.getItem(name)
+  const valueFromLocalStorage = isBrowser
+    ? window.localStorage.getItem(name)
+    : null
   if (valueFromLocalStorage) {
     return JSON.parse(valueFromLocalStorage)
   }
@@ -7,9 +11,9 @@ export const getFromLocalStorage = (name: string) => {
 }
 
 export const setToLocalStorage = (name: string, value: any) => {
-  localStorage.setItem(name, JSON.stringify(value))
+  window.localStorage.setItem(name, JSON.stringify(value))
 }
 
 export const deleteFromLocalStorage = (name: string) => {
-  localStorage.removeItem(name)
+  window.localStorage.removeItem(name)
 }
