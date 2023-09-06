@@ -7,9 +7,12 @@ import { createServer as createViteServer } from 'vite'
 import cors from 'cors'
 import { CLIENT_DIR, DIST_DIR, DIST_SSR_DIR, SERVER_DIR } from './assets/dir'
 import { ENVS } from './assets/env'
+import { dbConnect } from './db'
 
 export const createServer = async () => {
   const app = express()
+  await dbConnect()
+
   app.use(cors())
 
   const port = Number(process.env.SERVER_PORT) || 3001
@@ -28,6 +31,10 @@ export const createServer = async () => {
     app.use('/assets', express.static(path.resolve(DIST_DIR, 'assets')))
     app.use('/img', express.static(path.resolve(DIST_DIR, 'img')))
     app.use('/audio', express.static(path.resolve(DIST_DIR, 'audio')))
+    app.use(
+      '/service-worker.js',
+      express.static(path.resolve(DIST_DIR, 'service-worker.js'))
+    )
   }
 
   app.use('*', async (req, res, next) => {
