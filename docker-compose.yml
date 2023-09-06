@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
     postgres:
@@ -47,7 +47,6 @@ services:
         NODE_ENV: ${ENV}
       depends_on:
         - postgres
-        - pgadmin
       networks:
         - project
 
