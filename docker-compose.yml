@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3"
 
 services:
     postgres:
@@ -44,6 +44,7 @@ services:
         - "${SERVER_PORT}:${SERVER_PORT}"
       environment:
         SERVER_PORT: ${SERVER_PORT}
+        POSTGRES_HOST: ${POSTGRES_HOST}
         NODE_ENV: ${ENV}
       depends_on:
         - postgres
