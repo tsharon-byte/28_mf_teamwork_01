@@ -7,7 +7,8 @@
 4. Выполните команду `yarn dev --scope=server` чтобы запустить только server
 
 ### Как запускать в Docker
-1. В командной строке docker-compose up -d
+1. Проверить .env файл в нем должны быть указаны все зависимости указанные в .env.sample
+2. В командной строке docker-compose up -d
 2. Будут собраны 3 контейнера postgres, pgadmin, server
 3. Server запускается по адресу localhost:3001. pgadmin запускается по адресу localhost:8080
 
