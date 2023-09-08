@@ -1,28 +1,37 @@
-import { Client } from 'pg'
+import dotenv from 'dotenv'
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import { userModel } from './models/user'
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-  process.env
+dotenv.config()
 
-export const createClientAndConnect = async (): Promise<Client | null> => {
+const {
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_DB,
+  POSTGRES_PORT,
+  POSTGRES_HOST,
+} = process.env
+
+const sequelizeOptions: SequelizeOptions = {
+  host: POSTGRES_HOST,
+  database: POSTGRES_DB,
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
+  port: Number(POSTGRES_PORT || 5432),
+  dialect: 'postgres',
+}
+
+const sequelize = new Sequelize(sequelizeOptions)
+
+//Проверка синхронизации с БД, создание таблицы с пользователем
+export const User = sequelize.define('User', userModel, {})
+
+export const dbConnect = async () => {
   try {
-    const client = new Client({
-      user: POSTGRES_USER,
-      host: 'localhost',
-      database: POSTGRES_DB,
-      password: POSTGRES_PASSWORD,
-      port: Number(POSTGRES_PORT),
-    })
-
-    await client.connect()
-
-    const res = await client.query('SELECT NOW()')
-    console.log('  ➜ 🎸 Connected to the database at:', res?.rows?.[0].now)
-    await client.end()
-
-    return client
-  } catch (e) {
-    console.error(e)
+    await sequelize.authenticate()
+    await sequelize.sync()
+    console.log('Connection has been established successfully.')
+  } catch (error) {
+    console.error('Unable to connect to the database:', error)
   }
-
-  return null
 }
