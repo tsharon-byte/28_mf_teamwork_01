@@ -8,10 +8,15 @@ import cors from 'cors'
 import { CLIENT_DIR, DIST_DIR, DIST_SSR_DIR, SERVER_DIR } from './assets/dir'
 import { ENVS } from './assets/env'
 import { dbConnect } from './db'
+import emojiRoute from './routes/emojiRoute'
 
 export const createServer = async () => {
   const app = express()
-  await dbConnect()
+  try {
+    await dbConnect()
+  } catch (e) {
+    console.log(e)
+  }
 
   app.use(cors())
 
@@ -36,6 +41,12 @@ export const createServer = async () => {
       express.static(path.resolve(DIST_DIR, 'service-worker.js'))
     )
   }
+
+  app.use('/api/emoji', emojiRoute)
+
+  app.get('/api/*', (_, res) => {
+    res.json('👋 Howdy from the server :)')
+  })
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
@@ -82,10 +93,6 @@ export const createServer = async () => {
       }
       next(error)
     }
-  })
-
-  app.get('/', (_, res) => {
-    res.json('👋 Howdy from the server :)')
   })
 
   app.listen(port, () => {

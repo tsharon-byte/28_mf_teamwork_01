@@ -4,6 +4,7 @@ import { TopicCommentItemType } from './types'
 import styles from './styles.module.css'
 import { getCountDaysAgo } from '../../../utils/get-count-days-ago'
 import { makeResourcePath } from '../../../helpers'
+import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
@@ -16,9 +17,12 @@ export const TopicCommentItem = memo(
           />
           <Box className={styles.box}>
             <Box>
-              <Typography variant="body1" color="secondary">
-                {author}
-              </Typography>
+              <Box position="relative">
+                <Typography variant="body1" color="secondary">
+                  {author}
+                </Typography>
+                <TopicCommentMenu />
+              </Box>
               <Typography
                 variant="body1"
                 color="silver"

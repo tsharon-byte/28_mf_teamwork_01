@@ -1,0 +1,11 @@
+.emoji {
+  position: absolute !important;
+  right: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+}
