@@ -17,6 +17,9 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
     "importsNotUsedAsValues": "error",
     "jsx": "react-jsx",
     "lib": [
@@ -30,5 +33,8 @@
       "*": ["types/*"]
     },
     "outDir": "dist"
-  }
+  },
+  "files": [
+    "types/user.d.ts",
+  ]
 }
