@@ -25,7 +25,8 @@
     "sequelize": "^6.32.1",
     "sequelize-typescript": "^2.1.5",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "vite": "^3.0.7"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.4",

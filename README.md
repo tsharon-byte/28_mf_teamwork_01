@@ -6,6 +6,11 @@
 3. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
 4. Выполните команду `yarn dev --scope=server` чтобы запустить только server
 
+### Как запускать в Docker
+1. Проверить .env файл в нем должны быть указаны все зависимости указанные в .env.sample
+2. В командной строке docker-compose up -d
+2. Будут собраны 3 контейнера postgres, pgadmin, server
+3. Server запускается по адресу localhost:3001. pgadmin запускается по адресу localhost:8080
 
 ### Как добавить зависимости?
 В этом проекте используется `monorepo` на основе [`lerna`](https://github.com/lerna/lerna)

@@ -16,6 +16,8 @@ export const createServer = async () => {
   await dbConnect()
 
   const app = express()
+  await dbConnect()
+
   app.use(cors())
   app.use(json())
   app.use(urlencoded({ extended: true }))
@@ -41,6 +43,10 @@ export const createServer = async () => {
     app.use('/assets', express.static(path.resolve(DIST_DIR, 'assets')))
     app.use('/img', express.static(path.resolve(DIST_DIR, 'img')))
     app.use('/audio', express.static(path.resolve(DIST_DIR, 'audio')))
+    app.use(
+      '/service-worker.js',
+      express.static(path.resolve(DIST_DIR, 'service-worker.js'))
+    )
   }
 
   app.use('*', async (req, res, next) => {
