@@ -1,5 +1,3 @@
 import authMiddleware from './auth-middleware'
 
-export {
-    authMiddleware
-}
+export { authMiddleware }
