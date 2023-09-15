@@ -1,5 +1,3 @@
-import * as express from 'express'
-
 type Nullable<T> = T | null
 
 interface IUser {
@@ -13,10 +11,8 @@ interface IUser {
   phone: string
 }
 
-declare global {
-  namespace Express {
-    export interface Request {
-      user?: IUser
-    }
+declare namespace Express {
+  interface Request {
+    user?: IUser
   }
 }

@@ -27,14 +27,13 @@
       "esnext.asynciterable",
       "dom"
     ],
-    "types": ["node", "jest"],
+    "types": ["node", "jest", "express-request"],
     "baseUrl": ".",
     "paths": {
       "*": ["types/*"]
     },
-    "outDir": "dist"
-  },
-  "files": [
-    "types/user.d.ts",
-  ]
+    "outDir": "dist",
+    "typeRoots": ["types"],
+    // "skipLibCheck": true
+  }
 }
