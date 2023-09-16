@@ -9,7 +9,6 @@ const {
   POSTGRES_PORT,
   POSTGRES_USER,
   POSTGRES_PASSWORD,
-  TEST_DB,
 } = process.env
 
 const sequelize = new Sequelize({
@@ -17,7 +16,7 @@ const sequelize = new Sequelize({
   port: Number(POSTGRES_PORT),
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
-  database: TEST_DB,
+  database: 'testing',
   dialect: 'postgres',
   models: [TopicModel, CommentModel],
 })

@@ -11,6 +11,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - ./tmp/pgdata:/var/lib/postgresql/data
+      - ./create_test_db.sh:/docker-entrypoint-initdb.d/create_test_db.sh
     networks:
       - project
 
