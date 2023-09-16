@@ -4,12 +4,8 @@ import { TopicModel, CommentModel } from '../../models'
 
 dotenv.config()
 
-const {
-  POSTGRES_HOST,
-  POSTGRES_PORT,
-  POSTGRES_USER,
-  POSTGRES_PASSWORD,
-} = process.env
+const { POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD } =
+  process.env
 
 const sequelize = new Sequelize({
   host: POSTGRES_HOST,
