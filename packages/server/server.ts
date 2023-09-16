@@ -16,7 +16,6 @@ export const createServer = async () => {
   await dbConnect()
 
   const app = express()
-  await dbConnect()
 
   app.use(cors())
   app.use(json())
