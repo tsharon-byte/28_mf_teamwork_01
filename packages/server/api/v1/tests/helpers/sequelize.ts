@@ -1,5 +1,8 @@
+import dotenv from 'dotenv'
 import { Sequelize } from 'sequelize-typescript'
 import { TopicModel, CommentModel } from '../../models'
+
+dotenv.config()
 
 const {
   POSTGRES_HOST,

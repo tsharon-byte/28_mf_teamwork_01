@@ -33,7 +33,6 @@
       "*": ["types/*"]
     },
     "outDir": "dist",
-    "typeRoots": ["types"],
-    // "skipLibCheck": true
+    "typeRoots": ["../../node_modules/@types", "types"],
   }
 }
