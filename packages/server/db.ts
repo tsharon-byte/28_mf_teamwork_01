@@ -1,40 +1,58 @@
 import dotenv from 'dotenv'
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
-import { userModel } from './models/user'
-import { themeModel } from './models/theme'
+import { Sequelize } from 'sequelize-typescript'
+import { TopicModel, CommentModel } from './api/v1/models'
+import { emojiModel } from './models/Emoji'
 
 dotenv.config()
 
 const {
+  POSTGRES_HOST,
+  POSTGRES_PORT,
   POSTGRES_USER,
   POSTGRES_PASSWORD,
   POSTGRES_DB,
-  POSTGRES_PORT,
-  POSTGRES_HOST,
 } = process.env
 
-const sequelizeOptions: SequelizeOptions = {
+const sequelize = new Sequelize({
   host: POSTGRES_HOST,
-  database: POSTGRES_DB,
+  port: Number(POSTGRES_PORT),
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
-  port: Number(POSTGRES_PORT || 5432),
+  database: POSTGRES_DB,
   dialect: 'postgres',
-}
+  models: [TopicModel, CommentModel],
+})
 
-const sequelize = new Sequelize(sequelizeOptions)
+export const Emoji = sequelize.define('Emoji', emojiModel, {})
 
-//Проверка синхронизации с БД, создание таблицы с пользователем
-export const User = sequelize.define('User', userModel, {})
+const smileCodes = [
+  { name: 'Thumbs Up', code: '👍' },
+  { name: 'Grinning Face', code: '😀' },
+  { name: 'Face Blowing a Kiss', code: '😘' },
+  { name: 'Smiling Face with Heart-Eyes', code: '😍' },
+  { name: 'Grinning Squinting Face', code: '😆' },
+  { name: 'Winking Face with Tongue', code: '😜' },
+  { name: 'Grinning Face with Sweat', code: '😅' },
+  { name: 'Check Mark Button', code: '✅' },
+  { name: 'Bomb', code: '💣' },
+]
 
-export const Theme = sequelize.define('Theme', themeModel, {})
-
-export const dbConnect = async () => {
+const connect = async () => {
   try {
     await sequelize.authenticate()
     await sequelize.sync()
+    Emoji.sync({ force: true }).then(() => {
+      smileCodes.forEach((item: { name: string; code: string }) => {
+        Emoji.create({
+          name: item.name,
+          code: item.code,
+        })
+      })
+    })
     console.log('Connection has been established successfully.')
   } catch (error) {
     console.error('Unable to connect to the database:', error)
   }
 }
+
+export default connect

@@ -1,19 +1,36 @@
 import fs from 'fs'
 import path from 'path'
-import express from 'express'
+import express, { urlencoded, json } from 'express'
 import process from 'process'
 import type { ViteDevServer } from 'vite'
 import { createServer as createViteServer } from 'vite'
 import cors from 'cors'
 import { CLIENT_DIR, DIST_DIR, DIST_SSR_DIR, SERVER_DIR } from './assets/dir'
 import { ENVS } from './assets/env'
-import { dbConnect, Theme } from './db'
+import { topicRouter, commentRouter } from './api/v1/routers'
+import { authMiddleware } from './middlewares'
+import useSwagger from './api/v1/swagger'
+import dbConnect from './db'
+import emojiRoute from './routes/emojiRoute'
 
 export const createServer = async () => {
-  const app = express()
   await dbConnect()
 
-  app.use(cors())
+  const app = express()
+
+  const corsOptions = {
+    origin: true,
+    credentials: true,
+  }
+  app.use(cors(corsOptions))
+
+  app.use(json())
+  app.use(urlencoded({ extended: true }))
+
+  app.use('/api/v1/topics', authMiddleware, topicRouter)
+  app.use('/api/v1/comments', authMiddleware, commentRouter)
+
+  useSwagger(app)
 
   const port = Number(process.env.SERVER_PORT) || 3001
 
@@ -36,25 +53,13 @@ export const createServer = async () => {
       express.static(path.resolve(DIST_DIR, 'service-worker.js'))
     )
   }
-  app.post('/user/theme', async (req, res) => {
-    try {
-      const { mode } = req.body
-      const currentTheme = await Theme.create({ mode })
-      res.status(200).send({ currentTheme })
-    } catch (error) {
-      res.status(500).send({ error })
-    }
+
+  app.use('/api/emoji', emojiRoute)
+
+  app.get('/api/*', (_, res) => {
+    res.json('👋 Howdy from the server :)')
   })
-  app.get('/user/theme', async (_, res) => {
-    try {
-      const theme = await Theme.findOne({
-        order: [['createdAt', 'DESC']],
-      })
-      res.status(200).send(theme)
-    } catch (error) {
-      res.status(500).send({ error })
-    }
-  })
+
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
     let template, render
@@ -102,11 +107,9 @@ export const createServer = async () => {
     }
   })
 
-  app.get('/', (_, res) => {
-    res.json('👋 Howdy from the server :)')
-  })
-
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
   })
+
+  return app
 }
