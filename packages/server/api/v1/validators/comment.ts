@@ -14,7 +14,7 @@ class CommentValidator extends Validator<ICommentData> {
   }
 
   authorIdValidate() {
-    if (!this._partial || typeof this.data.authorId !== 'undefined') {
+    if (!this._partial || this.data.authorId) {
       if (typeof this.data.authorId === 'undefined') {
         throw new Error('authorId is required field')
       }
@@ -28,7 +28,7 @@ class CommentValidator extends Validator<ICommentData> {
   }
 
   topicIdValidate() {
-    if (!this._partial || typeof this.data.topicId !== 'undefined') {
+    if (!this._partial || this.data.topicId) {
       if (typeof this.data.topicId === 'undefined') {
         throw new Error('topicId is required field')
       }
@@ -42,7 +42,7 @@ class CommentValidator extends Validator<ICommentData> {
   }
 
   textValidate() {
-    if (!this._partial || typeof this.data.text !== 'undefined') {
+    if (!this._partial || this.data.text) {
       if (typeof this.data.text === 'undefined') {
         throw new Error('text is required field')
       }
@@ -64,8 +64,8 @@ class CommentValidator extends Validator<ICommentData> {
   parentIdValidate() {
     if (
       this.data.parentId &&
-      (typeof this.data.parentId !== 'number' ||
-        typeof this.data.parentId !== null)
+      typeof this.data.parentId !== 'number' &&
+      typeof this.data.parentId !== null
     ) {
       throw new Error('parentId should be number or null')
     }

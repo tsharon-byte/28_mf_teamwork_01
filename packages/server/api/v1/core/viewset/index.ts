@@ -1,6 +1,11 @@
 import type { Request, Response } from 'express'
 import type Controller from '../controller'
 import { catchError } from './decorators'
+import {
+  HTTP_200_OK,
+  HTTP_201_CREATED,
+  HTTP_204_NO_CONTENT,
+} from '../../../../constants/status'
 
 class Viewset<T extends Record<string, any>> {
   constructor(protected controller: Controller<T>) {
@@ -15,41 +20,41 @@ class Viewset<T extends Record<string, any>> {
   @catchError
   async create(req: Request, res: Response) {
     const instance = await this.controller.create(req.body)
-    res.status(201).json(instance)
+    res.status(HTTP_201_CREATED).json(instance)
   }
 
   @catchError
   async destroy(req: Request, res: Response) {
     const { id } = req.params
     await this.controller.destroy(id)
-    res.status(204).json()
+    res.status(HTTP_204_NO_CONTENT).json()
   }
 
   @catchError
   async list(req: Request, res: Response) {
     const queryset = await this.controller.list(req.query)
-    res.status(200).json(queryset)
+    res.status(HTTP_200_OK).json(queryset)
   }
 
   @catchError
   async retrieve(req: Request, res: Response) {
     const { id } = req.params
     const instance = await this.controller.retrieve(id)
-    res.status(200).json(instance)
+    res.status(HTTP_200_OK).json(instance)
   }
 
   @catchError
   async update(req: Request, res: Response) {
     const { id } = req.params
     const instance = await this.controller.update(id, req.body)
-    res.status(200).json(instance)
+    res.status(HTTP_200_OK).json(instance)
   }
 
   @catchError
   async patch(req: Request, res: Response) {
     const { id } = req.params
     const instance = await this.controller.update(id, req.body, true)
-    res.status(200).json(instance)
+    res.status(HTTP_200_OK).json(instance)
   }
 }
 

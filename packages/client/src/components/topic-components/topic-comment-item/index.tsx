@@ -19,6 +19,7 @@ import CommentsReplyModal from '../../forum-components/comments-reply-modal'
 import { createCommentsThunk } from '../../../store/slices/comments-slice/thunks'
 import getCommentsByIdThunk from '../../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
 import classNames from 'classnames'
+import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
@@ -90,9 +91,12 @@ export const TopicCommentItem = memo(
             />
             <Box className={styles.box}>
               <Box>
-                <Typography variant="body1" color="secondary">
-                  {foundUser?.display_name}
-                </Typography>
+                <Box position="relative">
+                  <Typography variant="body1" color="secondary">
+                    {foundUser?.display_name}
+                  </Typography>
+                  <TopicCommentMenu />
+                </Box>
                 <Typography
                   variant="body1"
                   color="silver"

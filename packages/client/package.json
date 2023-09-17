@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "clean": "rimraf dist && rimraf dist-ssr",
     "dev": "vite",
-    "build": "tsc && yarn build:ssr && vite build --config vite.config.ts",
+    "build": "yarn clean && tsc && yarn build:ssr && vite build --config vite.config.ts",
     "build:ssr": "tsc && vite build --config ssr.config.ts",
     "preview": "vite preview",
     "lint": "eslint .",

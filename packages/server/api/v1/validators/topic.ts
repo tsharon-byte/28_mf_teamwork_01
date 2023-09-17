@@ -14,7 +14,7 @@ class TopicValidator extends Validator<ITopicData> {
   }
 
   authorIdValidate() {
-    if (!this._partial || typeof this.data.authorId !== 'undefined') {
+    if (!this._partial || this.data.authorId) {
       if (typeof this.data.authorId === 'undefined') {
         throw new Error('authorId is required field')
       }
@@ -28,7 +28,7 @@ class TopicValidator extends Validator<ITopicData> {
   }
 
   async nameValidate() {
-    if (!this._partial || typeof this.data.name !== 'undefined') {
+    if (!this._partial || this.data.name) {
       if (typeof this.data.name === 'undefined') {
         throw new Error('name is required field')
       }

@@ -11,14 +11,19 @@ import { topicRouter, commentRouter } from './api/v1/routers'
 import { authMiddleware } from './middlewares'
 import useSwagger from './api/v1/swagger'
 import dbConnect from './db'
+import emojiRoute from './routes/emojiRoute'
 
 export const createServer = async () => {
   await dbConnect()
 
   const app = express()
-  await dbConnect()
 
-  app.use(cors())
+  const corsOptions = {
+    origin: true,
+    credentials: true,
+  }
+  app.use(cors(corsOptions))
+
   app.use(json())
   app.use(urlencoded({ extended: true }))
 
@@ -48,6 +53,12 @@ export const createServer = async () => {
       express.static(path.resolve(DIST_DIR, 'service-worker.js'))
     )
   }
+
+  app.use('/api/emoji', emojiRoute)
+
+  app.get('/api/*', (_, res) => {
+    res.json('👋 Howdy from the server :)')
+  })
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
@@ -94,10 +105,6 @@ export const createServer = async () => {
       }
       next(error)
     }
-  })
-
-  app.get('/', (_, res) => {
-    res.json('👋 Howdy from the server :)')
   })
 
   app.listen(port, () => {

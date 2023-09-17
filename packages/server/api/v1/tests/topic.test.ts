@@ -1,6 +1,12 @@
 import request from 'supertest'
 import { createTestServer, sequelize } from './helpers'
 import { TopicModel } from '../models'
+import {
+  HTTP_200_OK,
+  HTTP_201_CREATED,
+  HTTP_204_NO_CONTENT,
+  HTTP_400_BAD_REQUEST,
+} from '../../../constants/status'
 
 const app = createTestServer()
 
@@ -38,7 +44,7 @@ describe('test topic api', () => {
       })
 
       it('should respond with a 201 status code', async () => {
-        expect(response.statusCode).toBe(201)
+        expect(response.statusCode).toBe(HTTP_201_CREATED)
       })
 
       it('should respond with created topic', async () => {
@@ -65,7 +71,7 @@ describe('test topic api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "name is required field"', async () => {
@@ -85,7 +91,7 @@ describe('test topic api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "name shoud not be null"', async () => {
@@ -105,7 +111,7 @@ describe('test topic api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "name should be string"', async () => {
@@ -125,7 +131,7 @@ describe('test topic api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "name should not be empty string"', async () => {
@@ -145,7 +151,7 @@ describe('test topic api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "name lenth should be less than 50"', async () => {
@@ -165,7 +171,7 @@ describe('test topic api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "topic with name test topic already exist"', async () => {
@@ -191,7 +197,7 @@ describe('test topic api', () => {
       })
 
       it('should respond with a 200 status code', async () => {
-        expect(response.statusCode).toBe(200)
+        expect(response.statusCode).toBe(HTTP_200_OK)
       })
 
       it('should respond with empty list', async () => {
@@ -234,7 +240,7 @@ describe('test topic api', () => {
         })
 
         it('should respond with a 200 status code', async () => {
-          expect(response.statusCode).toBe(200)
+          expect(response.statusCode).toBe(HTTP_200_OK)
         })
 
         it('should return not empty topic list', async () => {
@@ -365,7 +371,7 @@ describe('test topic api', () => {
       })
 
       it('should respond with status code 400', () => {
-        expect(response.statusCode).toBe(400)
+        expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
       })
 
       it('should respond with message not found', () => {
@@ -386,7 +392,7 @@ describe('test topic api', () => {
       })
 
       it('should respond with status code 200', () => {
-        expect(response.statusCode).toBe(200)
+        expect(response.statusCode).toBe(HTTP_200_OK)
       })
 
       it('should return topic', () => {
@@ -413,7 +419,7 @@ describe('test topic api', () => {
       })
 
       it('should respond with status code 400', () => {
-        expect(response.statusCode).toBe(400)
+        expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
       })
 
       it('should respond with message not found', () => {
@@ -438,7 +444,7 @@ describe('test topic api', () => {
         })
 
         it('should respond with status code 200', () => {
-          expect(response.statusCode).toBe(200)
+          expect(response.statusCode).toBe(HTTP_200_OK)
         })
 
         it('should return updated topic', () => {
@@ -479,7 +485,7 @@ describe('test topic api', () => {
       })
 
       it('should respond with status code 400', () => {
-        expect(response.statusCode).toBe(400)
+        expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
       })
 
       it('should respond with message not found', () => {
@@ -501,7 +507,7 @@ describe('test topic api', () => {
       })
 
       it('should respond with status code 200', () => {
-        expect(response.statusCode).toBe(200)
+        expect(response.statusCode).toBe(HTTP_200_OK)
       })
 
       it('should return patched topic', () => {
@@ -523,7 +529,7 @@ describe('test topic api', () => {
       })
 
       it('should respond with status code 400', () => {
-        expect(response.statusCode).toBe(400)
+        expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
       })
 
       it('should respond with message not found', () => {
@@ -545,7 +551,7 @@ describe('test topic api', () => {
       })
 
       it('should respond with status code 204', () => {
-        expect(response.statusCode).toBe(204)
+        expect(response.statusCode).toBe(HTTP_204_NO_CONTENT)
       })
 
       it('should return empty body', () => {
