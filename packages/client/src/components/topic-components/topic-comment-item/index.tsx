@@ -70,6 +70,7 @@ export const TopicCommentItem = memo(
               .then(() => {
                 setMessage('')
                 dispatch(getCommentsByIdThunk())
+                setIsOpenModal(() => false)
               })
           }
         },
