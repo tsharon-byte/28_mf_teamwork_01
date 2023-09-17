@@ -1,33 +1,54 @@
 import {
   ChangeEvent,
   FC,
+  FormEvent,
   KeyboardEventHandler,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAppDispatch } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { getCurrentChat } from '../../store/slices/forum-slice/actions'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
 import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
-import { useUser } from '../../hooks'
-import { CommentType } from '../../components/topic-components/topic-comment-list/types'
 import { useChats } from '../../hooks'
 import { TopicHeader } from '../../components/topic-components/topic-header'
 import { makeResourcePath } from '../../helpers'
+import { createCommentsThunk } from '../../store/slices/comments-slice/thunks'
+import useComments from '../../hooks/use-comments'
+import getCommentsByIdThunk from '../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
+import { userSelector } from '../../store/slices/user-slice/selectors'
+import getUserThunk from '../../store/slices/user-slice/thunks/get-user-thunk'
+import { TComments } from '../../store/slices/comments-slice/types'
 
 const ForumTopic: FC = () => {
   const params = useParams()
   const { topicId } = params
   const { chats, loading, currentChat } = useChats()
-  const { user } = useUser()
+
+  const { foundUser } = useAppSelector(userSelector)
   const [message, setMessage] = useState('')
-  const [comments, setComments] = useState<CommentType[]>([])
+  const { comments } = useComments()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  const filteredComments: TComments = useMemo(() => {
+    const rows = comments.rows.filter(
+      comment => comment.topicId === Number(topicId)
+    )
+    return { count: rows.length, rows }
+  }, [comments, topicId])
+
   useEffect(() => {
-    if (chats.length !== 0 && topicId) {
+    if (!foundUser && currentChat) {
+      dispatch(getUserThunk(currentChat.authorId))
+    }
+  }, [currentChat])
+
+  useEffect(() => {
+    if (chats.rows.length !== 0 && topicId) {
       dispatch(getCurrentChat(topicId))
     }
   }, [chats, topicId, dispatch])
@@ -40,28 +61,34 @@ const ForumTopic: FC = () => {
     []
   )
   const handleKeyDown: KeyboardEventHandler = useCallback(
-    e => {
+    (e: React.KeyboardEvent<HTMLFormElement>) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault()
-        handleAddComment()
+        handleAddComment(e)
       }
     },
-    [comments, message]
+    [message]
   )
-  const handleAddComment = useCallback(() => {
-    if (message.trim() !== '' && user) {
-      const date = new Date().toISOString().split('T')[0]
-      const newComment = {
-        id: crypto.randomUUID(),
-        text: message,
-        author: user.login || '',
-        date,
-        avatar: user.avatar || '',
+  const handleAddComment = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      if (message.trim() !== '' && topicId) {
+        dispatch(
+          createCommentsThunk({
+            id: Number(topicId),
+            parentId: null,
+            text: message,
+          })
+        )
+          .unwrap()
+          .then(() => {
+            setMessage('')
+            dispatch(getCommentsByIdThunk())
+          })
       }
-      setComments([...comments, newComment])
-      setMessage('')
-    }
-  }, [comments, message])
+    },
+    [message]
+  )
   const handleNavigate = useCallback(() => {
     navigate(-1)
   }, [])
@@ -70,9 +97,9 @@ const ForumTopic: FC = () => {
   }
   return (
     <TopicCommentList
-      title={currentChat.title}
-      user={user}
-      comments={comments}
+      title={currentChat.name}
+      user={foundUser}
+      comments={filteredComments}
       header={
         <TopicHeader
           callback={handleNavigate}
@@ -83,7 +110,9 @@ const ForumTopic: FC = () => {
       footer={
         <TopicTextField
           placeholder="Добавить новый комментарий..."
-          avatar={(user?.avatar && makeResourcePath(user.avatar)) || ''}
+          avatar={
+            (foundUser?.avatar && makeResourcePath(foundUser.avatar)) || ''
+          }
           message={message}
           handleAddComment={handleAddComment}
           handleChange={handleChange}

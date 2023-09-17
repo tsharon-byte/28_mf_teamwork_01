@@ -1,22 +1,22 @@
 import { Nullable } from '../../../types'
 import IError from '../../../helpers/prepare-error/types'
 
-export type ForumInitialState = {
-  chats: TChatList
+export type TCommentsInitialState = {
+  comments: TComments
   loading: boolean
   error: Nullable<IError>
-  currentChat: Nullable<TChatItem>
 }
 
-export type TChatItem = {
+export type TComment = {
   id: number
+  topicId: number
+  parentId: number
   authorId: number
-  description?: string
-  name: string
+  text: string
   createdAt: string
 }
 
-export type TChatList = {
+export type TComments = {
   count: number
-  rows: Array<TChatItem>
+  rows: Array<TComment>
 }

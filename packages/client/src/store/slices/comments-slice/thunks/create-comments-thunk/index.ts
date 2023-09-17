@@ -1,15 +1,16 @@
 import { beInstance } from '../../../../../utils/http-transport'
-import { CHAT_URL } from '../../../../../constants/urls'
+import { COMMENTS_URL } from '../../../../../constants/urls'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { isAxiosError } from 'axios'
 
-const createChatThunk = createAsyncThunk(
-  '/chats/createChatThunk',
-  async (data: Record<string, string>, thunkAPI) => {
+const createCommentsThunk = createAsyncThunk(
+  '/comments/createCommentsThunk',
+  async (data: Record<string, string | number | null>, thunkAPI) => {
     try {
-      const response = await beInstance.post(CHAT_URL, {
-        name: data.name,
-        description: data.description,
+      const response = await beInstance.post(COMMENTS_URL, {
+        topicId: data.id,
+        parentId: data.parentId,
+        text: data.text,
       })
       return response.data
     } catch (error) {
@@ -20,10 +21,10 @@ const createChatThunk = createAsyncThunk(
         })
       }
       return thunkAPI.rejectWithValue({
-        message: 'Не удалось создать чат',
+        message: 'Не удалось создать комментарий',
       })
     }
   }
 )
 
-export default createChatThunk
+export default createCommentsThunk

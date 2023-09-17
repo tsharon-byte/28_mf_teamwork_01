@@ -5,6 +5,7 @@ import {
   retrieveUserThunk,
   changeAvatarThunk,
   changePasswordThunk,
+  getUserThunk,
 } from './thunks'
 import {
   deleteUserFromStorage,
@@ -16,6 +17,7 @@ const initialState: IUserState = {
   loading: false,
   user: null,
   error: null,
+  foundUser: null,
 }
 
 const userSlice = createSlice({
@@ -74,6 +76,25 @@ const userSlice = createSlice({
       })
       .addCase(
         changePasswordThunk.rejected.type,
+        (state, action: PayloadAction<IError>) => {
+          state.loading = false
+          state.error = action.payload
+        }
+      )
+      .addCase(getUserThunk.pending, state => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(
+        getUserThunk.fulfilled,
+        (state, action: PayloadAction<IUser>) => {
+          state.loading = false
+          state.error = null
+          state.foundUser = action.payload
+        }
+      )
+      .addCase(
+        getUserThunk.rejected.type,
         (state, action: PayloadAction<IError>) => {
           state.loading = false
           state.error = action.payload
