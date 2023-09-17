@@ -1,17 +1,29 @@
 import dotenv from 'dotenv'
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
-import { userModel } from './models/user'
+import { Sequelize } from 'sequelize-typescript'
+import { TopicModel, CommentModel } from './api/v1/models'
 import { emojiModel } from './models/Emoji'
 
 dotenv.config()
 
 const {
+  POSTGRES_HOST,
+  POSTGRES_PORT,
   POSTGRES_USER,
   POSTGRES_PASSWORD,
   POSTGRES_DB,
-  POSTGRES_PORT,
-  POSTGRES_HOST,
 } = process.env
+
+const sequelize = new Sequelize({
+  host: POSTGRES_HOST,
+  port: Number(POSTGRES_PORT),
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
+  database: POSTGRES_DB,
+  dialect: 'postgres',
+  models: [TopicModel, CommentModel],
+})
+
+export const Emoji = sequelize.define('Emoji', emojiModel, {})
 
 const smileCodes = [
   { name: 'Thumbs Up', code: '👍' },
@@ -25,27 +37,10 @@ const smileCodes = [
   { name: 'Bomb', code: '💣' },
 ]
 
-const sequelizeOptions: SequelizeOptions = {
-  host: POSTGRES_HOST,
-  database: POSTGRES_DB,
-  username: POSTGRES_USER,
-  password: POSTGRES_PASSWORD,
-  port: Number(POSTGRES_PORT || 5432),
-  dialect: 'postgres',
-}
-
-const sequelize = new Sequelize(sequelizeOptions)
-
-//Проверка синхронизации с БД, создание таблицы с пользователем
-export const User = sequelize.define('User', userModel, {})
-
-//Проверка синхронизации с БД, создание таблицы с эмоджи
-export const Emoji = sequelize.define('Emoji', emojiModel, {})
-
-export const dbConnect = async () => {
+const connect = async () => {
   try {
     await sequelize.authenticate()
-    await User.sync()
+    await sequelize.sync()
     Emoji.sync({ force: true }).then(() => {
       smileCodes.forEach((item: { name: string; code: string }) => {
         Emoji.create({
@@ -59,3 +54,5 @@ export const dbConnect = async () => {
     console.error('Unable to connect to the database:', error)
   }
 }
+
+export default connect

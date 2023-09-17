@@ -17,20 +17,22 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
-    "importsNotUsedAsValues": "error",
-    "jsx": "react-jsx",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "importsNotUsedAsValues": "error",
+    "jsx": "react-jsx",
     "lib": [
       "es2019",
       "esnext.asynciterable",
       "dom"
     ],
-    "types": ["node", "jest"],
+    "types": ["node", "jest", "express-request"],
     "baseUrl": ".",
     "paths": {
       "*": ["types/*"]
     },
-    "outDir": "dist"
+    "outDir": "dist",
+    "typeRoots": ["../../node_modules/@types", "types"],
   }
 }
