@@ -10,7 +10,7 @@ import { ENVS } from './assets/env'
 import { topicRouter, commentRouter } from './api/v1/routers'
 import { authMiddleware } from './middlewares'
 import useSwagger from './api/v1/swagger'
-import dbConnect from './db'
+import dbConnect, { Theme } from './db'
 import emojiRoute from './routes/emojiRoute'
 
 export const createServer = async () => {
@@ -53,7 +53,26 @@ export const createServer = async () => {
       express.static(path.resolve(DIST_DIR, 'service-worker.js'))
     )
   }
+  app.get('/api/theme', async (_, res) => {
+    try {
+      const theme = await Theme.findOne({
+        order: [['createdAt', 'DESC']],
+      })
+      res.status(200).send(theme)
+    } catch (error) {
+      res.status(500).send({ error })
+    }
+  })
 
+  app.post('/api/theme', async (req, res) => {
+    try {
+      const { mode } = req.body
+      const theme = await Theme.create({ mode })
+      res.status(201).send(theme)
+    } catch (error) {
+      res.status(500).send({ error })
+    }
+  })
   app.use('/api/emoji', emojiRoute)
 
   app.get('/api/*', (_, res) => {
