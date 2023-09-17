@@ -1,6 +1,12 @@
 import request from 'supertest'
 import { createTestServer, sequelize } from './helpers'
 import { CommentModel } from '../models'
+import {
+  HTTP_200_OK,
+  HTTP_201_CREATED,
+  HTTP_204_NO_CONTENT,
+  HTTP_400_BAD_REQUEST
+} from '../../../constants/status'
 
 const app = createTestServer()
 
@@ -27,30 +33,66 @@ describe('test comment api', () => {
     ) => await request(app).post('/api/v1/comments/').send(comment)
 
     describe('success creation', () => {
-      const comment = {
-        topicId: 1,
-        text: 'test comment',
-      }
       let response: request.Response
-
-      beforeEach(async () => {
-        response = await commentCreationRequest(comment)
+      
+      describe('create comment without parentId', () => {
+        const comment = {
+          topicId: 1,
+          text: 'test comment',
+        }
+  
+        beforeEach(async () => {
+          response = await commentCreationRequest(comment)
+        })
+  
+        it('should respond with a 201 status code', async () => {
+          expect(response.statusCode).toBe(HTTP_201_CREATED)
+        })
+  
+        it('should respond with created comment', async () => {
+          const { topicId, text } = response.body
+          const expected = JSON.stringify(comment)
+          const received = JSON.stringify({ topicId, text })
+          expect(received).toBe(expected)
+        })
+  
+        it('should the object exist in the database', async () => {
+          const instance = await CommentModel.findOne({ where: comment })
+          expect(instance).toBeInstanceOf(CommentModel)
+        })
       })
 
-      it('should respond with a 201 status code', async () => {
-        expect(response.statusCode).toBe(201)
-      })
-
-      it('should respond with created comment', async () => {
-        const { topicId, text } = response.body
-        const expected = JSON.stringify(comment)
-        const received = JSON.stringify({ topicId, text })
-        expect(received).toBe(expected)
-      })
-
-      it('should the object exist in the database', async () => {
-        const instance = await CommentModel.findOne({ where: comment })
-        expect(instance).toBeInstanceOf(CommentModel)
+      describe('create comment with parentId', () => {
+        const comment = {
+          topicId: 1,
+          text: 'test reply',
+          parentId: 1
+        }
+  
+        beforeEach(async () => {
+          await CommentModel.create({
+            topicId: 1,
+            text: 'test comment',
+            authorId: 1
+          })
+          response = await commentCreationRequest(comment)
+        })
+  
+        it('should respond with a 201 status code', async () => {
+          expect(response.statusCode).toBe(HTTP_201_CREATED)
+        })
+  
+        it('should respond with created comment', async () => {
+          const { topicId, text, parentId } = response.body
+          const expected = JSON.stringify(comment)
+          const received = JSON.stringify({ topicId, text, parentId })
+          expect(received).toBe(expected)
+        })
+  
+        it('should the object exist in the database', async () => {
+          const instance = await CommentModel.findOne({ where: comment })
+          expect(instance).toBeInstanceOf(CommentModel)
+        })
       })
     })
 
@@ -66,7 +108,7 @@ describe('test comment api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "topicId is required field"', async () => {
@@ -85,7 +127,7 @@ describe('test comment api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "topicId shoud not be null"', async () => {
@@ -104,7 +146,7 @@ describe('test comment api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "topicId should be number"', async () => {
@@ -127,7 +169,7 @@ describe('test comment api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "text is required field"', async () => {
@@ -147,7 +189,7 @@ describe('test comment api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "text shoud not be null"', async () => {
@@ -167,7 +209,7 @@ describe('test comment api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "text should be string"', async () => {
@@ -187,7 +229,7 @@ describe('test comment api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "text should not be empty string"', async () => {
@@ -207,7 +249,7 @@ describe('test comment api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "text lenth should be less than 2047"', async () => {
@@ -232,7 +274,7 @@ describe('test comment api', () => {
           })
 
           it('should respond with a 400 status code', async () => {
-            expect(response.statusCode).toBe(400)
+            expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
           })
 
           it('should respond with message "parentId should be number or null"', async () => {
@@ -258,7 +300,7 @@ describe('test comment api', () => {
       })
 
       it('should respond with a 200 status code', async () => {
-        expect(response.statusCode).toBe(200)
+        expect(response.statusCode).toBe(HTTP_200_OK)
       })
 
       it('should respond with empty list', async () => {
@@ -309,7 +351,7 @@ describe('test comment api', () => {
         })
 
         it('should respond with a 200 status code', async () => {
-          expect(response.statusCode).toBe(200)
+          expect(response.statusCode).toBe(HTTP_200_OK)
         })
 
         it('should return not empty comment list', async () => {
@@ -524,7 +566,7 @@ describe('test comment api', () => {
       })
 
       it('should respond with status code 400', () => {
-        expect(response.statusCode).toBe(400)
+        expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
       })
 
       it('should respond with message not found', () => {
@@ -546,7 +588,7 @@ describe('test comment api', () => {
       })
 
       it('should respond with status code 200', () => {
-        expect(response.statusCode).toBe(200)
+        expect(response.statusCode).toBe(HTTP_200_OK)
       })
 
       it('should return comment', () => {
@@ -574,7 +616,7 @@ describe('test comment api', () => {
       })
 
       it('should respond with status code 400', () => {
-        expect(response.statusCode).toBe(400)
+        expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
       })
 
       it('should respond with message not found', () => {
@@ -600,7 +642,7 @@ describe('test comment api', () => {
         })
 
         it('should respond with status code 200', () => {
-          expect(response.statusCode).toBe(200)
+          expect(response.statusCode).toBe(HTTP_200_OK)
         })
 
         it('should return updated comment', () => {
@@ -641,7 +683,7 @@ describe('test comment api', () => {
       })
 
       it('should respond with status code 400', () => {
-        expect(response.statusCode).toBe(400)
+        expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
       })
 
       it('should respond with message not found', () => {
@@ -663,7 +705,7 @@ describe('test comment api', () => {
       })
 
       it('should respond with status code 200', () => {
-        expect(response.statusCode).toBe(200)
+        expect(response.statusCode).toBe(HTTP_200_OK)
       })
 
       it('should return patched comment', () => {
@@ -685,7 +727,7 @@ describe('test comment api', () => {
       })
 
       it('should respond with status code 400', () => {
-        expect(response.statusCode).toBe(400)
+        expect(response.statusCode).toBe(HTTP_400_BAD_REQUEST)
       })
 
       it('should respond with message not found', () => {
@@ -707,7 +749,7 @@ describe('test comment api', () => {
       })
 
       it('should respond with status code 204', () => {
-        expect(response.statusCode).toBe(204)
+        expect(response.statusCode).toBe(HTTP_204_NO_CONTENT)
       })
 
       it('should return empty body', () => {

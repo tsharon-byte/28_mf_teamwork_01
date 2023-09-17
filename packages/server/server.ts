@@ -17,7 +17,12 @@ export const createServer = async () => {
 
   const app = express()
 
-  app.use(cors())
+  const corsOptions = {
+      origin:true, 
+      credentials:true
+  }
+  app.use(cors(corsOptions))
+
   app.use(json())
   app.use(urlencoded({ extended: true }))
 

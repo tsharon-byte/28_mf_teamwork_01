@@ -11,10 +11,11 @@ class TopicController extends Controller<ITopicData> {
   }
 
   override async create(data: ITopicData, user: number): Promise<Model> {
-    return await super.create({
+    const instance = await super.create({
       ...data,
       authorId: user,
     })
+    return instance
   }
 
   override async update(
@@ -23,7 +24,7 @@ class TopicController extends Controller<ITopicData> {
     partial: boolean,
     user: number
   ): Promise<Model> {
-    return await super.update(
+    const instance = await super.update(
       id,
       {
         ...data,
@@ -31,6 +32,7 @@ class TopicController extends Controller<ITopicData> {
       },
       partial
     )
+    return instance
   }
 }
 

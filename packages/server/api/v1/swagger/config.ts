@@ -139,7 +139,7 @@ const options: swaggerJsdoc.Options = {
       },
     },
     paths: {
-      'api/v1/topics/': {
+      '/api/v1/topics/': {
         post: {
           tags: ['Topic'],
           summary: 'Create topic',
@@ -268,7 +268,7 @@ const options: swaggerJsdoc.Options = {
           },
         },
       },
-      'api/v1/topics/{id}/': {
+      '/api/v1/topics/{id}/': {
         get: {
           tags: ['Topic'],
           summary: 'Retrieve topic',
@@ -495,7 +495,7 @@ const options: swaggerJsdoc.Options = {
           },
         },
       },
-      'api/v1/comments/': {
+      '/api/v1/comments/': {
         post: {
           tags: ['Comment'],
           summary: 'Create topic comment',
@@ -640,7 +640,7 @@ const options: swaggerJsdoc.Options = {
           },
         },
       },
-      'api/v1/comments/{id}/': {
+      '/api/v1/comments/{id}/': {
         get: {
           tags: ['Comment'],
           summary: 'Retrieve comment',

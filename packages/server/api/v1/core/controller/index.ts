@@ -27,7 +27,8 @@ class Controller<T extends Record<string, any>> {
   async create(data: T, ..._: any[]) {
     const validator = new this.ValidatorClass(data)
     await validator.validate()
-    return await this.model.create(validator.data)
+    const inctance = await this.model.create(validator.data)
+    return inctance
   }
 
   async destroy(id: string) {
@@ -37,19 +38,21 @@ class Controller<T extends Record<string, any>> {
 
   async list(query: ParsedQs) {
     this.filterset.setup(query)
-    console.log(this.filterset.options)
-    return await this.model.findAndCountAll(this.filterset.options)
+    const queryset = await this.model.findAndCountAll(this.filterset.options)
+    return queryset
   }
 
   async retrieve(id: string) {
-    return await this.getInstance(id)
+    const inctance = await this.getInstance(id)
+    return inctance
   }
 
   async update(id: string, data: T, partial = false, ..._: any[]) {
     const validator = new this.ValidatorClass(data, partial)
     await validator.validate()
     await this.model.update(validator.data, { where: { id } })
-    return await this.getInstance(id)
+    const inctance = await this.getInstance(id)
+    return inctance
   }
 }
 
