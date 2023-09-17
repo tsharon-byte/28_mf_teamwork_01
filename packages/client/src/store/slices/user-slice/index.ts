@@ -53,7 +53,7 @@ const userSlice = createSlice({
         }
       )
       .addCase(
-          retrieveUserThunk.rejected.type,
+        retrieveUserThunk.rejected.type,
         (state, action: PayloadAction<IError>) => {
           state.loading = false
           state.user = null
@@ -89,14 +89,17 @@ const userSlice = createSlice({
         state.loading = true
         state.error = null
       })
-      .addCase(changeThemeThunk.fulfilled, (state, action: PayloadAction<'dark' | 'light'>) => {
-        state.mode = action.payload
-        state.loading = false
-        state.error = null
-      })
+      .addCase(
+        changeThemeThunk.fulfilled,
+        (state, action: PayloadAction<'dark' | 'light'>) => {
+          state.mode = action.payload
+          state.loading = false
+          state.error = null
+        }
+      )
       .addCase(
         changeThemeThunk.rejected.type,
-        (state, action: PayloadAction<string>) => {
+        (state, action: PayloadAction<IError>) => {
           state.loading = false
           state.error = action.payload
         }
@@ -105,14 +108,17 @@ const userSlice = createSlice({
         state.loading = true
         state.error = null
       })
-      .addCase(retrieveThemeThunk.fulfilled, (state, action: PayloadAction<'dark' | 'light'>) => {
-        state.mode = action.payload
-        state.loading = false
-        state.error = null
-      })
+      .addCase(
+        retrieveThemeThunk.fulfilled,
+        (state, action: PayloadAction<'dark' | 'light'>) => {
+          state.mode = action.payload
+          state.loading = false
+          state.error = null
+        }
+      )
       .addCase(
         retrieveThemeThunk.rejected.type,
-        (state, action: PayloadAction<string>) => {
+        (state, action: PayloadAction<IError>) => {
           state.loading = false
           state.error = action.payload
         }

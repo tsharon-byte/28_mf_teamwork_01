@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { userModel } from './models/user'
-import {themeModel} from './models/theme'
+import { themeModel } from './models/theme'
 
 dotenv.config()
 

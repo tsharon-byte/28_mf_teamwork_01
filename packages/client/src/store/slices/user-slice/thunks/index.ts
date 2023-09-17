@@ -4,4 +4,10 @@ import changePasswordThunk from './change-password-thunk'
 import changeThemeThunk from './change-theme-thunk'
 import retrieveThemeThunk from './retrieve-theme-thunk'
 
-export { retrieveUserThunk, changeAvatarThunk, changePasswordThunk, changeThemeThunk, retrieveThemeThunk }
+export {
+  retrieveUserThunk,
+  changeAvatarThunk,
+  changePasswordThunk,
+  changeThemeThunk,
+  retrieveThemeThunk,
+}

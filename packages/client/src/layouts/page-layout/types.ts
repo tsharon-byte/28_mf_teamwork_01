@@ -7,8 +7,8 @@ interface IPageLayoutProps {
   headerClassName?: string
   mainClassName?: string
   footerClassName?: string
-  mode: 'dark' | 'light'
-  toggleTheme: () => void
+  mode?: 'dark' | 'light'
+  toggleTheme?: () => void
 }
 
 export default IPageLayoutProps

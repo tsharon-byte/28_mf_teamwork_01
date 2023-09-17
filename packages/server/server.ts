@@ -38,21 +38,22 @@ export const createServer = async () => {
   }
   app.post('/user/theme', async (req, res) => {
     try {
-      const {mode} = req.body
-      const currentTheme = await Theme.create({mode})
-      res.status(200).send({currentTheme})
-    } catch(error) {
-      res.status(500).send({error})
+      const { mode } = req.body
+      const currentTheme = await Theme.create({ mode })
+      res.status(200).send({ currentTheme })
+    } catch (error) {
+      res.status(500).send({ error })
     }
   })
   app.get('/user/theme', async (_, res) => {
-      try {
-        const theme = await Theme.findAll()
-        res.status(200).send(theme)
-      } catch (error) {
-
-        res.status(500).send({error})
-      }
+    try {
+      const theme = await Theme.findOne({
+        order: [['createdAt', 'DESC']],
+      })
+      res.status(200).send(theme)
+    } catch (error) {
+      res.status(500).send({ error })
+    }
   })
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
