@@ -1,6 +1,10 @@
 import type { Request, Response, NextFunction } from 'express'
 import axios, { isAxiosError } from 'axios'
-import { HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_500_INTERNAL_SERVER_ERROR } from '../constants/status'
+import {
+  HTTP_200_OK,
+  HTTP_403_FORBIDDEN,
+  HTTP_500_INTERNAL_SERVER_ERROR,
+} from '../constants/status'
 
 const authMiddleware = async (
   req: Request,
@@ -26,12 +30,12 @@ const authMiddleware = async (
         return res.status(err.response?.status).json(err.response?.data)
       }
       return res.status(HTTP_500_INTERNAL_SERVER_ERROR).json({
-        reason: (err as Error).message
+        reason: (err as Error).message,
       })
     }
   } else {
     return res.status(HTTP_403_FORBIDDEN).json({
-      reason: 'Cookie is not valid'
+      reason: 'Cookie is not valid',
     })
   }
 }

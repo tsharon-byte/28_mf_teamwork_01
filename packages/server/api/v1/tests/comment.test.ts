@@ -5,7 +5,7 @@ import {
   HTTP_200_OK,
   HTTP_201_CREATED,
   HTTP_204_NO_CONTENT,
-  HTTP_400_BAD_REQUEST
+  HTTP_400_BAD_REQUEST,
 } from '../../../constants/status'
 
 const app = createTestServer()
@@ -34,28 +34,28 @@ describe('test comment api', () => {
 
     describe('success creation', () => {
       let response: request.Response
-      
+
       describe('create comment without parentId', () => {
         const comment = {
           topicId: 1,
           text: 'test comment',
         }
-  
+
         beforeEach(async () => {
           response = await commentCreationRequest(comment)
         })
-  
+
         it('should respond with a 201 status code', async () => {
           expect(response.statusCode).toBe(HTTP_201_CREATED)
         })
-  
+
         it('should respond with created comment', async () => {
           const { topicId, text } = response.body
           const expected = JSON.stringify(comment)
           const received = JSON.stringify({ topicId, text })
           expect(received).toBe(expected)
         })
-  
+
         it('should the object exist in the database', async () => {
           const instance = await CommentModel.findOne({ where: comment })
           expect(instance).toBeInstanceOf(CommentModel)
@@ -66,29 +66,29 @@ describe('test comment api', () => {
         const comment = {
           topicId: 1,
           text: 'test reply',
-          parentId: 1
+          parentId: 1,
         }
-  
+
         beforeEach(async () => {
           await CommentModel.create({
             topicId: 1,
             text: 'test comment',
-            authorId: 1
+            authorId: 1,
           })
           response = await commentCreationRequest(comment)
         })
-  
+
         it('should respond with a 201 status code', async () => {
           expect(response.statusCode).toBe(HTTP_201_CREATED)
         })
-  
+
         it('should respond with created comment', async () => {
           const { topicId, text, parentId } = response.body
           const expected = JSON.stringify(comment)
           const received = JSON.stringify({ topicId, text, parentId })
           expect(received).toBe(expected)
         })
-  
+
         it('should the object exist in the database', async () => {
           const instance = await CommentModel.findOne({ where: comment })
           expect(instance).toBeInstanceOf(CommentModel)

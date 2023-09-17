@@ -1,7 +1,11 @@
 import type { Request, Response } from 'express'
 import type Controller from '../controller'
 import { catchError } from './decorators'
-import { HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT } from '../../../../constants/status'
+import {
+  HTTP_200_OK,
+  HTTP_201_CREATED,
+  HTTP_204_NO_CONTENT,
+} from '../../../../constants/status'
 
 class Viewset<T extends Record<string, any>> {
   constructor(protected controller: Controller<T>) {
