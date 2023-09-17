@@ -74,10 +74,8 @@ const Registration: FC = () => {
           </div>
         </Form>
         <div className={styles.textBlock}>
-          <span className={styles.text}>Уже зарегистрированы?</span>
-          <Link to={ROUTE_PATH.LOGIN} className={styles.link}>
-            Войти
-          </Link>
+          <span>Уже зарегистрированы?</span>
+          <Link to={ROUTE_PATH.LOGIN}>Войти</Link>
         </div>
       </div>
     </ContentLayout>

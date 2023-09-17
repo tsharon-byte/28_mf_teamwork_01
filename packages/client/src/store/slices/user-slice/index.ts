@@ -5,6 +5,8 @@ import {
   retrieveUserThunk,
   changeAvatarThunk,
   changePasswordThunk,
+  changeThemeThunk,
+  retrieveThemeThunk,
 } from './thunks'
 import {
   deleteUserFromStorage,
@@ -16,6 +18,7 @@ const initialState: IUserState = {
   loading: false,
   user: null,
   error: null,
+  mode: 'dark',
 }
 
 const userSlice = createSlice({
@@ -27,6 +30,9 @@ const userSlice = createSlice({
       state.user = initialState.user
       state.error = initialState.error
       setUserToStorage(state.user)
+    },
+    toggleTheme(state) {
+      state.mode = state.mode === 'dark' ? 'light' : 'dark'
     },
   },
   extraReducers: builder => {
@@ -47,7 +53,7 @@ const userSlice = createSlice({
         }
       )
       .addCase(
-        retrieveUserThunk.rejected.type,
+          retrieveUserThunk.rejected.type,
         (state, action: PayloadAction<IError>) => {
           state.loading = false
           state.user = null
@@ -75,6 +81,38 @@ const userSlice = createSlice({
       .addCase(
         changePasswordThunk.rejected.type,
         (state, action: PayloadAction<IError>) => {
+          state.loading = false
+          state.error = action.payload
+        }
+      )
+      .addCase(changeThemeThunk.pending, state => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(changeThemeThunk.fulfilled, (state, action: PayloadAction<'dark' | 'light'>) => {
+        state.mode = action.payload
+        state.loading = false
+        state.error = null
+      })
+      .addCase(
+        changeThemeThunk.rejected.type,
+        (state, action: PayloadAction<string>) => {
+          state.loading = false
+          state.error = action.payload
+        }
+      )
+      .addCase(retrieveThemeThunk.pending, state => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(retrieveThemeThunk.fulfilled, (state, action: PayloadAction<'dark' | 'light'>) => {
+        state.mode = action.payload
+        state.loading = false
+        state.error = null
+      })
+      .addCase(
+        retrieveThemeThunk.rejected.type,
+        (state, action: PayloadAction<string>) => {
           state.loading = false
           state.error = action.payload
         }

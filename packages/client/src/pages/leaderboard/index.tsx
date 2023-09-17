@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import { ContentLayout } from '../../layouts'
 import { Title } from '../../components'
 import {
@@ -18,15 +18,24 @@ import { UserIcon, BombIcon, PodiumIcon } from '../../icons'
 import styles from './styles.module.css'
 import useLeaderboard from '../../hooks/use-leaderboard'
 import { useUser } from '../../hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { userSelector } from '../../store/slices/user-slice/selectors'
+import { userSlice } from '../../store/slices'
 
 const WithIconTypography = withIcon<TypographyProps>()(Typography)
 
 const Leaderboard: FC = () => {
+  const dispatch = useAppDispatch()
   const { loading, leaderboard, infiniteScroll } = useLeaderboard()
   const { user } = useUser()
-
+  const { mode } = useAppSelector(userSelector)
+  const toggleThemeCallback = useCallback(() => {
+    dispatch(userSlice.actions.toggleTheme())
+  }, [])
   return (
     <ContentLayout
+      mode={mode}
+      toggleTheme={toggleThemeCallback}
       header={
         loading || leaderboard.length ? (
           <Title mb="17px" mt="17px">

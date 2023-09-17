@@ -8,6 +8,8 @@ export type TopicCommentListType = {
   footer: ReactNode
   user: Nullable<IUser>
   title: string
+  mode: 'dark' | 'light'
+  toggleTheme: () => void
 }
 
 export type CommentType = {

@@ -52,10 +52,8 @@ const Login: FC = () => {
             </Form>
             <YandexLogin />
             <div className={styles.textBlock}>
-              <span className={styles.text}>Нет аккаунта?</span>
-              <Link to={ROUTE_PATH.REGISTRATION} className={styles.link}>
-                Зарегистрироваться
-              </Link>
+              <span>Нет аккаунта?</span>
+              <Link to={ROUTE_PATH.REGISTRATION}>Зарегистрироваться</Link>
             </div>
           </div>
         </div>

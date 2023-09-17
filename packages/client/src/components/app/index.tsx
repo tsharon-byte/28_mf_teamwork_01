@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
-import { darkTheme } from '../../themes'
+import { theme } from '../../themes/theme'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 import { ROUTE_PATH } from '../../utils/constants'
@@ -18,10 +18,13 @@ import Forum from '../../pages/forum'
 import ForumTopic from '../../pages/forum-topic'
 import EndGame from '../../pages/end-game'
 import Page500 from '../../pages/page-500'
-
+import { useAppSelector } from '../../store/hooks'
+import { userSelector } from '../../store/slices/user-slice/selectors'
 const App: FC = () => {
+  const { mode } = useAppSelector(userSelector)
+  const appTheme = theme(mode)
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <Routes>
         <Route errorElement={<ErrorPage />}>

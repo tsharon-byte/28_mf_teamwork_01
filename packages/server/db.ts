@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { userModel } from './models/user'
+import {themeModel} from './models/theme'
 
 dotenv.config()
 
@@ -25,6 +26,8 @@ const sequelize = new Sequelize(sequelizeOptions)
 
 //Проверка синхронизации с БД, создание таблицы с пользователем
 export const User = sequelize.define('User', userModel, {})
+
+export const Theme = sequelize.define('Theme', themeModel, {})
 
 export const dbConnect = async () => {
   try {

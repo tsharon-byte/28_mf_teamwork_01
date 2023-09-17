@@ -11,6 +11,8 @@ interface IContentLayoutProps {
   footerClassName?: string
   pageClassNames?: Omit<IPageLayoutProps, 'children' | 'navigation'>
   onScroll?: UIEventHandler<HTMLDivElement>
+  mode?: 'dark' | 'light'
+  toggleTheme?: () => void
 }
 
 export default IContentLayoutProps

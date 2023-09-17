@@ -5,7 +5,7 @@ import { StaticRouter } from 'react-router-dom/server'
 import { App } from 'client/src/components'
 import { store } from './store'
 
-export function render(url: string) {
+export function render(url: string, mode: 'dark' | 'light') {
   const appHTML = renderToString(
     <StrictMode>
       <StaticRouter location={url}>
@@ -17,5 +17,5 @@ export function render(url: string) {
   )
   const preloadedState = store.getState()
 
-  return { appHTML, preloadedState }
+  return { appHTML, preloadedState, mode }
 }

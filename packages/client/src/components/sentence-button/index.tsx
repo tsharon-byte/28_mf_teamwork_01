@@ -7,10 +7,8 @@ export const SentenceButton: FC<SentenceButtonType> = memo(
   ({ callback, sentence, buttonText }) => {
     return (
       <div className={styles.wrapper}>
-        <Typography variant="body1" className={styles.sentence}>
-          {sentence}
-        </Typography>
-        <Button onClick={callback} variant="text" className={styles.button}>
+        <Typography variant="body1">{sentence}</Typography>
+        <Button onClick={callback} variant="outlined">
           {buttonText}
         </Button>
       </div>

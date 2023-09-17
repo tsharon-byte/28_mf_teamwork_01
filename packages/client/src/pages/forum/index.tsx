@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { ContentLayout } from '../../layouts'
 import { CircularProgress } from '@mui/material'
-import { useAppDispatch } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   createChatThunk,
   getChatListThunk,
@@ -22,6 +22,8 @@ import { TopicItem } from '../../components/forum-components/topic-item'
 import { useNavigate } from 'react-router-dom'
 import { SearchAndSelectBox } from '../../components/forum-components/search-and-select-box'
 import { Title } from '../../components'
+import { userSelector } from '../../store/slices/user-slice/selectors'
+import { userSlice } from '../../store/slices'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
@@ -30,6 +32,10 @@ const Forum: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [chatName, setChatName] = useState('')
   const navigate = useNavigate()
+  const { mode } = useAppSelector(userSelector)
+  const toggleThemeCallback = useCallback(() => {
+    dispatch(userSlice.actions.toggleTheme())
+  }, [])
   useEffect(() => {
     setChangedChats(chats)
   }, [chats])
@@ -91,6 +97,8 @@ const Forum: FC = () => {
   return (
     <>
       <ContentLayout
+        mode={mode}
+        toggleTheme={toggleThemeCallback}
         header={chats.length > 0 && <Title>any ideas for discussion?</Title>}
         footer={
           <ForumFooter

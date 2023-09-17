@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAppDispatch } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { getCurrentChat } from '../../store/slices/forum-slice/actions'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
 import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
@@ -16,6 +16,8 @@ import { CommentType } from '../../components/topic-components/topic-comment-lis
 import { useChats } from '../../hooks'
 import { TopicHeader } from '../../components/topic-components/topic-header'
 import { makeResourcePath } from '../../helpers'
+import { userSelector } from '../../store/slices/user-slice/selectors'
+import { userSlice } from '../../store/slices'
 
 const ForumTopic: FC = () => {
   const params = useParams()
@@ -26,6 +28,10 @@ const ForumTopic: FC = () => {
   const [comments, setComments] = useState<CommentType[]>([])
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { mode } = useAppSelector(userSelector)
+  const toggleThemeCallback = useCallback(() => {
+    dispatch(userSlice.actions.toggleTheme())
+  }, [])
   useEffect(() => {
     if (chats.length !== 0 && topicId) {
       dispatch(getCurrentChat(topicId))
@@ -73,6 +79,8 @@ const ForumTopic: FC = () => {
       title={currentChat.title}
       user={user}
       comments={comments}
+      mode={mode}
+      toggleTheme={toggleThemeCallback}
       header={
         <TopicHeader
           callback={handleNavigate}

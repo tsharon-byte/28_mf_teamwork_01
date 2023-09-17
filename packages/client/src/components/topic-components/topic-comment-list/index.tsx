@@ -7,7 +7,7 @@ import { Avatar, Box, Typography } from '@mui/material'
 import { makeResourcePath } from '../../../helpers'
 
 export const TopicCommentList: FC<TopicCommentListType> = memo(
-  ({ comments, header, footer, user, title }) => {
+  ({ comments, header, footer, user, title, mode, toggleTheme }) => {
     const endCommentRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
       if (endCommentRef.current) {
@@ -16,6 +16,8 @@ export const TopicCommentList: FC<TopicCommentListType> = memo(
     }, [comments])
     return (
       <ContentLayout
+        mode={mode}
+        toggleTheme={toggleTheme}
         mainClassName={styles.main}
         headerClassName={styles.header}
         footerClassName={styles.footer}
