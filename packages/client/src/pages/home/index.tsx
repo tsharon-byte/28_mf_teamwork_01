@@ -7,9 +7,9 @@ import styles from './styles.module.css'
 import StyledDialog from '../../components/dialog/StyledDialog'
 import GameRules from '../../components/game-rules/GameRules'
 import { useOAuth } from '../../hooks'
-import { theme } from '../../themes/theme'
+
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { userSlice } from '../../store/slices'
+
 import { userSelector } from '../../store/slices/user-slice/selectors'
 import {
   changeThemeThunk,
@@ -22,11 +22,12 @@ const Home: FC = () => {
   const dispatch = useAppDispatch()
   const { mode } = useAppSelector(userSelector)
   const toggleThemeCallback = useCallback(() => {
-    dispatch(changeThemeThunk(mode === 'dark' ? 'light' : 'dark'))
+    dispatch(retrieveThemeThunk())
+    // dispatch(changeThemeThunk(mode === 'dark' ? 'light' : 'dark'))
   }, [])
 
   useEffect(() => {
-    dispatch(retrieveThemeThunk())
+    // dispatch(retrieveThemeThunk())
     yandexLogin()
   }, [])
 

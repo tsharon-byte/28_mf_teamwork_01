@@ -3,7 +3,7 @@ import { APP_THEME_URL } from '../../../../../constants/urls'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 const changeThemeThunk = createAsyncThunk(
-  '/user/changeThemeThunk',
+  '/theme/changeThemeThunk',
   async (mode: 'dark' | 'light', thunkAPI) => {
     try {
       const response = await beInstance.post(APP_THEME_URL, { mode })

@@ -2,12 +2,12 @@ import type { Model } from 'sequelize-typescript'
 import type { ModelAttributes } from 'sequelize/types'
 import { DataType } from 'sequelize-typescript'
 
-export interface Theme {
+export interface ThemeModel {
   id: number
-  mode: 'dark' | 'string'
+  mode: string
 }
 
-export const themeModel: ModelAttributes<Model, Theme> = {
+export const themeModel: ModelAttributes<Model, ThemeModel> = {
   id: {
     type: DataType.INTEGER,
     autoIncrement: true,

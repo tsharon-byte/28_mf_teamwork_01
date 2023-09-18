@@ -3,7 +3,7 @@ import { APP_THEME_URL } from '../../../../../constants/urls'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 const retrieveThemeThunk = createAsyncThunk(
-  '/user/retrieveThemeThunk',
+  '/theme/retrieveThemeThunk',
   async (_, thunkAPI) => {
     try {
       const response = await beInstance.get(APP_THEME_URL)

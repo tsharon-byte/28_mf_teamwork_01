@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import { Sequelize } from 'sequelize-typescript'
 import { TopicModel, CommentModel } from './api/v1/models'
 import { emojiModel } from './models/Emoji'
-import { themeModel } from './models/theme'
+import { themeModel } from './models/theme-model'
 
 dotenv.config()
 
@@ -44,9 +44,10 @@ const connect = async () => {
   try {
     await sequelize.authenticate()
     await sequelize.sync()
-    await Theme.sync({ force: true })
-    await Theme.create({
-      mode: 'dark',
+    Theme.sync({ force: true }).then(() => {
+      Theme.create({
+        mode: 'dark',
+      })
     })
     Emoji.sync({ force: true }).then(() => {
       smileCodes.forEach((item: { name: string; code: string }) => {
