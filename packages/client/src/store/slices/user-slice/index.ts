@@ -91,8 +91,9 @@ const userSlice = createSlice({
       })
       .addCase(
         changeThemeThunk.fulfilled,
-        (state, action: PayloadAction<'dark' | 'light'>) => {
-          state.mode = action.payload
+        (state, action: PayloadAction<{ mode: 'dark' | 'light' }>) => {
+          const { mode } = action.payload
+          state.mode = mode
           state.loading = false
           state.error = null
         }
@@ -110,8 +111,9 @@ const userSlice = createSlice({
       })
       .addCase(
         retrieveThemeThunk.fulfilled,
-        (state, action: PayloadAction<'dark' | 'light'>) => {
-          state.mode = action.payload
+        (state, action: PayloadAction<{ mode: 'dark' | 'light' }>) => {
+          const { mode } = action.payload
+          state.mode = mode
           state.loading = false
           state.error = null
         }
