@@ -1,5 +1,5 @@
 import express from 'express'
-import { getTheme, changeTheme } from '../controllers/theme-controllers'
+import { getTheme, changeTheme } from '../controllers/theme'
 
 const themeRoute = express.Router()
 themeRoute.get('/', getTheme)
