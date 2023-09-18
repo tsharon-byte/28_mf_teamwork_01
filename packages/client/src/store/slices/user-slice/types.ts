@@ -16,7 +16,7 @@ export interface IUser {
 export interface IUserState {
   loading: boolean
   user: Nullable<IUser>
-  error: Nullable<IError | string>
+  error: Nullable<IError>
   mode: 'dark' | 'light'
 }
 
