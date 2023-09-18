@@ -20,7 +20,7 @@ import useLeaderboard from '../../hooks/use-leaderboard'
 import { useUser } from '../../hooks'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { userSelector } from '../../store/slices/user-slice/selectors'
-import { userSlice } from '../../store/slices'
+import { changeThemeThunk } from '../../store/slices/user-slice/thunks'
 
 const WithIconTypography = withIcon<TypographyProps>()(Typography)
 
@@ -30,8 +30,9 @@ const Leaderboard: FC = () => {
   const { user } = useUser()
   const { mode } = useAppSelector(userSelector)
   const toggleThemeCallback = useCallback(() => {
-    dispatch(userSlice.actions.toggleTheme())
-  }, [])
+    const newMode = mode === 'dark' ? 'light' : 'dark'
+    dispatch(changeThemeThunk(newMode))
+  }, [mode])
   return (
     <ContentLayout
       mode={mode}

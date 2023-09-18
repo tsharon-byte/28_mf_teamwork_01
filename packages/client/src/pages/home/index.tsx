@@ -11,10 +11,7 @@ import { useOAuth } from '../../hooks'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 
 import { userSelector } from '../../store/slices/user-slice/selectors'
-import {
-  changeThemeThunk,
-  retrieveThemeThunk,
-} from '../../store/slices/user-slice/thunks'
+import { changeThemeThunk } from '../../store/slices/user-slice/thunks'
 
 const Home: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -22,11 +19,11 @@ const Home: FC = () => {
   const dispatch = useAppDispatch()
   const { mode } = useAppSelector(userSelector)
   const toggleThemeCallback = useCallback(() => {
-    dispatch(changeThemeThunk(mode === 'dark' ? 'light' : 'dark'))
-  }, [])
+    const newMode = mode === 'dark' ? 'light' : 'dark'
+    dispatch(changeThemeThunk(newMode))
+  }, [mode])
 
   useEffect(() => {
-    dispatch(retrieveThemeThunk())
     yandexLogin()
   }, [])
 

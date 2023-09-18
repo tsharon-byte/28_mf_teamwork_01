@@ -31,9 +31,6 @@ const userSlice = createSlice({
       state.error = initialState.error
       setUserToStorage(state.user)
     },
-    toggleTheme(state) {
-      state.mode = state.mode === 'dark' ? 'light' : 'dark'
-    },
   },
   extraReducers: builder => {
     builder

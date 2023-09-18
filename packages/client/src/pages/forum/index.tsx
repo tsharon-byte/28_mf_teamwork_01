@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom'
 import { SearchAndSelectBox } from '../../components/forum-components/search-and-select-box'
 import { Title } from '../../components'
 import { userSelector } from '../../store/slices/user-slice/selectors'
-import { userSlice } from '../../store/slices'
+import { changeThemeThunk } from '../../store/slices/user-slice/thunks'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
@@ -34,8 +34,9 @@ const Forum: FC = () => {
   const navigate = useNavigate()
   const { mode } = useAppSelector(userSelector)
   const toggleThemeCallback = useCallback(() => {
-    dispatch(userSlice.actions.toggleTheme())
-  }, [])
+    const newMode = mode === 'dark' ? 'light' : 'dark'
+    dispatch(changeThemeThunk(newMode))
+  }, [mode])
   useEffect(() => {
     setChangedChats(chats)
   }, [chats])

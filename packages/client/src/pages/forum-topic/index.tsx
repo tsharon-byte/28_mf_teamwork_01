@@ -17,7 +17,7 @@ import { useChats } from '../../hooks'
 import { TopicHeader } from '../../components/topic-components/topic-header'
 import { makeResourcePath } from '../../helpers'
 import { userSelector } from '../../store/slices/user-slice/selectors'
-import { userSlice } from '../../store/slices'
+import { changeThemeThunk } from '../../store/slices/user-slice/thunks'
 
 const ForumTopic: FC = () => {
   const params = useParams()
@@ -30,8 +30,9 @@ const ForumTopic: FC = () => {
   const navigate = useNavigate()
   const { mode } = useAppSelector(userSelector)
   const toggleThemeCallback = useCallback(() => {
-    dispatch(userSlice.actions.toggleTheme())
-  }, [])
+    const newMode = mode === 'dark' ? 'light' : 'dark'
+    dispatch(changeThemeThunk(newMode))
+  }, [mode])
   useEffect(() => {
     if (chats.length !== 0 && topicId) {
       dispatch(getCurrentChat(topicId))
