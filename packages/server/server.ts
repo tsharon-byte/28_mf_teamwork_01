@@ -55,9 +55,7 @@ export const createServer = async () => {
   }
   app.get('/api/theme', async (_, res) => {
     try {
-      const theme = await Theme.findOne({
-        order: [['createdAt', 'DESC']],
-      })
+      const theme = await Theme.findAll()
       res.status(200).send(theme)
     } catch (error) {
       res.status(500).send({ error })

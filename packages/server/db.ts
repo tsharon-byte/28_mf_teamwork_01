@@ -44,7 +44,7 @@ const connect = async () => {
   try {
     await sequelize.authenticate()
     await sequelize.sync()
-    await Theme.sync()
+    await Theme.sync({ force: true })
     await Theme.create({
       mode: 'dark',
     })
