@@ -48,7 +48,7 @@
 }
 
 .reply {
-  padding-left: 100px;
+  margin-left: 100px;
   position: relative;
 }
 
@@ -57,6 +57,6 @@
   position: absolute;
   width: 64px;
   height: 64px;
-  left: 25px;
+  left: -75px;
   background-image: url('data:image/svg+xml,%3Csvg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cg id="SVGRepo_bgCarrier" stroke-width="0"%3E%3C/g%3E%3Cg id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"%3E%3C/g%3E%3Cg id="SVGRepo_iconCarrier"%3E%3Cpath d="M19.5 12L14.5 17M19.5 12L14.5 7M19.5 12L9.5 12C7.83333 12 4.5 11 4.5 7" stroke="%23ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"%3E%3C/path%3E%3C/g%3E%3C/svg%3E');
 }

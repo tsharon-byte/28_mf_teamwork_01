@@ -5,7 +5,7 @@ export type TopicTextFieldType = {
   message: string
   label?: string
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
-  handleAddComment: (e: FormEvent<HTMLFormElement>) => void
+  handleAddComment: (e: FormEvent<HTMLFormElement | HTMLDivElement>) => void
   handleKeyDown: KeyboardEventHandler
   avatar: Nullable<string>
   placeholder?: string

@@ -3,7 +3,6 @@ import { BE_EMOJI_LIST_URL } from '../../../../../constants/urls'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { EmojiType } from '../../types'
 import { isAxiosError } from 'axios'
-import { logDOM } from '@testing-library/react'
 
 const getEmojiListThunk = createAsyncThunk(
   '/emoji/getEmojiListThunk',

@@ -3,6 +3,7 @@ import {
   FC,
   FormEvent,
   KeyboardEventHandler,
+  KeyboardEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -61,7 +62,7 @@ const ForumTopic: FC = () => {
     []
   )
   const handleKeyDown: KeyboardEventHandler = useCallback(
-    (e: React.KeyboardEvent<HTMLFormElement>) => {
+    (e: KeyboardEvent<HTMLFormElement | HTMLDivElement>) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault()
         handleAddComment(e)
@@ -70,7 +71,7 @@ const ForumTopic: FC = () => {
     [message]
   )
   const handleAddComment = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
+    (e: FormEvent<HTMLFormElement | HTMLDivElement>) => {
       e.preventDefault()
       if (message.trim() !== '' && topicId) {
         dispatch(

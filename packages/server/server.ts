@@ -29,6 +29,7 @@ export const createServer = async () => {
 
   app.use('/api/v1/topics', authMiddleware, topicRouter)
   app.use('/api/v1/comments', authMiddleware, commentRouter)
+  app.use('/api/v1/emoji', emojiRoute)
 
   useSwagger(app)
 
@@ -53,8 +54,6 @@ export const createServer = async () => {
       express.static(path.resolve(DIST_DIR, 'service-worker.js'))
     )
   }
-
-  app.use('/api/emoji', emojiRoute)
 
   app.get('/api/*', (_, res) => {
     res.json('👋 Howdy from the server :)')
