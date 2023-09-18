@@ -22,12 +22,11 @@ const Home: FC = () => {
   const dispatch = useAppDispatch()
   const { mode } = useAppSelector(userSelector)
   const toggleThemeCallback = useCallback(() => {
-    dispatch(retrieveThemeThunk())
-    // dispatch(changeThemeThunk(mode === 'dark' ? 'light' : 'dark'))
+    dispatch(changeThemeThunk(mode === 'dark' ? 'light' : 'dark'))
   }, [])
 
   useEffect(() => {
-    // dispatch(retrieveThemeThunk())
+    dispatch(retrieveThemeThunk())
     yandexLogin()
   }, [])
 
