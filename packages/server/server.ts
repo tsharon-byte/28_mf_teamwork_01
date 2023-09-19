@@ -1,10 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-import express, { urlencoded, json } from 'express'
+import express from 'express'
 import process from 'process'
 import type { ViteDevServer } from 'vite'
 import { createServer as createViteServer } from 'vite'
-import cors from 'cors'
 import { CLIENT_DIR, DIST_DIR, DIST_SSR_DIR, SERVER_DIR } from './assets/dir'
 import { ENVS } from './assets/env'
 import { topicRouter, commentRouter } from './api/v1/routers'
@@ -12,20 +11,22 @@ import { authMiddleware } from './middlewares'
 import useSwagger from './api/v1/swagger'
 import dbConnect from './db'
 import emojiRoute from './routes/emojiRoute'
+import { createProxyMiddleware } from 'http-proxy-middleware'
+import cors from 'cors'
 
 export const createServer = async () => {
-  await dbConnect()
-
   const app = express()
-
   const corsOptions = {
     origin: true,
     credentials: true,
   }
   app.use(cors(corsOptions))
 
-  app.use(json())
-  app.use(urlencoded({ extended: true }))
+  try {
+    await dbConnect()
+  } catch (e) {
+    console.log('Ошибка подключения к БД', e)
+  }
 
   app.use('/api/v1/topics', authMiddleware, topicRouter)
   app.use('/api/v1/comments', authMiddleware, commentRouter)
@@ -54,6 +55,17 @@ export const createServer = async () => {
       express.static(path.resolve(DIST_DIR, 'service-worker.js'))
     )
   }
+
+  app.use(
+    '/api/v2',
+    createProxyMiddleware({
+      changeOrigin: true,
+      cookieDomainRewrite: {
+        '*': '',
+      },
+      target: 'https://ya-praktikum.tech',
+    })
+  )
 
   app.get('/api/*', (_, res) => {
     res.json('👋 Howdy from the server :)')
