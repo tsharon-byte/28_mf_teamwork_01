@@ -1,4 +1,5 @@
-#Игра BOMBERMAN
+# Игра BOMBERMAN
+
 Выполнена студентами курса [Я.Практикум](https://practicum.yandex.ru/) `Мидл фронтенд-разработчик`
 
 [Антон Татаринов](https://github.com/Avanire)
@@ -9,7 +10,7 @@
 
 [Татьяна Чуркина](https://github.com/tsharon-byte/)
 
-##Используемые технологии
+## Используемые технологии
 
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
@@ -25,11 +26,26 @@
 ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
 ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 
-##[Описание игры](./docs/scenario.md)
-##[Видео демонстрация задач 7-8 спринтов](TODO)
-##[Отчет об утечках памяти тут](./docs/MEMORYLEAKS.md)
+## [Описание игры](./docs/scenario.md)
+
+## [Видео демонстрация задач 7-8 спринтов](TODO)
+
+## [Отчет об утечках памяти тут](./docs/MEMORYLEAKS.md)
+
+## Как запускать локально
+
+### Режим разработки
+
+1. Установите зависимости командой `yarn bootstrap`
+2. В режиме разработки запустите сервер `yarn dev:server`
+
+### Режим production локально
+
+1. Установите зависимости командой `yarn bootstrap`
+2. В режиме разработки запустите сервер `yarn dev:server`
 
 ## Как запускать в Docker
+
 1. Проверить .env файл в нем должны быть указаны все зависимости указанные в .env.sample
 2. В командной строке docker-compose build
 3. docker-compose up
@@ -38,9 +54,10 @@
 6. Документация к API доступна по url [swagger](http://localhost:3001/swagger/)
 
 ## Как добавить зависимости?
+
 В этом проекте используется `monorepo` на основе [`lerna`](https://github.com/lerna/lerna)
 
-Чтобы добавить зависимость для клиента 
+Чтобы добавить зависимость для клиента
 ```yarn lerna add {your_dep} --scope client```
 
 Для сервера
@@ -72,7 +89,9 @@
 `yarn preview --scope server`
 
 ## Хуки
+
 В проекте используется [lefthook](https://github.com/evilmartians/lefthook)
 
 ## Автодеплой статики на vercel
+
 [BOMBERMAN](https://28-mf-teamwork-01-client.vercel.app/)
