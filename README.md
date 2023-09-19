@@ -1,21 +1,64 @@
-### Как запускать?
+# Игра BOMBERMAN
 
-1. Убедитесь что у вас установлен `node` и `docker`
-2. Выполните команду `yarn bootstrap` - это обязательный шаг, без него ничего работать не будет :)
-3. Выполните команду `yarn dev`
-3. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
-4. Выполните команду `yarn dev --scope=server` чтобы запустить только server
+Выполнена студентами курса [Я.Практикум](https://practicum.yandex.ru/) `Мидл фронтенд-разработчик`
 
-### Как запускать в Docker
+[Антон Татаринов](https://github.com/Avanire)
+
+[Иван Аксененко](https://github.com/ioaksenenko)
+
+[Сергей Калачев](https://github.com/likeariverstream)
+
+[Татьяна Чуркина](https://github.com/tsharon-byte/)
+
+## Используемые технологии
+
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
+![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
+![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
+
+## [Описание игры](./docs/scenario.md)
+
+## [Видео демонстрация задач 7-8 спринтов](https://www.vidline.com/player/V0ZRHDDK5N)
+
+## [Отчет об утечках памяти тут](./docs/MEMORYLEAKS.md)
+
+## Как запускать локально
+
+### Режим разработки
+
+1. Установите зависимости командой `yarn bootstrap`
+2. В режиме разработки запустите сервер `yarn dev:server`
+
+### Режим production локально
+
+1. Установите зависимости командой `yarn bootstrap`
+2. `yarn build`
+3. `yarn preview`
+
+## Как запускать в Docker
+
 1. Проверить .env файл в нем должны быть указаны все зависимости указанные в .env.sample
-2. В командной строке docker-compose up -d
-2. Будут собраны 3 контейнера postgres, pgadmin, server
-3. Server запускается по адресу localhost:3001. pgadmin запускается по адресу localhost:8080
+2. В командной строке docker-compose build
+3. docker-compose up
+4. Будут собраны 3 контейнера postgres, pgadmin, server
+5. Server запускается по адресу localhost:3001. pgadmin запускается по адресу localhost:8080
+6. Документация к API доступна по url [swagger](http://localhost:3001/swagger/)
 
-### Как добавить зависимости?
+## Как добавить зависимости?
+
 В этом проекте используется `monorepo` на основе [`lerna`](https://github.com/lerna/lerna)
 
-Чтобы добавить зависимость для клиента 
+Чтобы добавить зависимость для клиента
 ```yarn lerna add {your_dep} --scope client```
 
 Для сервера
@@ -24,14 +67,10 @@
 И для клиента и для сервера
 ```yarn lerna add {your_dep}```
 
-
 Если вы хотите добавить dev зависимость, проделайте то же самое, но с флагом `dev`
 ```yarn lerna add {your_dep} --dev --scope server```
 
-
 ### Тесты
-
-Для клиента используется [`react-testing-library`](https://testing-library.com/docs/react-testing-library/intro/)
 
 ```yarn test```
 
@@ -48,37 +87,12 @@
 ```yarn build```
 
 И чтобы посмотреть что получилось
-
-
-`yarn preview --scope client`
 `yarn preview --scope server`
 
 ## Хуки
+
 В проекте используется [lefthook](https://github.com/evilmartians/lefthook)
-Если очень-очень нужно пропустить проверки, используйте `--no-verify` (но не злоупотребляйте :)
-
-## Ой, ничего не работает :(
-
-Откройте issue, я приду :)
 
 ## Автодеплой статики на vercel
 
 [BOMBERMAN](https://28-mf-teamwork-01-client.vercel.app/)
-
-Зарегистрируйте аккаунт на [vercel](https://vercel.com/)
-Следуйте [инструкции](https://vitejs.dev/guide/static-deploy.html#vercel-for-git)
-В качестве `root directory` укажите `packages/client`
-
-Все ваши PR будут автоматически деплоиться на vercel. URL вам предоставит деплоящий бот
-
-## Production окружение в докере
-Перед первым запуском выполните `node init.js`
-
-
-`docker compose up` - запустит три сервиса
-1. nginx, раздающий клиентскую статику (client)
-2. node, ваш сервер (server)
-3. postgres, вашу базу данных (postgres)
-
-Если вам понадобится только один сервис, просто уточните какой в команде
-`docker compose up {sevice_name}`, например `docker compose up server`
