@@ -16,17 +16,18 @@ import cors from 'cors'
 
 export const createServer = async () => {
   const app = express()
+  
   const corsOptions = {
     origin: true,
     credentials: true,
   }
   app.use(cors(corsOptions))
-
+  
   try {
     await dbConnect()
   } catch (e) {
     console.log('Ошибка подключения к БД', e)
-  }
+  }  
 
   app.use('/api/v1/topics', authMiddleware, topicRouter)
   app.use('/api/v1/comments', authMiddleware, commentRouter)

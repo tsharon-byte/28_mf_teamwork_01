@@ -25,13 +25,14 @@ const useMusicPlayer = () => {
   }, [])
 
   const playMusic = useCallback(() => {
+    const gainNode = audioContext.createGain()
+    gainNode.gain.value = 0.1 // setting it to 10%
+    gainNode.connect(audioContext.destination)
     source = audioContext.createBufferSource()
 
     source.buffer = audioBuffer
 
-    const destination = audioContext.destination
-
-    source.connect(destination)
+    source.connect(gainNode)
 
     source.start()
   }, [])
