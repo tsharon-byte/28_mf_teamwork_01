@@ -28,7 +28,7 @@
 
 ## [Описание игры](./docs/scenario.md)
 
-## [Видео демонстрация задач 7-8 спринтов](https://www.vidline.com/player/V0ZRHDDK5N)
+## [Видео демонстрация задач 7-8 спринтов](https://www.vidline.com/share/V0ZRHDDK5N/4126aad33c07ee9227fbc90b11ea1e13)
 
 ## [Отчет об утечках памяти тут](./docs/MEMORYLEAKS.md)
 
