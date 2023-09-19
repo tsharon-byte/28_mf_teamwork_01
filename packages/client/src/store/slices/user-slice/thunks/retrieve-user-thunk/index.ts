@@ -1,14 +1,15 @@
-import { axiosInstance } from '../../../../../utils/http-transport'
-import { RETRIEVE_USER_URL } from '../../../../../constants/urls'
 import { IUser } from '../../types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { isAxiosError } from 'axios'
+import axios, { isAxiosError } from 'axios'
+import { API_ROOT } from '../../../../../hooks/use-oauth/constants'
 
 const retrieveUserThunk = createAsyncThunk(
   '/user/retrieveUserThunk',
   async (_, thunkAPI) => {
     try {
-      const response = await axiosInstance.get<IUser>(RETRIEVE_USER_URL)
+      const response = await axios.get<IUser>(`${API_ROOT}/auth/user`, {
+        withCredentials: true,
+      })
       return response.data
     } catch (error) {
       if (isAxiosError(error)) {
