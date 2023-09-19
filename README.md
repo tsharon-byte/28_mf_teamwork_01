@@ -28,7 +28,7 @@
 
 ## [Описание игры](./docs/scenario.md)
 
-## [Видео демонстрация задач 7-8 спринтов](TODO)
+## [Видео демонстрация задач 7-8 спринтов](https://www.vidline.com/player/V0ZRHDDK5N)
 
 ## [Отчет об утечках памяти тут](./docs/MEMORYLEAKS.md)
 
@@ -42,7 +42,8 @@
 ### Режим production локально
 
 1. Установите зависимости командой `yarn bootstrap`
-2. В режиме разработки запустите сервер `yarn dev:server`
+2. `yarn build`
+3. `yarn preview`
 
 ## Как запускать в Docker
 
