@@ -1,7 +1,6 @@
 import { TLoginData, TRegistrationData } from './type'
-import { axiosInstance } from '../../utils/http-transport'
-import axios, { AxiosResponse } from 'axios'
-import { API_ROOT } from '../../hooks/use-oauth/constants'
+import { axiosInstance, axioxProxyInstance } from '../../utils/http-transport'
+import { AxiosResponse } from 'axios'
 
 export const registration = (
   data: TRegistrationData
@@ -14,7 +13,7 @@ export const login = (data: TLoginData): Promise<AxiosResponse> => {
 }
 
 export const logout = (): Promise<AxiosResponse> => {
-  return axios.post(`${API_ROOT}/auth/logout`)
+  return axioxProxyInstance.post('auth/logout')
 }
 
 export const getUser = (): Promise<AxiosResponse> => {
