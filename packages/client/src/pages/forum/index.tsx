@@ -114,7 +114,7 @@ const Forum: FC = () => {
             {chats.length === 0 && (
               <>
                 <Title>No one discussion</Title>
-                <ForumImage />
+                <ForumImage mode={mode} />
               </>
             )}
             {chats.length > 0 && (
