@@ -15,7 +15,11 @@ import emojiRoute from './routes/emojiRoute'
 import themeRoute from './routes/theme-route'
 
 export const createServer = async () => {
-  await dbConnect()
+  try {
+    await dbConnect()
+  } catch (e) {
+    console.log('Ошибка подключения к БД', e)
+  }
 
   const app = express()
 
