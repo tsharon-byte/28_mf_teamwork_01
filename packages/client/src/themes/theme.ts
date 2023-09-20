@@ -229,7 +229,7 @@ const getDesignTokens = (mode: PaletteMode) =>
             MuiBackdrop: {
               styleOverrides: {
                 root: {
-                  backgroundColor: '#ffffff80',
+                  backgroundColor: '#504e4e',
                 },
               },
             },
