@@ -26,7 +26,7 @@ const Profile: FC = () => {
   const dispatch = useAppDispatch()
   const { logout } = useAuth()
   const { user } = useUser()
-  const { error } = useAppSelector(state => state.user, shallowEqual)
+  const { error, mode } = useAppSelector(state => state.user, shallowEqual)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [password, setPassword] = useState({ oldPassword: '', newPassword: '' })
   const inputRef = useRef<HTMLInputElement>(null)
@@ -87,7 +87,7 @@ const Profile: FC = () => {
         ref={inputRef}
         user={user}
       />
-      <ProfileInfo user={user} handleOpenModal={handleOpenModal} />
+      <ProfileInfo user={user} handleOpenModal={handleOpenModal} mode={mode} />
       <Button variant="contained" onClick={logout} sx={{ minWidth: 300 }}>
         Выйти
       </Button>

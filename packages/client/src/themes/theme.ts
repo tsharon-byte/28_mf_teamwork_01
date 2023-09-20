@@ -1,4 +1,5 @@
 import { createTheme, PaletteMode, ThemeOptions } from '@mui/material'
+import { Mode } from '../store/slices/user-slice/types'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -50,7 +51,7 @@ const getDesignTokens = (mode: PaletteMode) =>
               main: '#504e4e',
             },
             bronze: {
-              main: '#422202',
+              main: '#804407',
             },
             background: {
               default: '#ffffff',
@@ -236,7 +237,7 @@ const getDesignTokens = (mode: PaletteMode) =>
               styleOverrides: {
                 root: {
                   form: {
-                    backgroundColor: '#c5c9b6',
+                    backgroundColor: '#797a75',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -503,6 +504,6 @@ const getDesignTokens = (mode: PaletteMode) =>
     },
   } as ThemeOptions)
 
-export const theme = (mode: 'dark' | 'light') => {
+export const theme = (mode: Mode) => {
   return createTheme(getDesignTokens(mode))
 }

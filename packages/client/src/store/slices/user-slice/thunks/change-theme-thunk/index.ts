@@ -1,10 +1,11 @@
 import { beInstance } from '../../../../../utils/http-transport'
 import { APP_THEME_URL } from '../../../../../constants/urls'
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { Mode } from '../../types'
 
 const changeThemeThunk = createAsyncThunk(
   '/theme/changeThemeThunk',
-  async (mode: 'dark' | 'light', thunkAPI) => {
+  async (mode: Mode, thunkAPI) => {
     try {
       const response = await beInstance.post(APP_THEME_URL, { mode })
       return response.data

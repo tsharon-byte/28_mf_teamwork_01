@@ -1,5 +1,6 @@
 import { ReactNode, UIEventHandler } from 'react'
 import IPageLayoutProps from '../page-layout/types'
+import { Mode } from '../../store/slices/user-slice/types'
 
 interface IContentLayoutProps {
   header?: ReactNode
@@ -11,7 +12,7 @@ interface IContentLayoutProps {
   footerClassName?: string
   pageClassNames?: Omit<IPageLayoutProps, 'children' | 'navigation'>
   onScroll?: UIEventHandler<HTMLDivElement>
-  mode?: 'dark' | 'light'
+  mode?: Mode
   toggleTheme?: () => void
 }
 

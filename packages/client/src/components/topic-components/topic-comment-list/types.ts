@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { IUser } from '../../../store/slices/user-slice/types'
+import { IUser, Mode } from '../../../store/slices/user-slice/types'
 import { Nullable } from '../../../types'
 
 export type TopicCommentListType = {
@@ -8,7 +8,7 @@ export type TopicCommentListType = {
   footer: ReactNode
   user: Nullable<IUser>
   title: string
-  mode: 'dark' | 'light'
+  mode: Mode
   toggleTheme: () => void
 }
 

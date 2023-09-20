@@ -7,7 +7,7 @@
 }
 
 .done:hover {
-  transition: 0.25 ease-in;
+  transition: 0.25s ease-in;
   cursor: pointer;
   color: #ffd54f;
 }

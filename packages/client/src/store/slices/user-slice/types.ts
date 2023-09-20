@@ -17,7 +17,7 @@ export interface IUserState {
   loading: boolean
   user: Nullable<IUser>
   error: Nullable<IError>
-  mode: 'dark' | 'light'
+  mode: Mode
 }
 
 export interface IPasswordData {
@@ -37,3 +37,5 @@ export interface IUserUpdateData {
   email: string
   phone: string
 }
+
+export type Mode = 'dark' | 'light'

@@ -5,7 +5,8 @@
 .page {
   background-image: url('/img/home-page.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-position-x: -14px;
+  background-size: 102% 100%;
 }
 
 .main {

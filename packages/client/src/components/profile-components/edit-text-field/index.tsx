@@ -28,7 +28,7 @@ export const EditTextField: FC<EditTextFieldType> = memo(
     const [isEditing, setIsEditing] = useState(false)
     const textFieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
     const callbacks = {
-      hanldeChange: useCallback(
+      handleChange: useCallback(
         (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
           if (isEditing) {
             const { value } = e.currentTarget
@@ -54,7 +54,7 @@ export const EditTextField: FC<EditTextFieldType> = memo(
         name={name}
         label={label}
         value={currentValue}
-        onChange={callbacks.hanldeChange}
+        onChange={callbacks.handleChange}
         validationRules={validationRules}
         InputProps={{
           endAdornment: (

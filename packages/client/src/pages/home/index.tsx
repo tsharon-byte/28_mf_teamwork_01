@@ -37,17 +37,18 @@ const Home: FC = () => {
         <Title>Bomberman</Title>
         <Button
           component={NavLink}
+          color="secondary"
+          variant="contained"
           to="/game"
-          variant="outlined"
           size="large"
-          color="inherit"
           className={styles.button}>
           Начать игру
         </Button>
         <Button
+          color="secondary"
+          variant="contained"
           className={styles.link}
           onClick={() => setOpen(!open)}
-          variant="outlined"
           size="large">
           Правила игры
         </Button>

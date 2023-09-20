@@ -19,7 +19,7 @@ const YandexLogin: FC = () => {
 
   return (
     <IconButton className={styles.iconButton} href={url}>
-      <YandexIcon />
+      <YandexIcon color="inherit" />
     </IconButton>
   )
 }

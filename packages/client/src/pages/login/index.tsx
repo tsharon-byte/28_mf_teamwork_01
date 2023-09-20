@@ -1,6 +1,6 @@
 import { FC, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from '@mui/material'
+import { Button, Link as MuiLink } from '@mui/material'
 import { Form, TextField } from '../../components'
 import {
   loginValidationRule,
@@ -53,7 +53,11 @@ const Login: FC = () => {
             <YandexLogin />
             <div className={styles.textBlock}>
               <span>Нет аккаунта?</span>
-              <Link to={ROUTE_PATH.REGISTRATION}>Зарегистрироваться</Link>
+              <Link to={ROUTE_PATH.REGISTRATION} className={styles.link}>
+                <MuiLink underline="always" variant="inherit">
+                  Зарегистрироваться
+                </MuiLink>
+              </Link>
             </div>
           </div>
         </div>
