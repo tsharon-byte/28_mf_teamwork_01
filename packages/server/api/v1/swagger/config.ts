@@ -4,7 +4,7 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Forum API',
+      title: 'API',
       version: '1.0.0',
     },
     components: {
@@ -16,6 +16,15 @@ const options: swaggerJsdoc.Options = {
         },
       },
       schemas: {
+        ThemeModel: {
+          type: 'object',
+          required: ['mode'],
+          properties: {
+            mode: {
+              type: 'string',
+            },
+          },
+        },
         TopicModel: {
           type: 'object',
           required: ['id', 'name', 'authorId', 'createdAt'],
@@ -55,7 +64,7 @@ const options: swaggerJsdoc.Options = {
             },
             parentId: {
               type: 'number',
-              nullabel: true,
+              nullable: true,
             },
             authorId: {
               type: 'number',
@@ -139,6 +148,70 @@ const options: swaggerJsdoc.Options = {
       },
     },
     paths: {
+      '/api/theme/': {
+        post: {
+          tags: ['Theme'],
+          summary: 'Change theme',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ThemeModel',
+                },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: 'Theme changed',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/ThemeModel',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal Server Error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/ErrorResponse',
+                  },
+                },
+              },
+            },
+          },
+        },
+        get: {
+          tags: ['Theme'],
+          summary: 'Get current theme',
+          responses: {
+            200: {
+              description: 'Current theme',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/ThemeModel',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal Server Error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/ErrorResponse',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
       '/api/v1/topics/': {
         post: {
           tags: ['Topic'],
@@ -869,7 +942,11 @@ const options: swaggerJsdoc.Options = {
       },
     },
   },
-  apis: ['./api/v1/routers/topic.ts', './api/v1/routers/comment.ts'],
+  apis: [
+    './api/v1/routers/topic.ts',
+    './api/v1/routers/comment.ts',
+    './api/v1/routers/theme.ts',
+  ],
 }
 
 export default options

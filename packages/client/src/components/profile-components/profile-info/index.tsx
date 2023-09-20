@@ -15,7 +15,7 @@ import styles from './styles.module.css'
 export const ProfileInfo: FC<ProfileInfoType> = memo(props => {
   const { user, handleOpenModal, mode, handleUpdateUserSubmit } = props
   const mainColor = mode === 'light' ? '#000000' : '#FFFFFF'
-  const hoverColor = mode === 'light' ? '#322E2E' : '#FFD54F'
+  const hoverColor = mode === 'light' ? '#a26565' : '#FFD54F'
   return (
     <Form
       validator={updateUserValidator}
