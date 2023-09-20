@@ -58,24 +58,7 @@ export const createServer = async () => {
       express.static(path.resolve(DIST_DIR, 'service-worker.js'))
     )
   }
-  // app.get('/api/theme', express.json(), async (_, res) => {
-  //   try {
-  //     const theme = await ThemeModel.findAll()
-  //     res.status(200).send(theme)
-  //   } catch (error) {
-  //     res.status(500).send({ error })
-  //   }
-  // })
 
-  // app.post('/api/theme', async (req, res) => {
-  //   try {
-  //     const { mode } = req.body
-  //     const theme = await ThemeModel.create({ mode })
-  //     res.status(201).send(theme)
-  //   } catch (error) {
-  //     res.status(500).send({ error })
-  //   }
-  // })
   app.use('/api/emoji', emojiRoute)
   app.use('/api/theme', themeRoute)
   app.get('/api/*', (_, res) => {
