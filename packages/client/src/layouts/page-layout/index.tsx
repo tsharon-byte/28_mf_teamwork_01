@@ -31,7 +31,7 @@ const PageLayout: FC<IPageLayoutProps> = ({
           <NavLink to="/leaderboard">Доска лидеров</NavLink>
           <NavLink to="/forum">Форум</NavLink>
           <IconButton onClick={toggleTheme} color="inherit">
-            {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            {theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
           <Auth />
         </Navigation>
