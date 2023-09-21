@@ -21,7 +21,6 @@ import { createCommentsThunk } from '../../../store/slices/comments-slice/thunks
 import getCommentsByIdThunk from '../../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
 import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
-import useComments from '../../../hooks/use-comments'
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
