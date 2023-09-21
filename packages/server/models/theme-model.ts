@@ -10,7 +10,6 @@ export interface ThemeModel {
 export const themeModel: ModelAttributes<Model, ThemeModel> = {
   id: {
     type: DataType.INTEGER,
-    autoIncrement: true,
     primaryKey: true,
   },
   mode: {
