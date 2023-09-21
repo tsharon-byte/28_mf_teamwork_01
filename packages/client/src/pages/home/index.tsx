@@ -7,7 +7,6 @@ import styles from './styles.module.css'
 import StyledDialog from '../../components/dialog/StyledDialog'
 import GameRules from '../../components/game-rules/GameRules'
 import { useOAuth } from '../../hooks'
-
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 
 import { userSelector } from '../../store/slices/user-slice/selectors'

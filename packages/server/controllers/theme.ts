@@ -2,9 +2,8 @@ import type { Handler } from 'express'
 import { Theme } from '../db'
 
 export const getTheme: Handler = (_, res) => {
-  Theme.findOne({
+  Theme.findAll({
     attributes: ['mode'],
-    order: [['id', 'DESC']],
   })
     .then(mode => {
       res.status(200).send(mode)
@@ -16,7 +15,14 @@ export const getTheme: Handler = (_, res) => {
 
 export const changeTheme: Handler = (req, res) => {
   const { mode } = req.body
-  Theme.create({ mode })
+  Theme.update(
+    { mode },
+    {
+      where: {
+        id: 1,
+      },
+    }
+  )
     .then(() => {
       res.status(200).send({ mode })
     })
