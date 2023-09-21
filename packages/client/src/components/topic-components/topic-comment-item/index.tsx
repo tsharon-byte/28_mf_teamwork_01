@@ -25,11 +25,13 @@ import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
     ({ text, author, date, id, topicId, replyComments, isReply }, ref) => {
+      const dispatch = useAppDispatch()
+
+      const { foundUsers } = useAppSelector(userSelector)
+
       const [isOpenModal, setIsOpenModal] = useState(false)
       const [message, setMessage] = useState('')
 
-      const dispatch = useAppDispatch()
-      const { foundUsers } = useAppSelector(userSelector)
       const foundUser = useMemo(
         () => foundUsers.find(user => user.id === author),
         [foundUsers]
