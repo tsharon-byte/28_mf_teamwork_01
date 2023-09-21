@@ -21,6 +21,7 @@ import { createCommentsThunk } from '../../../store/slices/comments-slice/thunks
 import getCommentsByIdThunk from '../../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
 import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
+import useComments from '../../../hooks/use-comments'
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
@@ -31,6 +32,7 @@ export const TopicCommentItem = memo(
 
       const [isOpenModal, setIsOpenModal] = useState(false)
       const [message, setMessage] = useState('')
+      const { error } = useComments()
 
       const foundUser = useMemo(
         () => foundUsers.find(user => user.id === author),
@@ -140,6 +142,7 @@ export const TopicCommentItem = memo(
             handleChangeMessage={handleChangeMessage}
             handleSendReply={handleSendReply}
             handleCancel={handleCancel}
+            error={error?.message}
           />
         </>
       )

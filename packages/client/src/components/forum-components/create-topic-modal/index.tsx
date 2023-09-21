@@ -36,7 +36,6 @@ export const CreateTopicModal: FC<CreateTopicModalType> = memo(
             className={styles.field}
             onChange={handleChangeChatDescription}
             label="Описание"
-            required
           />
           {error && (
             <Typography variant="body1" color="error">

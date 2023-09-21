@@ -60,7 +60,7 @@ const Forum: FC = () => {
   const handleCreateChatSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      if (chatName.trim() !== '' && chatDescription.trim() !== '') {
+      if (chatName.trim() !== '') {
         dispatch(
           createChatThunk({ name: chatName, description: chatDescription })
         )
@@ -73,7 +73,7 @@ const Forum: FC = () => {
           })
       }
     },
-    [chatName, chatDescription]
+    [chatName]
   )
   const handleOpenModal = useCallback(() => setIsOpenModal(true), [])
   const handleCloseModal = useCallback(() => setIsOpenModal(false), [])

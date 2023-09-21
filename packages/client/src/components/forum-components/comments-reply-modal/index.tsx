@@ -13,6 +13,7 @@ const CommentsReplyModal: FC<TCommentsReplyModal> = ({
   handleSendReply,
   handleCancel,
   handleChangeMessage,
+  error,
 }) => {
   return (
     <Modal open={isOpenModal} onClose={handleCloseModal}>
@@ -29,6 +30,11 @@ const CommentsReplyModal: FC<TCommentsReplyModal> = ({
           label="Сообщение"
           required
         />
+        {error && (
+          <Typography variant="body1" color="error">
+            {error}
+          </Typography>
+        )}
         <Box className={styles.buttons}>
           <Button
             variant="contained"
