@@ -16,7 +16,7 @@ export const getTheme: Handler = (_, res) => {
 export const changeTheme: Handler = (req, res) => {
   const { mode } = req.body
   Theme.update(
-    { mode },
+    { id: 1, mode },
     {
       where: {
         id: 1,

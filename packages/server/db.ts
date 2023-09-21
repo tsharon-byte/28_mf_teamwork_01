@@ -46,6 +46,7 @@ const connect = async () => {
     await sequelize.sync()
     Theme.sync({ force: true }).then(() => {
       Theme.create({
+        id: 1,
         mode: 'dark',
       })
     })
