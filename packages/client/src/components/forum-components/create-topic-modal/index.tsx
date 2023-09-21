@@ -30,11 +30,13 @@ export const CreateTopicModal: FC<CreateTopicModalType> = memo(
             className={styles.field}
             onChange={handleChangeChatName}
             label="Создание темы"
+            required
           />
           <TextField
             className={styles.field}
             onChange={handleChangeChatDescription}
             label="Описание"
+            required
           />
           {error && (
             <Typography variant="body1" color="error">

@@ -1,18 +1,11 @@
-import React, { ChangeEvent, FC, FormEvent, memo } from 'react'
+import React, { FC, memo } from 'react'
 import { Box, Button, Modal, Typography } from '@mui/material'
 import Form from '../../form'
 import styles from '../create-topic-modal/styles.module.css'
 import IconButton from '@mui/material/IconButton'
 import { Close } from '@mui/icons-material'
 import TextField from '../../text-field'
-
-export type TCommentsReplyModal = {
-  isOpenModal: boolean
-  handleCloseModal: () => void
-  handleSendReply: (e: FormEvent<HTMLFormElement>) => void
-  handleCancel: () => void
-  handleChangeMessage: (e: ChangeEvent<HTMLInputElement>) => void
-}
+import { TCommentsReplyModal } from './types'
 
 const CommentsReplyModal: FC<TCommentsReplyModal> = ({
   isOpenModal = false,
@@ -34,6 +27,7 @@ const CommentsReplyModal: FC<TCommentsReplyModal> = ({
           className={styles.field}
           onChange={handleChangeMessage}
           label="Сообщение"
+          required
         />
         <Box className={styles.buttons}>
           <Button
