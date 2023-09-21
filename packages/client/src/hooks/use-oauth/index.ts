@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { axiosInstance, axioxProxyInstance } from '../../utils/http-transport'
+import { axiosInstance } from '../../utils/http-transport'
 import {
   CLIENT_ID_RETRIEVE_URL,
   REDIRECT_URI,
@@ -26,7 +26,7 @@ const useOAuth = () => {
     setSearchParams(searchParams)
     if (!user && code) {
       try {
-        const response = await axioxProxyInstance.post(YANDEX_LOGIN_URL, {
+        const response = await axiosInstance.post(YANDEX_LOGIN_URL, {
           code,
           redirect_uri: REDIRECT_URI,
         })

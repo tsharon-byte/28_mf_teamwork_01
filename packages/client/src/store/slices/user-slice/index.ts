@@ -17,7 +17,7 @@ const initialState: IUserState = {
   loading: false,
   user: null,
   error: null,
-  foundUser: null,
+  foundUsers: [],
 }
 
 const userSlice = createSlice({
@@ -90,7 +90,7 @@ const userSlice = createSlice({
         (state, action: PayloadAction<IUser>) => {
           state.loading = false
           state.error = null
-          state.foundUser = action.payload
+          state.foundUsers = [...state.foundUsers, action.payload]
         }
       )
       .addCase(

@@ -29,27 +29,32 @@ const ForumTopic: FC = () => {
   const { topicId } = params
   const { chats, loading, currentChat } = useChats()
 
-  const { foundUser } = useAppSelector(userSelector)
+  const { foundUsers } = useAppSelector(userSelector)
   const [message, setMessage] = useState('')
   const { comments } = useComments()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const filteredComments: TComments = useMemo(() => {
+  const commentByTopicId: TComments = useMemo(() => {
     const rows = comments.rows.filter(
       comment => comment.topicId === Number(topicId)
     )
     return { count: rows.length, rows }
   }, [comments, topicId])
 
+  const foundUser = useMemo(
+    () => foundUsers.find(user => currentChat?.authorId === user.id),
+    [currentChat]
+  )
+
   useEffect(() => {
-    if (!foundUser && currentChat) {
+    if (chats && currentChat) {
       dispatch(getUserThunk(currentChat.authorId))
     }
   }, [currentChat])
 
   useEffect(() => {
-    if (chats.rows.length !== 0 && topicId) {
+    if (topicId) {
       dispatch(getCurrentChat(topicId))
     }
   }, [chats, topicId, dispatch])
@@ -99,8 +104,8 @@ const ForumTopic: FC = () => {
   return (
     <TopicCommentList
       title={currentChat.name}
-      user={foundUser}
-      comments={filteredComments}
+      user={foundUser || null}
+      comments={commentByTopicId}
       header={
         <TopicHeader
           callback={handleNavigate}

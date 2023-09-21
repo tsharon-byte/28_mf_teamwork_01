@@ -1,5 +1,5 @@
 import { TLoginData, TRegistrationData } from './type'
-import { axiosInstance, axioxProxyInstance } from '../../utils/http-transport'
+import { axiosInstance } from '../../utils/http-transport'
 import { AxiosResponse } from 'axios'
 
 export const registration = (
@@ -13,7 +13,7 @@ export const login = (data: TLoginData): Promise<AxiosResponse> => {
 }
 
 export const logout = (): Promise<AxiosResponse> => {
-  return axioxProxyInstance.post('auth/logout')
+  return axiosInstance.post('auth/logout')
 }
 
 export const getUser = (): Promise<AxiosResponse> => {

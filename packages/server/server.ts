@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import express from 'express'
+import express, { json } from 'express'
 import process from 'process'
 import type { ViteDevServer } from 'vite'
 import { createServer as createViteServer } from 'vite'
@@ -16,22 +16,19 @@ import cors from 'cors'
 
 export const createServer = async () => {
   const app = express()
-  
+
   const corsOptions = {
     origin: true,
     credentials: true,
   }
+
   app.use(cors(corsOptions))
-  
+
   try {
     await dbConnect()
   } catch (e) {
     console.log('Ошибка подключения к БД', e)
-  }  
-
-  app.use('/api/v1/topics', authMiddleware, topicRouter)
-  app.use('/api/v1/comments', authMiddleware, commentRouter)
-  app.use('/api/v1/emoji', emojiRoute)
+  }
 
   useSwagger(app)
 
@@ -67,6 +64,11 @@ export const createServer = async () => {
       target: 'https://ya-praktikum.tech',
     })
   )
+
+  app.use(json())
+  app.use('/api/v1/topics', authMiddleware, topicRouter)
+  app.use('/api/v1/comments', authMiddleware, commentRouter)
+  app.use('/api/v1/emoji', emojiRoute)
 
   app.get('/api/*', (_, res) => {
     res.json('👋 Howdy from the server :)')

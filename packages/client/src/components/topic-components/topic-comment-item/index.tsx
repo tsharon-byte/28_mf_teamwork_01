@@ -5,6 +5,7 @@ import React, {
   memo,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
 import { Avatar, Box, Button, Paper, Typography } from '@mui/material'
@@ -20,6 +21,7 @@ import { createCommentsThunk } from '../../../store/slices/comments-slice/thunks
 import getCommentsByIdThunk from '../../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
 import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
+import useComments from '../../../hooks/use-comments'
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
@@ -28,13 +30,15 @@ export const TopicCommentItem = memo(
       const [message, setMessage] = useState('')
 
       const dispatch = useAppDispatch()
-      const { foundUser } = useAppSelector(userSelector)
+      const { foundUsers } = useAppSelector(userSelector)
+      const foundUser = useMemo(
+        () => foundUsers.find(user => user.id === author),
+        [foundUsers]
+      )
 
       useEffect(() => {
-        if (!foundUser) {
-          dispatch(getUserThunk(author))
-        }
-      }, [author])
+        dispatch(getUserThunk(author))
+      }, [])
 
       const handleOpenModal = useCallback(() => setIsOpenModal(() => true), [])
       const handleCloseModal = useCallback(
@@ -93,7 +97,7 @@ export const TopicCommentItem = memo(
               <Box>
                 <Box position="relative">
                   <Typography variant="body1" color="secondary">
-                    {foundUser?.display_name}
+                    {foundUser?.display_name || foundUser?.first_name}
                   </Typography>
                   <TopicCommentMenu />
                 </Box>
