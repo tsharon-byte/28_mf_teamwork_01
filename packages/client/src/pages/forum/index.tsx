@@ -24,6 +24,7 @@ import { SearchAndSelectBox } from '../../components/forum-components/search-and
 import { Title } from '../../components'
 import { userSelector } from '../../store/slices/user-slice/selectors'
 import { changeThemeThunk } from '../../store/slices/user-slice/thunks'
+import { useTheme } from '../../hooks/use-theme'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
@@ -32,11 +33,7 @@ const Forum: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [chatName, setChatName] = useState('')
   const navigate = useNavigate()
-  const { mode } = useAppSelector(userSelector)
-  const toggleThemeCallback = useCallback(() => {
-    const newMode = mode === 'dark' ? 'light' : 'dark'
-    dispatch(changeThemeThunk(newMode))
-  }, [mode])
+  const { theme, toggleThemeCallback } = useTheme()
   useEffect(() => {
     setChangedChats(chats)
   }, [chats])
@@ -98,7 +95,7 @@ const Forum: FC = () => {
   return (
     <>
       <ContentLayout
-        mode={mode}
+        theme={theme}
         toggleTheme={toggleThemeCallback}
         header={chats.length > 0 && <Title>any ideas for discussion?</Title>}
         footer={
@@ -114,7 +111,7 @@ const Forum: FC = () => {
             {chats.length === 0 && (
               <>
                 <Title>No one discussion</Title>
-                <ForumImage mode={mode} />
+                <ForumImage theme={theme} />
               </>
             )}
             {chats.length > 0 && (

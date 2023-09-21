@@ -18,9 +18,12 @@ const options: swaggerJsdoc.Options = {
       schemas: {
         ThemeModel: {
           type: 'object',
-          required: ['mode'],
+          required: ['userId', 'mode'],
           properties: {
-            mode: {
+            userId: {
+              type: 'number',
+            },
+            theme: {
               type: 'string',
             },
           },
@@ -148,23 +151,25 @@ const options: swaggerJsdoc.Options = {
       },
     },
     paths: {
-      '/api/theme/': {
-        post: {
+      '/api/theme/{userId}/': {
+        get: {
           tags: ['Theme'],
-          summary: 'Change theme',
-          requestBody: {
-            required: true,
-            content: {
-              'application/json': {
-                schema: {
-                  $ref: '#/components/schemas/ThemeModel',
-                },
+          summary: 'Get current theme',
+          parameters: [
+            {
+              in: 'path',
+              name: 'userId',
+              required: true,
+              schema: {
+                type: 'integer',
+                minimum: 1,
               },
+              description: 'The user ID',
             },
-          },
+          ],
           responses: {
             200: {
-              description: 'Theme changed',
+              description: 'Current theme',
               content: {
                 'application/json': {
                   schema: {
@@ -185,12 +190,24 @@ const options: swaggerJsdoc.Options = {
             },
           },
         },
-        get: {
+      },
+      '/api/theme/': {
+        post: {
           tags: ['Theme'],
-          summary: 'Get current theme',
+          summary: 'Change theme',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ThemeModel',
+                },
+              },
+            },
+          },
           responses: {
             200: {
-              description: 'Current theme',
+              description: 'Theme changed',
               content: {
                 'application/json': {
                   schema: {

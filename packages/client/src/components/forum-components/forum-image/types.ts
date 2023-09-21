@@ -1,5 +1,5 @@
-import { Mode } from '../../../store/slices/user-slice/types'
+import { ThemeType } from '../../../store/slices/user-slice/types'
 
 export type ForumImageType = {
-  mode: Mode
+  theme: ThemeType
 }

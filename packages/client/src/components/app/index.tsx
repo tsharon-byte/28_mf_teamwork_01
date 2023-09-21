@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
-import { theme } from '../../themes/theme'
+import { theme as appTheme } from '../../themes/theme'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 import { ROUTE_PATH } from '../../utils/constants'
@@ -18,19 +18,15 @@ import Forum from '../../pages/forum'
 import ForumTopic from '../../pages/forum-topic'
 import EndGame from '../../pages/end-game'
 import Page500 from '../../pages/page-500'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { userSelector } from '../../store/slices/user-slice/selectors'
-import { retrieveThemeThunk } from '../../store/slices/user-slice/thunks'
+import { useTheme } from '../../hooks/use-theme'
 const App: FC = () => {
-  const dispatch = useAppDispatch()
-  const { mode } = useAppSelector(userSelector)
+  const { theme, getTheme } = useTheme()
   useEffect(() => {
-    dispatch(retrieveThemeThunk())
+    getTheme()
   }, [])
 
-  const appTheme = theme(mode)
   return (
-    <ThemeProvider theme={appTheme}>
+    <ThemeProvider theme={appTheme(theme)}>
       <CssBaseline />
       <Routes>
         <Route errorElement={<ErrorPage />}>

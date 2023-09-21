@@ -15,13 +15,13 @@ const ContentLayout: FC<IContentLayoutProps> = ({
   footerClassName,
   pageClassNames,
   onScroll,
-  mode,
+  theme,
   toggleTheme,
 }) => (
   <PageLayout
     navigation={navigation}
     {...pageClassNames}
-    mode={mode}
+    theme={theme}
     toggleTheme={toggleTheme}>
     {header && (
       <Box className={classNames(styles.header, headerClassName)}>{header}</Box>

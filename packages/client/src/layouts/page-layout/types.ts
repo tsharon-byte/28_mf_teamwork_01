@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Mode } from '../../store/slices/user-slice/types'
+import { ThemeType } from '../../store/slices/user-slice/types'
 
 interface IPageLayoutProps {
   children: ReactNode
@@ -8,7 +8,7 @@ interface IPageLayoutProps {
   headerClassName?: string
   mainClassName?: string
   footerClassName?: string
-  mode?: Mode
+  theme?: ThemeType
   toggleTheme?: () => void
 }
 

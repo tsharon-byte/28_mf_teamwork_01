@@ -20,17 +20,18 @@ import { useNavigate } from 'react-router-dom'
 import { ProfileAvatar } from '../../components/profile-components/profile-avatar'
 import { ChangePasswordModal } from '../../components/profile-components/change-password-modal'
 import { ProfileInfo } from '../../components/profile-components/profile-info'
+import { useTheme } from '../../hooks/use-theme'
 
 const Profile: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { logout } = useAuth()
   const { user } = useUser()
-  const { error, mode } = useAppSelector(state => state.user, shallowEqual)
+  const { error } = useAppSelector(state => state.user, shallowEqual)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [password, setPassword] = useState({ oldPassword: '', newPassword: '' })
   const inputRef = useRef<HTMLInputElement>(null)
-
+  const { theme } = useTheme()
   const handleBackNavigate = useCallback(() => navigate(-1 || '/'), [])
   const handleChangePasswordSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -87,7 +88,11 @@ const Profile: FC = () => {
         ref={inputRef}
         user={user}
       />
-      <ProfileInfo user={user} handleOpenModal={handleOpenModal} mode={mode} />
+      <ProfileInfo
+        user={user}
+        handleOpenModal={handleOpenModal}
+        theme={theme}
+      />
       <Button variant="contained" onClick={logout} sx={{ minWidth: 300 }}>
         Выйти
       </Button>

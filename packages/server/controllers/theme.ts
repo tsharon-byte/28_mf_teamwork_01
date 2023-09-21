@@ -1,12 +1,16 @@
 import type { Handler } from 'express'
 import { Theme } from '../db'
 
-export const getTheme: Handler = (_, res) => {
-  Theme.findAll({
-    attributes: ['mode'],
+export const getTheme: Handler = (req, res) => {
+  const userId = req.params.userId
+  Theme.findOne({
+    where: {
+      userId: userId,
+    },
+    attributes: ['theme'],
   })
-    .then(mode => {
-      res.status(200).send(mode)
+    .then(theme => {
+      res.status(200).send(theme)
     })
     .catch(error => {
       res.status(500).send(error)
@@ -14,17 +18,17 @@ export const getTheme: Handler = (_, res) => {
 }
 
 export const changeTheme: Handler = (req, res) => {
-  const { mode } = req.body
+  const { theme, userId } = req.body
   Theme.update(
-    { id: 1, mode },
+    { theme },
     {
       where: {
-        id: 1,
+        userId: userId,
       },
     }
   )
     .then(() => {
-      res.status(200).send({ mode })
+      res.status(200).send({ theme })
     })
     .catch(error => {
       res.status(500).send(error)

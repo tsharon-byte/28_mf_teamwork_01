@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUserState, IUser, Mode } from './types'
+import { IUserState, IUser, ThemeType } from './types'
 import IError from '../../../helpers/prepare-error/types'
 import {
   retrieveUserThunk,
@@ -18,7 +18,7 @@ const initialState: IUserState = {
   loading: false,
   user: null,
   error: null,
-  mode: 'dark',
+  theme: 'dark',
 }
 
 const userSlice = createSlice({
@@ -88,9 +88,9 @@ const userSlice = createSlice({
       })
       .addCase(
         changeThemeThunk.fulfilled,
-        (state, action: PayloadAction<{ mode: Mode }>) => {
-          const { mode } = action.payload
-          state.mode = mode
+        (state, action: PayloadAction<{ theme: ThemeType }>) => {
+          const { theme } = action.payload
+          state.theme = theme
           state.loading = false
           state.error = null
         }
@@ -108,9 +108,9 @@ const userSlice = createSlice({
       })
       .addCase(
         retrieveThemeThunk.fulfilled,
-        (state, action: PayloadAction<{ mode: Mode }>) => {
-          const { mode } = action.payload
-          state.mode = mode
+        (state, action: PayloadAction<{ theme: ThemeType }>) => {
+          const { theme } = action.payload
+          state.theme = theme
           state.loading = false
           state.error = null
         }

@@ -16,7 +16,7 @@ const PageLayout: FC<IPageLayoutProps> = ({
   headerClassName,
   mainClassName,
   footerClassName,
-  mode,
+  theme,
   toggleTheme,
 }) => (
   <Box className={classNames(styles.page, pageClassName)}>

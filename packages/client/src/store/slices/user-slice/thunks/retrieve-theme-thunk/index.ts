@@ -4,9 +4,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 const retrieveThemeThunk = createAsyncThunk(
   '/theme/retrieveThemeThunk',
-  async (_, thunkAPI) => {
+  async (userId: number, thunkAPI) => {
     try {
-      const response = await beInstance.get(APP_THEME_URL)
+      const response = await beInstance.get(`${APP_THEME_URL}?userId=${userId}`)
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue('Не удалось получить тему')

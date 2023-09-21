@@ -4,16 +4,22 @@ import { DataType } from 'sequelize-typescript'
 
 export interface ThemeModel {
   id: number
-  mode: string
+  theme: string
+  userId: number | null
 }
 
 export const themeModel: ModelAttributes<Model, ThemeModel> = {
   id: {
     type: DataType.INTEGER,
     primaryKey: true,
+    autoIncrement: true,
   },
-  mode: {
+  theme: {
     type: DataType.STRING,
     allowNull: false,
+  },
+  userId: {
+    type: DataType.INTEGER,
+    allowNull: true,
   },
 }

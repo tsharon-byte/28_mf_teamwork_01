@@ -1,5 +1,5 @@
 import { createTheme, PaletteMode, ThemeOptions } from '@mui/material'
-import { Mode } from '../store/slices/user-slice/types'
+import { ThemeType } from '../store/slices/user-slice/types'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -504,6 +504,6 @@ const getDesignTokens = (mode: PaletteMode) =>
     },
   } as ThemeOptions)
 
-export const theme = (mode: Mode) => {
+export const theme = (mode: ThemeType) => {
   return createTheme(getDesignTokens(mode))
 }

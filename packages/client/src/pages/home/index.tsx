@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Button, Box } from '@mui/material'
 import { PageLayout } from '../../layouts'
@@ -7,20 +7,12 @@ import styles from './styles.module.css'
 import StyledDialog from '../../components/dialog/StyledDialog'
 import GameRules from '../../components/game-rules/GameRules'
 import { useOAuth } from '../../hooks'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-
-import { userSelector } from '../../store/slices/user-slice/selectors'
-import { changeThemeThunk } from '../../store/slices/user-slice/thunks'
+import { useTheme } from '../../hooks/use-theme'
 
 const Home: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
   const { yandexLogin } = useOAuth()
-  const dispatch = useAppDispatch()
-  const { mode } = useAppSelector(userSelector)
-  const toggleThemeCallback = useCallback(() => {
-    const newMode = mode === 'dark' ? 'light' : 'dark'
-    dispatch(changeThemeThunk(newMode))
-  }, [mode])
+  const { theme, toggleThemeCallback } = useTheme()
 
   useEffect(() => {
     yandexLogin()
@@ -30,7 +22,7 @@ const Home: FC = () => {
     <PageLayout
       pageClassName={styles.page}
       mainClassName={styles.main}
-      mode={mode}
+      theme={theme}
       toggleTheme={toggleThemeCallback}>
       <Box className={styles.content}>
         <Title>Bomberman</Title>
