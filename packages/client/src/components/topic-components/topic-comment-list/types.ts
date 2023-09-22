@@ -1,19 +1,12 @@
 import { ReactNode } from 'react'
 import { IUser } from '../../../store/slices/user-slice/types'
 import { Nullable } from '../../../types'
+import { TComments } from '../../../store/slices/comments-slice/types'
 
 export type TopicCommentListType = {
-  comments: CommentType[]
+  comments: TComments
   header: ReactNode
   footer: ReactNode
   user: Nullable<IUser>
   title: string
-}
-
-export type CommentType = {
-  id: string
-  text: string
-  author: string
-  date: string
-  avatar: string
 }

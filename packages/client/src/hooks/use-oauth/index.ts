@@ -3,9 +3,9 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { axiosInstance } from '../../utils/http-transport'
 import {
-  YANDEX_LOGIN_URL,
   CLIENT_ID_RETRIEVE_URL,
   REDIRECT_URI,
+  YANDEX_LOGIN_URL,
 } from './constants'
 import { ROUTE_PATH } from '../../utils/constants'
 import { prepareError } from '../../helpers'

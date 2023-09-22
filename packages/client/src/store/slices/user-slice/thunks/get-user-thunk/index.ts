@@ -1,14 +1,14 @@
+import { axiosInstance } from '../../../../../utils/http-transport'
+import { GET_USER_URL } from '../../../../../constants/urls'
 import { IUser } from '../../types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { isAxiosError } from 'axios'
-import { axiosInstance } from '../../../../../utils/http-transport'
-import { RETRIEVE_USER_URL } from '../../../../../constants/urls'
 
-const retrieveUserThunk = createAsyncThunk(
-  '/user/retrieveUserThunk',
-  async (_, thunkAPI) => {
+const getUserThunk = createAsyncThunk(
+  '/user/getUserThunk',
+  async (id: number, thunkAPI) => {
     try {
-      const response = await axiosInstance.get<IUser>(RETRIEVE_USER_URL)
+      const response = await axiosInstance.get<IUser>(`${GET_USER_URL}${id}`)
       return response.data
     } catch (error) {
       if (isAxiosError(error)) {
@@ -24,4 +24,4 @@ const retrieveUserThunk = createAsyncThunk(
   }
 )
 
-export default retrieveUserThunk
+export default getUserThunk

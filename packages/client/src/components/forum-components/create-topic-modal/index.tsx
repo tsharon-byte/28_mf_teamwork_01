@@ -13,7 +13,8 @@ export const CreateTopicModal: FC<CreateTopicModalType> = memo(
     handleCloseModal,
     handleCreateChatSubmit,
     handleCancel,
-    handleChange,
+    handleChangeChatName,
+    handleChangeChatDescription,
     error,
   }) => {
     return (
@@ -27,8 +28,14 @@ export const CreateTopicModal: FC<CreateTopicModalType> = memo(
           </Box>
           <TextField
             className={styles.field}
-            onChange={handleChange}
+            onChange={handleChangeChatName}
             label="Создание темы"
+            required
+          />
+          <TextField
+            className={styles.field}
+            onChange={handleChangeChatDescription}
+            label="Описание"
           />
           {error && (
             <Typography variant="body1" color="error">

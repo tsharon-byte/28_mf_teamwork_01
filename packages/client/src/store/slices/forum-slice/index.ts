@@ -1,10 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { getChatListThunk, createChatThunk } from './thunks'
-import { ChatType, ForumInitialState } from './types'
+import { ForumInitialState, TChatList } from './types'
 import IError from '../../../helpers/prepare-error/types'
 
 const initialState: ForumInitialState = {
-  chats: [],
+  chats: {
+    count: 0,
+    rows: [],
+  },
   loading: false,
   error: null,
   currentChat: null,
@@ -16,7 +19,7 @@ const forumSlice = createSlice({
   reducers: {
     getCurrentChat(state, { payload }: PayloadAction<string>) {
       const currentId = Number(payload)
-      const chat = state.chats.find(chat => chat.id === currentId)
+      const chat = state.chats.rows.find(chat => chat.id === currentId)
       if (chat) {
         state.currentChat = chat
       }
@@ -26,7 +29,7 @@ const forumSlice = createSlice({
     builder
       .addCase(
         getChatListThunk.fulfilled,
-        (state, { payload }: PayloadAction<ChatType[]>) => {
+        (state, { payload }: PayloadAction<TChatList>) => {
           state.chats = payload
           state.loading = false
         }

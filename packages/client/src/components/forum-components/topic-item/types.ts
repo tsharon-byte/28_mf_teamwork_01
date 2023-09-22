@@ -1,6 +1,6 @@
-import { ChatType } from '../../../store/slices/forum-slice/types'
+import { TChatItem } from '../../../store/slices/forum-slice/types'
 
 export type TopicItemType = {
-  chat: ChatType
+  chat: TChatItem
   handleNavigate: (id: number) => void
 }

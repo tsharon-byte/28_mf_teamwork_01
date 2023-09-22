@@ -33,7 +33,9 @@ export const TopicTextField: FC<TopicTextFieldType> = memo(
           ),
           endAdornment: message && (
             <InputAdornment position="end">
-              <SendIcon onClick={handleAddComment} className={styles.icon} />
+              <div onClick={handleAddComment}>
+                <SendIcon className={styles.icon} />
+              </div>
             </InputAdornment>
           ),
         }}

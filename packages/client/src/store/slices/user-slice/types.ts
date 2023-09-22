@@ -17,6 +17,7 @@ export interface IUserState {
   loading: boolean
   user: Nullable<IUser>
   error: Nullable<IError>
+  foundUsers: Array<IUser>
 }
 
 export interface IPasswordData {

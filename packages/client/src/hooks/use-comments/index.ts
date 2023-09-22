@@ -1,18 +1,18 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { forumSelector } from '../../store/slices/forum-slice/selectors'
-import { getChatListThunk } from '../../store/slices/forum-slice/thunks'
 import { useNavigate } from 'react-router-dom'
 import { ROUTE_PATH } from '../../utils/constants'
+import commentsSelector from '../../store/slices/comments-slice/selectors/comments-selector'
+import getCommentsByIdThunk from '../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
 
-const useChats = () => {
+const useComments = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { chats, currentChat, loading, error } = useAppSelector(forumSelector)
+  const { comments, loading, error } = useAppSelector(commentsSelector)
 
   useEffect(() => {
-    if (chats.rows.length === 0) {
-      dispatch(getChatListThunk())
+    if (comments.rows.length === 0) {
+      dispatch(getCommentsByIdThunk())
         .unwrap()
         .catch(() => {
           if (error?.status === 500) {
@@ -23,11 +23,10 @@ const useChats = () => {
   }, [])
 
   return {
-    chats,
-    currentChat,
-    loading,
+    comments,
+    loadingComments: loading,
     error,
   }
 }
 
-export default useChats
+export default useComments

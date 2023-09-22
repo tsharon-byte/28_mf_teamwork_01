@@ -29,16 +29,27 @@ const Forum: FC = () => {
   const [changedChats, setChangedChats] = useState(chats)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [chatName, setChatName] = useState('')
+  const [chatDescription, setChatDescription] = useState('')
   const navigate = useNavigate()
+
   useEffect(() => {
     setChangedChats(chats)
   }, [chats])
-  const handleChange = useCallback(
+
+  const handleChangeChatName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const { value } = e.currentTarget
       setChatName(value)
     },
     [setChatName]
+  )
+
+  const handleChangeChatDescription = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.currentTarget
+      setChatDescription(value)
+    },
+    [setChatDescription]
   )
 
   const handleCancel = useCallback(() => {
@@ -50,10 +61,13 @@ const Forum: FC = () => {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       if (chatName.trim() !== '') {
-        dispatch(createChatThunk(chatName))
+        dispatch(
+          createChatThunk({ name: chatName, description: chatDescription })
+        )
           .unwrap()
           .then(() => {
             setChatName('')
+            setChatDescription('')
             dispatch(getChatListThunk())
             setIsOpenModal(false)
           })
@@ -66,11 +80,15 @@ const Forum: FC = () => {
   const handleNavigate = useCallback((id: number) => {
     navigate(`${ROUTE_PATH.FORUM}/${id}`)
   }, [])
+
   const handleSearch = useCallback(
     (value: string) => {
       if (value.trim() !== '') {
-        const filteredChats = chats.filter(chat => chat.title.includes(value))
-        setChangedChats(filteredChats)
+        const filteredChats = {
+          ...chats,
+          rows: chats.rows.filter(chat => chat.name.includes(value)),
+        }
+        setChangedChats(() => filteredChats)
       } else if (value.trim() === '') {
         setChangedChats(chats)
       }
@@ -80,9 +98,17 @@ const Forum: FC = () => {
   const handleSelect = useCallback(
     (value: string) => {
       if (value === 'Сначала новые') {
-        setChangedChats([...changedChats].sort((a, b) => b.id - a.id))
+        const ASC = {
+          ...chats,
+          rows: [...chats.rows].sort((a, b) => b.id - a.id),
+        }
+        setChangedChats(() => ASC)
       } else if (value === 'Сначала старые') {
-        setChangedChats([...changedChats].sort((a, b) => a.id - b.id))
+        const DESC = {
+          ...chats,
+          rows: [...chats.rows].sort((a, b) => a.id - b.id),
+        }
+        setChangedChats(DESC)
       }
     },
     [changedChats]
@@ -91,7 +117,9 @@ const Forum: FC = () => {
   return (
     <>
       <ContentLayout
-        header={chats.length > 0 && <Title>any ideas for discussion?</Title>}
+        header={
+          chats.rows.length > 0 && <Title>any ideas for discussion?</Title>
+        }
         footer={
           <ForumFooter
             isOpenModal={isOpenModal}
@@ -102,19 +130,19 @@ const Forum: FC = () => {
           <CircularProgress />
         ) : (
           <>
-            {chats.length === 0 && (
+            {chats.rows.length === 0 && (
               <>
                 <Title>No one discussion</Title>
                 <ForumImage />
               </>
             )}
-            {chats.length > 0 && (
+            {chats.rows.length > 0 && (
               <>
                 <SearchAndSelectBox
                   handleSearch={handleSearch}
                   handleSelect={handleSelect}
                 />
-                {changedChats.map(chat => {
+                {changedChats.rows.map(chat => {
                   const { id } = chat
                   return (
                     <TopicItem
@@ -133,7 +161,8 @@ const Forum: FC = () => {
         isOpenModal={isOpenModal}
         handleCancel={handleCancel}
         handleCloseModal={handleCloseModal}
-        handleChange={handleChange}
+        handleChangeChatName={handleChangeChatName}
+        handleChangeChatDescription={handleChangeChatDescription}
         handleCreateChatSubmit={handleCreateChatSubmit}
         error={error?.message}
       />
