@@ -39,3 +39,11 @@ export interface IUserUpdateData {
 }
 
 export type ThemeType = 'dark' | 'light'
+
+export interface ThemeData {
+  id: number
+  theme: ThemeType
+  userId: number
+  updatedAt?: string
+  createdAt?: string
+}

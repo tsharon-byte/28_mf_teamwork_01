@@ -27,11 +27,10 @@ export const changeTheme: Handler = (req, res) => {
       theme: theme,
     },
   })
-    .then(theme => {
-      res.status(200).send(theme)
-    })
-    .then(() => {
-      res.status(200).send({ theme })
+    .then(([data, created]) => {
+      if (created) {
+        res.status(200).send(data)
+      }
     })
     .catch(error => {
       res.status(500).send(error)

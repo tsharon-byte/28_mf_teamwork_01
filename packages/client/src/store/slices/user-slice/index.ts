@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUserState, IUser, ThemeType } from './types'
+import { IUser, IUserState, ThemeData, ThemeType } from './types'
 import IError from '../../../helpers/prepare-error/types'
 import {
-  retrieveUserThunk,
   changeAvatarThunk,
   changePasswordThunk,
   changeThemeThunk,
   retrieveThemeThunk,
+  retrieveUserThunk,
 } from './thunks'
 import {
   deleteUserFromStorage,
@@ -108,9 +108,8 @@ const userSlice = createSlice({
       })
       .addCase(
         retrieveThemeThunk.fulfilled,
-        (state, action: PayloadAction<{ theme: ThemeType }>) => {
-          const { theme } = action.payload
-          state.theme = theme
+        (state, action: PayloadAction<ThemeData>) => {
+          state.theme = action.payload.theme
           state.loading = false
           state.error = null
         }
