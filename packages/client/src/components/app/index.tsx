@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -20,10 +20,7 @@ import EndGame from '../../pages/end-game'
 import Page500 from '../../pages/page-500'
 import { useTheme } from '../../hooks/use-theme'
 const App: FC = () => {
-  const { theme, getTheme } = useTheme()
-  useEffect(() => {
-    getTheme()
-  }, [])
+  const { theme } = useTheme()
 
   return (
     <ThemeProvider theme={appTheme(theme)}>

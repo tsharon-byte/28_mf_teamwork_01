@@ -19,14 +19,17 @@ export const getTheme: Handler = (req, res) => {
 
 export const changeTheme: Handler = (req, res) => {
   const { theme, userId } = req.body
-  Theme.update(
-    { theme },
-    {
-      where: {
-        userId: userId,
-      },
-    }
-  )
+  Theme.findOrCreate({
+    where: {
+      userId: userId,
+    },
+    defaults: {
+      theme: theme,
+    },
+  })
+    .then(theme => {
+      res.status(200).send(theme)
+    })
     .then(() => {
       res.status(200).send({ theme })
     })

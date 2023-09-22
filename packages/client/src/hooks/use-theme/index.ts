@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { userSelector } from '../../store/slices/user-slice/selectors'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import {
   changeThemeThunk,
   retrieveThemeThunk,
@@ -9,11 +9,12 @@ import {
 export const useTheme = () => {
   const dispatch = useAppDispatch()
   const { theme, user } = useAppSelector(userSelector)
-  const getTheme = useCallback(() => {
+  useEffect(() => {
     if (user) {
       dispatch(retrieveThemeThunk(user?.id))
     }
   }, [user])
+
   const toggleThemeCallback = useCallback(() => {
     const newTheme = theme === 'dark' ? 'light' : 'dark'
     if (user) {
@@ -23,6 +24,5 @@ export const useTheme = () => {
   return {
     theme,
     toggleThemeCallback,
-    getTheme,
   }
 }
