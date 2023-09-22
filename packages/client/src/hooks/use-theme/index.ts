@@ -5,6 +5,7 @@ import {
   changeThemeThunk,
   retrieveThemeThunk,
 } from '../../store/slices/user-slice/thunks'
+import { userSlice } from '../../store/slices'
 
 const useTheme = () => {
   const dispatch = useAppDispatch()
@@ -19,6 +20,8 @@ const useTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark'
     if (user) {
       dispatch(changeThemeThunk({ theme: newTheme, userId: user?.id }))
+    } else {
+      dispatch(userSlice.actions.changeTheme(newTheme))
     }
   }, [theme, user])
   return {

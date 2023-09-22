@@ -31,6 +31,9 @@ const userSlice = createSlice({
       state.error = initialState.error
       setUserToStorage(state.user)
     },
+    changeTheme(state, action: PayloadAction<ThemeType>) {
+      state.theme = action.payload
+    },
   },
   extraReducers: builder => {
     builder
@@ -107,10 +110,11 @@ const userSlice = createSlice({
       })
       .addCase(
         retrieveThemeThunk.fulfilled,
-
         (state, action: PayloadAction<{ theme: ThemeType }>) => {
           const { theme } = action.payload
-          state.theme = theme
+          if (theme) {
+            state.theme = theme
+          }
           state.loading = false
           state.error = null
         }
