@@ -8,23 +8,20 @@ import React, {
 } from 'react'
 import { ContentLayout } from '../../layouts'
 import { CircularProgress } from '@mui/material'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch } from '../../store/hooks'
 import {
   createChatThunk,
   getChatListThunk,
 } from '../../store/slices/forum-slice/thunks'
 import { ROUTE_PATH } from '../../utils/constants'
 import { CreateTopicModal } from '../../components/forum-components/create-topic-modal'
-import { useChats } from '../../hooks'
+import { useChats, useTheme } from '../../hooks'
 import { ForumFooter } from '../../components/forum-components/forum-footer'
 import { ForumImage } from '../../components/forum-components/forum-image'
 import { TopicItem } from '../../components/forum-components/topic-item'
 import { useNavigate } from 'react-router-dom'
 import { SearchAndSelectBox } from '../../components/forum-components/search-and-select-box'
 import { Title } from '../../components'
-import { userSelector } from '../../store/slices/user-slice/selectors'
-import { changeThemeThunk } from '../../store/slices/user-slice/thunks'
-import { useTheme } from '../../hooks/use-theme'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()

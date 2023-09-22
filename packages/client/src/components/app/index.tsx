@@ -18,7 +18,7 @@ import Forum from '../../pages/forum'
 import ForumTopic from '../../pages/forum-topic'
 import EndGame from '../../pages/end-game'
 import Page500 from '../../pages/page-500'
-import { useTheme } from '../../hooks/use-theme'
+import { useTheme } from '../../hooks'
 const App: FC = () => {
   const { theme } = useTheme()
 

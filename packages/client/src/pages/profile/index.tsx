@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { Button } from '@mui/material'
 import { ContentLayout } from '../../layouts'
-import { useAuth, useUser } from '../../hooks'
+import { useAuth, useTheme, useUser } from '../../hooks'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   changeAvatarThunk,
@@ -20,7 +20,6 @@ import { useNavigate } from 'react-router-dom'
 import { ProfileAvatar } from '../../components/profile-components/profile-avatar'
 import { ChangePasswordModal } from '../../components/profile-components/change-password-modal'
 import { ProfileInfo } from '../../components/profile-components/profile-info'
-import { useTheme } from '../../hooks/use-theme'
 
 const Profile: FC = () => {
   const navigate = useNavigate()

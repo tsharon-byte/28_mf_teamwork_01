@@ -13,10 +13,9 @@ import { TopicTextField } from '../../components/topic-components/topic-text-fie
 import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
 import { useUser } from '../../hooks'
 import { CommentType } from '../../components/topic-components/topic-comment-list/types'
-import { useChats } from '../../hooks'
+import { useChats, useTheme } from '../../hooks'
 import { TopicHeader } from '../../components/topic-components/topic-header'
 import { makeResourcePath } from '../../helpers'
-import { useTheme } from '../../hooks/use-theme'
 
 const ForumTopic: FC = () => {
   const params = useParams()

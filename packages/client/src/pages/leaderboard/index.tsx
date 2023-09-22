@@ -17,8 +17,7 @@ import { withIcon } from '../../hocs'
 import { UserIcon, BombIcon, PodiumIcon } from '../../icons'
 import styles from './styles.module.css'
 import useLeaderboard from '../../hooks/use-leaderboard'
-import { useUser } from '../../hooks'
-import { useTheme } from '../../hooks/use-theme'
+import { useUser, useTheme } from '../../hooks'
 
 const WithIconTypography = withIcon<TypographyProps>()(Typography)
 

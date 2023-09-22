@@ -6,7 +6,7 @@ import {
   retrieveThemeThunk,
 } from '../../store/slices/user-slice/thunks'
 
-export const useTheme = () => {
+const useTheme = () => {
   const dispatch = useAppDispatch()
   const { theme, user } = useAppSelector(userSelector)
   useEffect(() => {
@@ -26,3 +26,5 @@ export const useTheme = () => {
     toggleThemeCallback,
   }
 }
+
+export default useTheme
