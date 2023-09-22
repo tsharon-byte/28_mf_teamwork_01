@@ -6,7 +6,7 @@ const retrieveThemeThunk = createAsyncThunk(
   '/theme/retrieveThemeThunk',
   async (userId: number, thunkAPI) => {
     try {
-      const response = await beInstance.get(`${APP_THEME_URL}?userId=${userId}`)
+      const response = await beInstance.get(`${APP_THEME_URL}/${userId}`)
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue('Не удалось получить тему')

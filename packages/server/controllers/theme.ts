@@ -20,16 +20,21 @@ export const getTheme: Handler = (req, res) => {
 export const changeTheme: Handler = (req, res) => {
   const { theme, userId } = req.body
   Theme.findOrCreate({
-    where: {
-      userId: userId,
-    },
-    defaults: {
-      theme: theme,
-    },
+    where: { userId },
+    defaults: { theme },
   })
     .then(([data, created]) => {
       if (created) {
-        res.status(200).send(data)
+        res.status(201).send(data)
+      } else {
+        data
+          .update({ theme })
+          .then(updatedData => {
+            res.status(200).send(updatedData)
+          })
+          .catch(error => {
+            res.status(500).send(error)
+          })
       }
     })
     .catch(error => {
