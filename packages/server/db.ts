@@ -47,7 +47,7 @@ const connect = async () => {
     Theme.sync({ force: true }).then(() => {
       Theme.create({
         theme: 'dark',
-        userId: 'null',
+        userId: null,
       })
     })
     Emoji.sync({ force: true }).then(() => {

@@ -13,13 +13,13 @@ export const useTheme = () => {
     if (user) {
       dispatch(retrieveThemeThunk(user?.id))
     }
-  }, [])
+  }, [user])
   const toggleThemeCallback = useCallback(() => {
     const newTheme = theme === 'dark' ? 'light' : 'dark'
     if (user) {
       dispatch(changeThemeThunk({ theme: newTheme, userId: user?.id }))
     }
-  }, [theme])
+  }, [theme, user])
   return {
     theme,
     toggleThemeCallback,
