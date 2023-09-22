@@ -88,9 +88,8 @@ const userSlice = createSlice({
       })
       .addCase(
         changeThemeThunk.fulfilled,
-        (state, action: PayloadAction<{ theme: ThemeType }>) => {
-          const { theme } = action.payload
-          state.theme = theme
+        (state, action: PayloadAction<ThemeData>) => {
+          state.theme = action.payload.theme
           state.loading = false
           state.error = null
         }
@@ -108,8 +107,10 @@ const userSlice = createSlice({
       })
       .addCase(
         retrieveThemeThunk.fulfilled,
-        (state, action: PayloadAction<ThemeData>) => {
-          state.theme = action.payload.theme
+
+        (state, action: PayloadAction<{ theme: ThemeType }>) => {
+          const { theme } = action.payload
+          state.theme = theme
           state.loading = false
           state.error = null
         }
