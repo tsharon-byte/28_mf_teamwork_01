@@ -9,4 +9,5 @@ export type TopicCommentListType = {
   footer: ReactNode
   user: Nullable<IUser>
   title: string
+  description: string | null
 }
