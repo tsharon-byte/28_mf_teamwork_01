@@ -22,6 +22,7 @@ import { TopicItem } from '../../components/forum-components/topic-item'
 import { useNavigate } from 'react-router-dom'
 import { SearchAndSelectBox } from '../../components/forum-components/search-and-select-box'
 import { Title } from '../../components'
+import { resetChatError } from '../../store/slices/forum-slice/actions'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
@@ -76,7 +77,10 @@ const Forum: FC = () => {
     [chatName]
   )
   const handleOpenModal = useCallback(() => setIsOpenModal(true), [])
-  const handleCloseModal = useCallback(() => setIsOpenModal(false), [])
+  const handleCloseModal = useCallback(() => {
+    dispatch(resetChatError())
+    setIsOpenModal(false)
+  }, [])
   const handleNavigate = useCallback((id: number) => {
     navigate(`${ROUTE_PATH.FORUM}/${id}`)
   }, [])

@@ -22,6 +22,7 @@ import getCommentsByIdThunk from '../../../store/slices/comments-slice/thunks/ge
 import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 import useComments from '../../../hooks/use-comments'
+import { resetCommentError } from '../../../store/slices/comments-slice/actions'
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
@@ -44,10 +45,10 @@ export const TopicCommentItem = memo(
       }, [])
 
       const handleOpenModal = useCallback(() => setIsOpenModal(() => true), [])
-      const handleCloseModal = useCallback(
-        () => setIsOpenModal(() => false),
-        []
-      )
+      const handleCloseModal = useCallback(() => {
+        dispatch(resetCommentError())
+        setIsOpenModal(() => false)
+      }, [])
 
       const handleChangeMessage = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {

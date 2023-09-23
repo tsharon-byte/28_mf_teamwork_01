@@ -24,6 +24,9 @@ const forumSlice = createSlice({
         state.currentChat = chat
       }
     },
+    resetChatError(state) {
+      state.error = null
+    },
   },
   extraReducers: builder => {
     builder
