@@ -20,6 +20,9 @@ export const getTheme: Handler = (req, res) => {
 export const changeTheme: Handler = (req, res) => {
   const { theme, userId } = req.body
   Theme.upsert({ theme, userId })
+    .then(() => {
+      return Theme.findOne({ where: { userId } })
+    })
     .then(data => {
       res.status(200).send(data)
     })
