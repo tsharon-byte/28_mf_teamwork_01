@@ -9,7 +9,7 @@ class PasswordValidationRule extends ValidationRule {
       logicalNot: false,
     },
     {
-      regexp: /[A-Z]+/,
+      regexp: /[A-Z]|[А-Я]+/,
       logicalNot: false,
     },
     {
