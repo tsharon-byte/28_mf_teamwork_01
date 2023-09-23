@@ -2,16 +2,18 @@ import React, {
   ChangeEvent,
   FC,
   memo,
+  MouseEventHandler,
   useCallback,
   useRef,
   useState,
 } from 'react'
 import TextField from '../../text-field'
-import { InputAdornment } from '@mui/material'
+import { InputAdornment, IconButton } from '@mui/material'
 import { StyledEditIcon } from '../../icons/styled-edit-icon'
 import { EditTextFieldType } from './types'
 import styles from './styles.module.css'
 import DoneIcon from '@mui/icons-material/Done'
+import { FocusEventHandler } from 'react'
 
 export const EditTextField: FC<EditTextFieldType> = memo(
   ({
@@ -27,6 +29,7 @@ export const EditTextField: FC<EditTextFieldType> = memo(
     const [currentValue, setCurrentValue] = useState<string>(value)
     const [isEditing, setIsEditing] = useState(false)
     const textFieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+    const buttonRef = useRef<HTMLButtonElement>(null)
     const callbacks = {
       hanldeChange: useCallback(
         (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -47,6 +50,20 @@ export const EditTextField: FC<EditTextFieldType> = memo(
         }
       }, [setIsEditing, textFieldRef, isEditing]),
     }
+
+    const handleFocus: FocusEventHandler<HTMLInputElement> = () => {
+      setIsEditing(true)
+    }
+
+    const handleBlur: FocusEventHandler<HTMLInputElement> = () => {
+      buttonRef.current?.click?.()
+      setIsEditing(false)
+    }
+
+    const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+      !isEditing && event.preventDefault()
+    }
+
     return (
       <TextField
         inputRef={textFieldRef}
@@ -62,14 +79,18 @@ export const EditTextField: FC<EditTextFieldType> = memo(
               position={position}
               style={{ color: mainColor }}
               onClick={callbacks.handleEditMode}>
-              {isEditing ? (
-                <DoneIcon className={styles.done} />
-              ) : (
-                <StyledEditIcon mainColor={mainColor} hoverColor={hoverColor} />
-              )}
+              <IconButton type="submit" ref={buttonRef} onClick={handleButtonClick}>
+                {isEditing ? (
+                    <DoneIcon className={styles.done} />
+                ) : (
+                    <StyledEditIcon mainColor={mainColor} hoverColor={hoverColor} />
+                )}
+              </IconButton>
             </InputAdornment>
           ),
         }}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
     )
   }

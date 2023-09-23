@@ -1,4 +1,5 @@
 export const RETRIEVE_USER_URL = 'auth/user/'
+export const UPDATE_USER_URL = '/user/profile'
 export const GET_USER_URL = 'user/'
 export const RETRIEVE_RESOURCE_URL = 'resources/{path}/'
 export const CHANGE_AVATAR_URL = 'user/profile/avatar/'
