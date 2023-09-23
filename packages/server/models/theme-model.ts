@@ -5,7 +5,7 @@ import { DataType } from 'sequelize-typescript'
 export interface ThemeModel {
   id: number
   theme: string
-  userId: number | null
+  userId: number
 }
 
 export const themeModel: ModelAttributes<Model, ThemeModel> = {
@@ -20,6 +20,7 @@ export const themeModel: ModelAttributes<Model, ThemeModel> = {
   },
   userId: {
     type: DataType.INTEGER,
-    allowNull: true,
+    unique: true,
+    allowNull: false,
   },
 }

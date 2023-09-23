@@ -19,17 +19,9 @@ export const getTheme: Handler = (req, res) => {
 
 export const changeTheme: Handler = (req, res) => {
   const { theme, userId } = req.body
-  Theme.findOne({ where: { userId } })
+  Theme.upsert({ theme, userId })
     .then(data => {
-      if (!data) {
-        return Theme.create({ theme, userId }).then(createdData => {
-          res.status(200).send(createdData)
-        })
-      } else {
-        return data.update({ theme }).then(updatedData => {
-          res.status(200).send(updatedData)
-        })
-      }
+      res.status(200).send(data)
     })
     .catch(error => {
       res.status(500).send(error)

@@ -44,12 +44,7 @@ const connect = async () => {
   try {
     await sequelize.authenticate()
     await sequelize.sync()
-    Theme.sync({ force: true }).then(() => {
-      Theme.create({
-        theme: 'dark',
-        userId: null,
-      })
-    })
+    await Theme.sync({ force: true })
     Emoji.sync({ force: true }).then(() => {
       smileCodes.forEach((item: { name: string; code: string }) => {
         Emoji.create({
