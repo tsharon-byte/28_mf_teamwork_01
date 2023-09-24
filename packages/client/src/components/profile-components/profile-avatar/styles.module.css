@@ -32,3 +32,9 @@
   color: #fcd448;
   cursor: pointer;
 }
+
+.backdrop {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(33, 33, 33, 0.5);
+}
