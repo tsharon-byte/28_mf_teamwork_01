@@ -101,9 +101,11 @@ const ForumTopic: FC = () => {
   if (!currentChat) {
     return null
   }
+  console.log(currentChat)
   return (
     <TopicCommentList
       title={currentChat.name}
+      description={currentChat.description || null}
       user={foundUser || null}
       comments={commentByTopicId}
       header={
