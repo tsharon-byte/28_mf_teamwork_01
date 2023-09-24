@@ -10,7 +10,7 @@ const changeAvatarThunk = createAsyncThunk(
     try {
       const response = await axiosInstance.put(CHANGE_AVATAR_URL, formData, {
         timeout: 1000,
-        timeoutErrorMessage: 'File too large'
+        timeoutErrorMessage: 'File too large',
       })
       return response.data
     } catch (error) {

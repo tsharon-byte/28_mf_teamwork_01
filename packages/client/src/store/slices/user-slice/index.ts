@@ -6,7 +6,7 @@ import {
   changeAvatarThunk,
   changePasswordThunk,
   getUserThunk,
-  updateUserThunk
+  updateUserThunk,
 } from './thunks'
 import {
   deleteUserFromStorage,
