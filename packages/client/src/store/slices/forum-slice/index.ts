@@ -16,15 +16,7 @@ const initialState: ForumInitialState = {
 const forumSlice = createSlice({
   name: 'forum',
   initialState,
-  reducers: {
-    getCurrentChat(state, { payload }: PayloadAction<string>) {
-      const currentId = Number(payload)
-      const chat = state.chats.rows.find(chat => chat.id === currentId)
-      if (chat) {
-        state.currentChat = chat
-      }
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(
