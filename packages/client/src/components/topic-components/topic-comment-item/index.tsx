@@ -23,6 +23,7 @@ import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 import { IUser } from '../../../store/slices/user-slice/types'
 import { resetCommentError } from '../../../store/slices/comments-slice/actions'
+import { getEmojiForComment } from '../../../api/emoji-api'
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
@@ -39,6 +40,12 @@ export const TopicCommentItem = memo(
         () => foundUsers.find(user => user.id === author),
         [author]
       )
+
+      useEffect(() => {
+        getEmojiForComment(id).then(data => {
+          console.log('To set state here', data)
+        })
+      }, [id])
 
       useEffect(() => {
         if (!foundUser) {
@@ -105,7 +112,7 @@ export const TopicCommentItem = memo(
                   <Typography variant="body1" color="secondary">
                     {user?.display_name || user?.first_name}
                   </Typography>
-                  <TopicCommentMenu />
+                  <TopicCommentMenu id={id} />
                 </Box>
                 <Typography
                   variant="body1"
