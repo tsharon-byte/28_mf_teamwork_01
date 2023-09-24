@@ -7,7 +7,7 @@ import { Avatar, Box, Typography } from '@mui/material'
 import { makeResourcePath } from '../../../helpers'
 
 export const TopicCommentList: FC<TopicCommentListType> = memo(
-  ({ comments, header, footer, user, title }) => {
+  ({ comments, header, footer, user, title, description }) => {
     const endCommentRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export const TopicCommentList: FC<TopicCommentListType> = memo(
           <Box className={styles.box}>
             <Typography variant="h2">{title}</Typography>
             <Typography className={styles.text} variant="body1">
-              {comments.rows[0]?.text}
+              {description || ''}
             </Typography>
           </Box>
         </Box>
