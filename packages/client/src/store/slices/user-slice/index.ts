@@ -6,7 +6,7 @@ import {
   changeAvatarThunk,
   changePasswordThunk,
   getUserThunk,
-  updateUserThunk
+  updateUserThunk,
 } from './thunks'
 import {
   deleteUserFromStorage,
@@ -64,6 +64,14 @@ const userSlice = createSlice({
           if (state.user) {
             state.user.avatar = action.payload.avatar
             setUserToStorage(state.user)
+          }
+        }
+      )
+      .addCase(
+        changeAvatarThunk.rejected.type,
+        (state, action: PayloadAction<IError>) => {
+          if (state.user) {
+            state.error = action.payload
           }
         }
       )
