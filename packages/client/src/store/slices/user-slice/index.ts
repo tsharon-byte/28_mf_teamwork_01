@@ -67,6 +67,14 @@ const userSlice = createSlice({
           }
         }
       )
+      .addCase(
+        changeAvatarThunk.rejected.type,
+        (state, action: PayloadAction<IError>) => {
+          if (state.user) {
+            state.error = action.payload
+          }
+        }
+      )
       .addCase(changePasswordThunk.pending, state => {
         state.loading = true
         state.error = null
