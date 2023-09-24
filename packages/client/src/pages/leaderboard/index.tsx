@@ -85,13 +85,9 @@ const Leaderboard: FC = () => {
                 </TableCell>
                 <TableCell>
                   {i < 3 ? (
-                    <BombIcon color={
-                      i === 1
-                        ? 'silver'
-                        : i === 2
-                          ? 'bronze'
-                          : 'gold'
-                    } />
+                    <BombIcon
+                      color={i === 1 ? 'silver' : i === 2 ? 'bronze' : 'gold'}
+                    />
                   ) : null}
                 </TableCell>
               </TableRow>
