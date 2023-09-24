@@ -72,6 +72,21 @@ const options: swaggerJsdoc.Options = {
             },
           },
         },
+        EmojiModel: {
+          type: 'object',
+          required: ['id', 'name', 'code'],
+          properties: {
+            id: {
+              type: 'number',
+            },
+            name: {
+              type: 'string',
+            },
+            code: {
+              type: 'string',
+            },
+          },
+        },
         TopicRequest: {
           type: 'object',
           required: ['name'],
@@ -132,6 +147,20 @@ const options: swaggerJsdoc.Options = {
               type: 'array',
               items: {
                 $ref: '#/components/schemas/CommentModel',
+              },
+            },
+          },
+          EmojiRequest: {
+            type: 'object',
+            properties: {
+              count: {
+                type: 'number',
+              },
+              rows: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/EmojiModel',
+                },
               },
             },
           },
@@ -867,9 +896,52 @@ const options: swaggerJsdoc.Options = {
           },
         },
       },
+      '/api/v1/emoji/': {
+        get: {
+          tags: ['Emoji'],
+          summary: 'Get emoji',
+          parameters: [],
+          responses: {
+            200: {
+              description: 'OK',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/EmojiRequest',
+                  },
+                },
+              },
+            },
+            403: {
+              description: 'Forbidden',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/ErrorResponse',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal Server Error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/ErrorResponse',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
-  apis: ['./api/v1/routers/topic.ts', './api/v1/routers/comment.ts'],
+  apis: [
+    './api/v1/routers/topic.ts',
+    './api/v1/routers/comment.ts',
+    './api/v1/routers/emoji.ts',
+  ],
 }
 
 export default options
