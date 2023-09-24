@@ -73,7 +73,7 @@ const Forum: FC = () => {
           })
       }
     },
-    [chatName]
+    [chatName, chatDescription]
   )
   const handleOpenModal = useCallback(() => setIsOpenModal(true), [])
   const handleCloseModal = useCallback(() => setIsOpenModal(false), [])
