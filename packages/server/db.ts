@@ -1,8 +1,12 @@
 import dotenv from 'dotenv'
 import { Sequelize } from 'sequelize-typescript'
-import { TopicModel, CommentModel } from './api/v1/models'
-import { emojiModel } from './models/Emoji'
 import { themeModel } from './models/theme-model'
+import {
+  TopicModel,
+  CommentModel,
+  EmojiModel,
+  CommentEmojiModel,
+} from './api/v1/models'
 
 dotenv.config()
 
@@ -21,10 +25,8 @@ const sequelize = new Sequelize({
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   dialect: 'postgres',
-  models: [TopicModel, CommentModel],
+  models: [TopicModel, CommentModel, EmojiModel, CommentEmojiModel],
 })
-
-export const Emoji = sequelize.define('Emoji', emojiModel, {})
 
 const smileCodes = [
   { name: 'Thumbs Up', code: '👍' },
@@ -45,9 +47,9 @@ const connect = async () => {
     await sequelize.authenticate()
     await sequelize.sync()
     await Theme.sync({ force: true })
-    Emoji.sync({ force: true }).then(() => {
+    await EmojiModel.sync({ force: true }).then(() => {
       smileCodes.forEach((item: { name: string; code: string }) => {
-        Emoji.create({
+        EmojiModel.create({
           name: item.name,
           code: item.code,
         })
