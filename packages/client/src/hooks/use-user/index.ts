@@ -23,7 +23,8 @@ const useUser = (toastifyError: boolean | undefined = false) => {
   }
 
   useEffect(() => {
-    toastifyError && error?.message &&
+    toastifyError &&
+      error?.message &&
       toast.error(error.message, {
         toastId: error.message,
       })

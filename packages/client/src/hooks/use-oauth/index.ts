@@ -36,7 +36,7 @@ const useOAuth = () => {
         status === 401 && navigate(ROUTE_PATH.LOGIN)
         status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
         toast.error(message, {
-          toastId: message
+          toastId: message,
         })
       }
     }
@@ -52,7 +52,7 @@ const useOAuth = () => {
       const { status, message } = prepareError(error)
       status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
       toast.error(message, {
-        toastId: message
+        toastId: message,
       })
     }
   }, [])

@@ -14,7 +14,7 @@ const authMiddleware = async (
   const nonSecurePaths = [
     '/v2/auth/signin',
     '/v2/oauth/yandex/service-id',
-    '/v2/oauth/yandex'
+    '/v2/oauth/yandex',
   ]
   if (nonSecurePaths.includes(req.path)) {
     return next()

@@ -28,7 +28,7 @@ const useAuth = () => {
       status === 401 && navigate(ROUTE_PATH.LOGIN)
       status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
       toast.error(message, {
-        toastId: message
+        toastId: message,
       })
     }
   }, [])
@@ -45,7 +45,7 @@ const useAuth = () => {
       status === 401 && navigate(ROUTE_PATH.LOGIN)
       status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
       toast.error(message, {
-        toastId: message
+        toastId: message,
       })
     }
   }, [])
@@ -60,7 +60,7 @@ const useAuth = () => {
       status === 401 && dispatch(userSlice.actions.resetUser())
       status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
       toast.error(message, {
-        toastId: message
+        toastId: message,
       })
     }
   }, [])

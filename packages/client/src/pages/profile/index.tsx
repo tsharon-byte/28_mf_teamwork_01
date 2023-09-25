@@ -79,7 +79,7 @@ const Profile: FC = () => {
     return null
   }
 
-  const handleUpdateUserSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  const handleUpdateUserSubmit: FormEventHandler<HTMLFormElement> = event => {
     const form = event.currentTarget
     const formData = new FormData(form)
     const data = Object.fromEntries(formData.entries()) as Partial<IUser>
@@ -96,7 +96,11 @@ const Profile: FC = () => {
         ref={inputRef}
         user={user}
       />
-      <ProfileInfo user={user} handleOpenModal={handleOpenModal} handleUpdateUserSubmit={handleUpdateUserSubmit} />
+      <ProfileInfo
+        user={user}
+        handleOpenModal={handleOpenModal}
+        handleUpdateUserSubmit={handleUpdateUserSubmit}
+      />
       <Button variant="contained" onClick={logout} sx={{ minWidth: 300 }}>
         Выйти
       </Button>
