@@ -3,9 +3,9 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { axiosInstance } from '../../utils/http-transport'
 import {
-  YANDEX_LOGIN_URL,
   CLIENT_ID_RETRIEVE_URL,
   REDIRECT_URI,
+  YANDEX_LOGIN_URL,
 } from './constants'
 import { ROUTE_PATH } from '../../utils/constants'
 import { prepareError } from '../../helpers'
@@ -32,10 +32,12 @@ const useOAuth = () => {
         })
         response.status === 200 && dispatch(retrieveUserThunk())
       } catch (error) {
-        const err = prepareError(error)
-        err.status === 401 && navigate(ROUTE_PATH.LOGIN)
-        err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
-        toast.error(err.message)
+        const { status, message } = prepareError(error)
+        status === 401 && navigate(ROUTE_PATH.LOGIN)
+        status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
+        toast.error(message, {
+          toastId: message,
+        })
       }
     }
   }, [])
@@ -47,9 +49,11 @@ const useOAuth = () => {
       )
       response.status === 200 && setClientId(response.data.service_id)
     } catch (error) {
-      const err = prepareError(error)
-      err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
-      toast.error(err.message)
+      const { status, message } = prepareError(error)
+      status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
+      toast.error(message, {
+        toastId: message,
+      })
     }
   }, [])
 

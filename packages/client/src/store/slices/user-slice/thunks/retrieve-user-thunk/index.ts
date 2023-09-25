@@ -1,8 +1,8 @@
-import { axiosInstance } from '../../../../../utils/http-transport'
-import { RETRIEVE_USER_URL } from '../../../../../constants/urls'
 import { IUser } from '../../types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { isAxiosError } from 'axios'
+import { axiosInstance } from '../../../../../utils/http-transport'
+import { RETRIEVE_USER_URL } from '../../../../../constants/urls'
 
 const retrieveUserThunk = createAsyncThunk(
   '/user/retrieveUserThunk',

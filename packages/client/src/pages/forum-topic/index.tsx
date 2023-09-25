@@ -1,38 +1,48 @@
 import {
   ChangeEvent,
   FC,
+  FormEvent,
   KeyboardEventHandler,
+  KeyboardEvent,
   useCallback,
-  useEffect,
+  useMemo,
   useState,
 } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../store/hooks'
-import { getCurrentChat } from '../../store/slices/forum-slice/actions'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
 import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
-import { useUser } from '../../hooks'
-import { CommentType } from '../../components/topic-components/topic-comment-list/types'
-import { useChats, useTheme } from '../../hooks'
+import { useChats, useUser, useTheme } from '../../hooks'
 import { TopicHeader } from '../../components/topic-components/topic-header'
 import { makeResourcePath } from '../../helpers'
+import { createCommentsThunk } from '../../store/slices/comments-slice/thunks'
+import useComments from '../../hooks/use-comments'
+import getCommentsByIdThunk from '../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
+import { TComments } from '../../store/slices/comments-slice/types'
 
 const ForumTopic: FC = () => {
-  const params = useParams()
-  const { topicId } = params
-  const { chats, loading, currentChat } = useChats()
-  const { user } = useUser()
-  const [message, setMessage] = useState('')
-  const [comments, setComments] = useState<CommentType[]>([])
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const params = useParams()
+  const { topicId } = params
   const { theme, toggleThemeCallback } = useTheme()
+  const { loading, chats } = useChats()
+  const { user } = useUser()
+  const { comments } = useComments()
 
-  useEffect(() => {
-    if (chats.length !== 0 && topicId) {
-      dispatch(getCurrentChat(topicId))
-    }
-  }, [chats, topicId, dispatch])
+  const [message, setMessage] = useState('')
+
+  const commentByTopicId: TComments = useMemo(() => {
+    const rows = comments.rows.filter(
+      comment => comment.topicId === Number(topicId)
+    )
+    return { count: rows.length, rows }
+  }, [comments, topicId])
+
+  const currentChat = useMemo(
+    () => chats.rows.find(chat => chat.id === Number(topicId)),
+    [topicId]
+  )
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -42,28 +52,34 @@ const ForumTopic: FC = () => {
     []
   )
   const handleKeyDown: KeyboardEventHandler = useCallback(
-    e => {
+    (e: KeyboardEvent<HTMLFormElement | HTMLDivElement>) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault()
-        handleAddComment()
+        handleAddComment(e)
       }
     },
-    [comments, message]
+    [message]
   )
-  const handleAddComment = useCallback(() => {
-    if (message.trim() !== '' && user) {
-      const date = new Date().toISOString().split('T')[0]
-      const newComment = {
-        id: crypto.randomUUID(),
-        text: message,
-        author: user.login || '',
-        date,
-        avatar: user.avatar || '',
+  const handleAddComment = useCallback(
+    (e: FormEvent<HTMLFormElement | HTMLDivElement>) => {
+      e.preventDefault()
+      if (message.trim() !== '' && topicId) {
+        dispatch(
+          createCommentsThunk({
+            id: Number(topicId),
+            parentId: null,
+            text: message,
+          })
+        )
+          .unwrap()
+          .then(() => {
+            setMessage('')
+            dispatch(getCommentsByIdThunk())
+          })
       }
-      setComments([...comments, newComment])
-      setMessage('')
-    }
-  }, [comments, message])
+    },
+    [message]
+  )
   const handleNavigate = useCallback(() => {
     navigate(-1)
   }, [])
@@ -72,9 +88,10 @@ const ForumTopic: FC = () => {
   }
   return (
     <TopicCommentList
-      title={currentChat.title}
-      user={user}
-      comments={comments}
+      title={currentChat.name}
+      comments={commentByTopicId}
+      description={currentChat.description || null}
+      authorId={currentChat.authorId}
       theme={theme}
       toggleTheme={toggleThemeCallback}
       header={

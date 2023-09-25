@@ -1,15 +1,15 @@
-import { axiosInstance } from '../../../../../utils/http-transport'
-import { CHAT_LIST_URL } from '../../../../../constants/urls'
+import { beInstance } from '../../../../../utils/http-transport'
+import { CHAT_URL } from '../../../../../constants/urls'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { ChatType } from '../../types'
 import { isAxiosError } from 'axios'
 
 const createChatThunk = createAsyncThunk(
   '/chats/createChatThunk',
-  async (title: string, thunkAPI) => {
+  async (data: Record<string, string>, thunkAPI) => {
     try {
-      const response = await axiosInstance.post<ChatType[]>(CHAT_LIST_URL, {
-        title,
+      const response = await beInstance.post(CHAT_URL, {
+        name: data.name,
+        description: data.description,
       })
       return response.data
     } catch (error) {

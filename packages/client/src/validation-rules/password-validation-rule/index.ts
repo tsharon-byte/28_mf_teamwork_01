@@ -2,7 +2,7 @@ import ValidationRule from '../validation-rule'
 
 class PasswordValidationRule extends ValidationRule {
   error =
-    'Должно быть от 8 символов, обязательно хотя бы одна заглавная буква и цифра.'
+    'Должно быть от 8 символов, обязательно хотя бы одна заглавная буква и цифра. Использовать буквы латинского алфавита'
   checks = [
     {
       regexp: /^.{8,}$/,

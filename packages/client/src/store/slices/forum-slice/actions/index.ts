@@ -1,3 +1,3 @@
 import forumSlice from '..'
 
-export const { getCurrentChat } = forumSlice.actions
+export const { resetChatError } = forumSlice.actions

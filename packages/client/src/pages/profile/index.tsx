@@ -2,6 +2,7 @@ import {
   ChangeEvent,
   FC,
   FormEvent,
+  FormEventHandler,
   useCallback,
   useRef,
   useState,
@@ -20,12 +21,13 @@ import { useNavigate } from 'react-router-dom'
 import { ProfileAvatar } from '../../components/profile-components/profile-avatar'
 import { ChangePasswordModal } from '../../components/profile-components/change-password-modal'
 import { ProfileInfo } from '../../components/profile-components/profile-info'
+import { IUser } from '../../store/slices/user-slice/types'
 
 const Profile: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { logout } = useAuth()
-  const { user } = useUser()
+  const { user, updateUser } = useUser(true)
   const { error } = useAppSelector(state => state.user, shallowEqual)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [password, setPassword] = useState({ oldPassword: '', newPassword: '' })
@@ -76,6 +78,12 @@ const Profile: FC = () => {
   if (!user) {
     return null
   }
+  const handleUpdateUserSubmit: FormEventHandler<HTMLFormElement> = event => {
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData.entries()) as Partial<IUser>
+    updateUser(data)
+  }
 
   return (
     <ContentLayout
@@ -91,7 +99,9 @@ const Profile: FC = () => {
         user={user}
         handleOpenModal={handleOpenModal}
         theme={theme}
+        handleUpdateUserSubmit={handleUpdateUserSubmit}
       />
+
       <Button variant="contained" onClick={logout} sx={{ minWidth: 300 }}>
         Выйти
       </Button>

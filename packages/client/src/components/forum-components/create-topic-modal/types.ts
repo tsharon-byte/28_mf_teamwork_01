@@ -6,6 +6,7 @@ export type CreateTopicModalType = {
   handleCloseModal: () => void
   handleCreateChatSubmit: (e: FormEvent<HTMLFormElement>) => void
   handleCancel: () => void
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleChangeChatName: (e: ChangeEvent<HTMLInputElement>) => void
+  handleChangeChatDescription: (e: ChangeEvent<HTMLInputElement>) => void
   error: Nullable<string | undefined>
 }

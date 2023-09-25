@@ -1,6 +1,11 @@
+import { TComment } from '../../../store/slices/comments-slice/types'
+
 export type TopicCommentItemType = {
+  id: number
+  topicId: number
   text: string
-  author: string
+  author: number
   date: string
-  avatar: string
+  replyComments?: Array<TComment>
+  isReply: boolean
 }

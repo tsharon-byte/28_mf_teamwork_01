@@ -4,6 +4,8 @@ import { Avatar, InputAdornment } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 import { TopicTextFieldType } from './types'
 import styles from './styles.module.css'
+import { useUser } from '../../../hooks'
+import { makeResourcePath } from '../../../helpers'
 
 export const TopicTextField: FC<TopicTextFieldType> = memo(
   ({
@@ -12,8 +14,9 @@ export const TopicTextField: FC<TopicTextFieldType> = memo(
     handleChange,
     handleAddComment,
     handleKeyDown,
-    avatar,
   }) => {
+    const { user } = useUser()
+
     return (
       <TextField
         className={styles.field}
@@ -28,12 +31,17 @@ export const TopicTextField: FC<TopicTextFieldType> = memo(
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Avatar className={styles.avatar} src={avatar || ''} />
+              <Avatar
+                className={styles.avatar}
+                src={user?.avatar ? makeResourcePath(user.avatar) : ''}
+              />
             </InputAdornment>
           ),
           endAdornment: message && (
             <InputAdornment position="end">
-              <SendIcon onClick={handleAddComment} className={styles.icon} />
+              <div onClick={handleAddComment}>
+                <SendIcon className={styles.icon} />
+              </div>
             </InputAdornment>
           ),
         }}

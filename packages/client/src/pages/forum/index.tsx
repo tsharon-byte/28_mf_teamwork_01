@@ -17,11 +17,12 @@ import { ROUTE_PATH } from '../../utils/constants'
 import { CreateTopicModal } from '../../components/forum-components/create-topic-modal'
 import { useChats, useTheme } from '../../hooks'
 import { ForumFooter } from '../../components/forum-components/forum-footer'
-import { ForumImage } from '../../components/forum-components/forum-image'
 import { TopicItem } from '../../components/forum-components/topic-item'
 import { useNavigate } from 'react-router-dom'
 import { SearchAndSelectBox } from '../../components/forum-components/search-and-select-box'
 import { Title } from '../../components'
+import { NoDiscussionIcon } from '../../icons'
+import { resetChatError } from '../../store/slices/forum-slice/actions'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
@@ -29,17 +30,27 @@ const Forum: FC = () => {
   const [changedChats, setChangedChats] = useState(chats)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [chatName, setChatName] = useState('')
+  const [chatDescription, setChatDescription] = useState('')
   const navigate = useNavigate()
   const { theme, toggleThemeCallback } = useTheme()
   useEffect(() => {
     setChangedChats(chats)
   }, [chats])
-  const handleChange = useCallback(
+
+  const handleChangeChatName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const { value } = e.currentTarget
       setChatName(value)
     },
     [setChatName]
+  )
+
+  const handleChangeChatDescription = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.currentTarget
+      setChatDescription(value)
+    },
+    [setChatDescription]
   )
 
   const handleCancel = useCallback(() => {
@@ -51,27 +62,37 @@ const Forum: FC = () => {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       if (chatName.trim() !== '') {
-        dispatch(createChatThunk(chatName))
+        dispatch(
+          createChatThunk({ name: chatName, description: chatDescription })
+        )
           .unwrap()
           .then(() => {
             setChatName('')
+            setChatDescription('')
             dispatch(getChatListThunk())
             setIsOpenModal(false)
           })
       }
     },
-    [chatName]
+    [chatName, chatDescription]
   )
   const handleOpenModal = useCallback(() => setIsOpenModal(true), [])
-  const handleCloseModal = useCallback(() => setIsOpenModal(false), [])
+  const handleCloseModal = useCallback(() => {
+    dispatch(resetChatError())
+    setIsOpenModal(false)
+  }, [])
   const handleNavigate = useCallback((id: number) => {
     navigate(`${ROUTE_PATH.FORUM}/${id}`)
   }, [])
+
   const handleSearch = useCallback(
     (value: string) => {
       if (value.trim() !== '') {
-        const filteredChats = chats.filter(chat => chat.title.includes(value))
-        setChangedChats(filteredChats)
+        const filteredChats = {
+          ...chats,
+          rows: chats.rows.filter(chat => chat.name.includes(value)),
+        }
+        setChangedChats(() => filteredChats)
       } else if (value.trim() === '') {
         setChangedChats(chats)
       }
@@ -81,9 +102,17 @@ const Forum: FC = () => {
   const handleSelect = useCallback(
     (value: string) => {
       if (value === 'Сначала новые') {
-        setChangedChats([...changedChats].sort((a, b) => b.id - a.id))
+        const ASC = {
+          ...chats,
+          rows: [...chats.rows].sort((a, b) => b.id - a.id),
+        }
+        setChangedChats(() => ASC)
       } else if (value === 'Сначала старые') {
-        setChangedChats([...changedChats].sort((a, b) => a.id - b.id))
+        const DESC = {
+          ...chats,
+          rows: [...chats.rows].sort((a, b) => a.id - b.id),
+        }
+        setChangedChats(DESC)
       }
     },
     [changedChats]
@@ -94,7 +123,9 @@ const Forum: FC = () => {
       <ContentLayout
         theme={theme}
         toggleTheme={toggleThemeCallback}
-        header={chats.length > 0 && <Title>any ideas for discussion?</Title>}
+        header={
+          chats.rows.length > 0 && <Title>any ideas for discussion?</Title>
+        }
         footer={
           <ForumFooter
             isOpenModal={isOpenModal}
@@ -105,19 +136,19 @@ const Forum: FC = () => {
           <CircularProgress />
         ) : (
           <>
-            {chats.length === 0 && (
+            {chats.rows.length === 0 && (
               <>
-                <Title>No one discussion</Title>
-                <ForumImage theme={theme} />
+                <Title variant="h2">No one discussion</Title>
+                <NoDiscussionIcon size={500} />
               </>
             )}
-            {chats.length > 0 && (
+            {chats.rows.length > 0 && (
               <>
                 <SearchAndSelectBox
                   handleSearch={handleSearch}
                   handleSelect={handleSelect}
                 />
-                {changedChats.map(chat => {
+                {changedChats.rows.map(chat => {
                   const { id } = chat
                   return (
                     <TopicItem
@@ -136,7 +167,8 @@ const Forum: FC = () => {
         isOpenModal={isOpenModal}
         handleCancel={handleCancel}
         handleCloseModal={handleCloseModal}
-        handleChange={handleChange}
+        handleChangeChatName={handleChangeChatName}
+        handleChangeChatDescription={handleChangeChatDescription}
         handleCreateChatSubmit={handleCreateChatSubmit}
         error={error?.message}
       />

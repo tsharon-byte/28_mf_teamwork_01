@@ -19,9 +19,12 @@ import ForumTopic from '../../pages/forum-topic'
 import EndGame from '../../pages/end-game'
 import Page500 from '../../pages/page-500'
 import { useTheme } from '../../hooks'
-const App: FC = () => {
-  const { theme } = useTheme()
+import { useAppDispatch } from '../../store/hooks'
+import { retrieveUserThunk } from '../../store/slices/user-slice/thunks'
 
+const App: FC = () => {
+  const dispatch = useAppDispatch()
+  const { theme } = useTheme()
   return (
     <ThemeProvider theme={appTheme(theme)}>
       <CssBaseline />
@@ -30,7 +33,11 @@ const App: FC = () => {
           <Route path={ROUTE_PATH.HOME} element={<Home />} />
           <Route path={ROUTE_PATH.LOGIN} element={<Login />} />
           <Route path={ROUTE_PATH.REGISTRATION} element={<Registration />} />
-          <Route element={<ProtectedRoute />}>
+          <Route
+            element={<ProtectedRoute />}
+            loader={async () => {
+              await dispatch(retrieveUserThunk())
+            }}>
             <Route path={ROUTE_PATH.PROFILE} element={<Profile />} />
             <Route path={ROUTE_PATH.GAME} element={<Game />} />
             <Route path={ROUTE_PATH.LEADERBOARD} element={<Leaderboard />} />

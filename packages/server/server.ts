@@ -1,9 +1,10 @@
 import fs from 'fs'
 import path from 'path'
-import express, { urlencoded, json } from 'express'
+import express, { json } from 'express'
 import process from 'process'
 import type { ViteDevServer } from 'vite'
 import { createServer as createViteServer } from 'vite'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 import cors from 'cors'
 import { CLIENT_DIR, DIST_DIR, DIST_SSR_DIR, SERVER_DIR } from './assets/dir'
 import { ENVS } from './assets/env'
@@ -29,11 +30,11 @@ export const createServer = async () => {
   }
   app.use(cors(corsOptions))
 
-  app.use(json())
-  app.use(urlencoded({ extended: true }))
-
-  app.use('/api/v1/topics', authMiddleware, topicRouter)
-  app.use('/api/v1/comments', authMiddleware, commentRouter)
+  try {
+    await dbConnect()
+  } catch (e) {
+    console.log('Ошибка подключения к БД', e)
+  }
 
   useSwagger(app)
 
@@ -59,8 +60,25 @@ export const createServer = async () => {
     )
   }
 
-  app.use('/api/emoji', emojiRoute)
-  app.use('/api/theme', themeRoute)
+  app.use('/api', authMiddleware)
+
+  app.use(
+    '/api/v2',
+    createProxyMiddleware({
+      changeOrigin: true,
+      cookieDomainRewrite: {
+        '*': '',
+      },
+      target: 'https://ya-praktikum.tech',
+    })
+  )
+
+  app.use(json())
+  app.use('/api/v1/topics', topicRouter)
+  app.use('/api/v1/comments', commentRouter)
+  app.use('/api/v1/emoji', emojiRoute)
+  app.use('/api/v1/theme', themeRoute)
+
   app.get('/api/*', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })

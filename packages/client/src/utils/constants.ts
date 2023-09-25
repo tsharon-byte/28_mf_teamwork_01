@@ -11,12 +11,6 @@ export enum ROUTE_PATH {
   'SERVER_ERROR' = '/server-error',
 }
 
-export const menu: Record<string, string> = {
-  Главная: ROUTE_PATH.HOME,
-  'Доска лидеров': ROUTE_PATH.LEADERBOARD,
-  Форум: ROUTE_PATH.FORUM,
-}
-
 export const isBrowser = !!(
   typeof window !== 'undefined' &&
   window.document &&

@@ -1,21 +1,14 @@
 import { ReactNode } from 'react'
-import { IUser, ThemeType } from '../../../store/slices/user-slice/types'
-import { Nullable } from '../../../types'
+import { TComments } from '../../../store/slices/comments-slice/types'
+import { ThemeType } from '../../../store/slices/user-slice/types'
 
 export type TopicCommentListType = {
-  comments: CommentType[]
+  comments: TComments
   header: ReactNode
   footer: ReactNode
-  user: Nullable<IUser>
   title: string
+  description: string | null
+  authorId: number
   theme: ThemeType
   toggleTheme: () => void
-}
-
-export type CommentType = {
-  id: string
-  text: string
-  author: string
-  date: string
-  avatar: string
 }

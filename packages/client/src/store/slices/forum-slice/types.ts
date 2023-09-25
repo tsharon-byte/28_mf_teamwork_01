@@ -2,29 +2,21 @@ import { Nullable } from '../../../types'
 import IError from '../../../helpers/prepare-error/types'
 
 export type ForumInitialState = {
-  chats: ChatType[] | []
+  chats: TChatList
   loading: boolean
   error: Nullable<IError>
-  currentChat: Nullable<ChatType>
+  currentChat: Nullable<TChatItem>
 }
 
-export type ChatType = {
+export type TChatItem = {
   id: number
-  title: string
-  avatar: string
-  unread_count: number
-  last_message: LastMessage
+  authorId: number
+  description?: string
+  name: string
+  created_at: string
 }
 
-interface LastMessage {
-  user: User
-  time: string
-  content: string
-}
-
-interface User {
-  first_name: string
-  second_name: string
-  avatar: string
-  login: string
+export type TChatList = {
+  count: number
+  rows: Array<TChatItem>
 }

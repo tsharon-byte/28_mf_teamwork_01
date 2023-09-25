@@ -18,6 +18,7 @@ export interface IUserState {
   user: Nullable<IUser>
   error: Nullable<IError>
   theme: ThemeType
+  foundUsers: Array<IUser>
 }
 
 export interface IPasswordData {

@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUser, IUserState, ThemeData, ThemeType } from './types'
+import { IUserState, IUser, ThemeData, ThemeType } from './types'
 import IError from '../../../helpers/prepare-error/types'
 import {
+  retrieveUserThunk,
   changeAvatarThunk,
   changePasswordThunk,
-  changeThemeThunk,
+  getUserThunk,
+  updateUserThunk,
   retrieveThemeThunk,
-  retrieveUserThunk,
+  changeThemeThunk,
 } from './thunks'
 import {
   deleteUserFromStorage,
@@ -18,6 +20,7 @@ const initialState: IUserState = {
   loading: false,
   user: null,
   error: null,
+  foundUsers: [],
   theme: 'dark',
 }
 
@@ -70,6 +73,14 @@ const userSlice = createSlice({
           }
         }
       )
+      .addCase(
+        changeAvatarThunk.rejected.type,
+        (state, action: PayloadAction<IError>) => {
+          if (state.user) {
+            state.error = action.payload
+          }
+        }
+      )
       .addCase(changePasswordThunk.pending, state => {
         state.loading = true
         state.error = null
@@ -80,6 +91,45 @@ const userSlice = createSlice({
       })
       .addCase(
         changePasswordThunk.rejected.type,
+        (state, action: PayloadAction<IError>) => {
+          state.loading = false
+          state.error = action.payload
+        }
+      )
+      .addCase(getUserThunk.pending, state => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(
+        getUserThunk.fulfilled,
+        (state, action: PayloadAction<IUser>) => {
+          state.loading = false
+          state.error = null
+          state.foundUsers = [...state.foundUsers, action.payload]
+        }
+      )
+      .addCase(
+        getUserThunk.rejected.type,
+        (state, action: PayloadAction<IError>) => {
+          state.loading = false
+          state.error = action.payload
+        }
+      )
+      .addCase(updateUserThunk.pending.type, state => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(
+        updateUserThunk.fulfilled.type,
+        (state, action: PayloadAction<IUser>) => {
+          state.loading = false
+          state.user = action.payload
+          state.error = null
+          setUserToStorage(state.user)
+        }
+      )
+      .addCase(
+        updateUserThunk.rejected.type,
         (state, action: PayloadAction<IError>) => {
           state.loading = false
           state.error = action.payload

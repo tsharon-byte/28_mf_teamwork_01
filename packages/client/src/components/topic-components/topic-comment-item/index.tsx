@@ -1,43 +1,155 @@
-import React, { forwardRef, memo } from 'react'
+import React, {
+  ChangeEvent,
+  FormEvent,
+  forwardRef,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { Avatar, Box, Button, Paper, Typography } from '@mui/material'
 import { TopicCommentItemType } from './types'
 import styles from './styles.module.css'
 import { getCountDaysAgo } from '../../../utils/get-count-days-ago'
 import { makeResourcePath } from '../../../helpers'
+import { useAppDispatch, useAppSelector } from '../../../store/hooks'
+import { userSelector } from '../../../store/slices/user-slice/selectors'
+import getUserThunk from '../../../store/slices/user-slice/thunks/get-user-thunk'
+import CommentsReplyModal from '../../forum-components/comments-reply-modal'
+import { createCommentsThunk } from '../../../store/slices/comments-slice/thunks'
+import getCommentsByIdThunk from '../../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
+import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
+import useComments from '../../../hooks/use-comments'
+import { IUser } from '../../../store/slices/user-slice/types'
+import { resetCommentError } from '../../../store/slices/comments-slice/actions'
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
-    ({ text, author, date, avatar }, ref) => {
+    ({ text, author, date, id, topicId, replyComments, isReply }, ref) => {
+      const dispatch = useAppDispatch()
+
+      const [isOpenModal, setIsOpenModal] = useState(false)
+      const [message, setMessage] = useState('')
+      const [user, setUser] = useState<IUser | null>(null)
+
+      const { error } = useComments()
+      const { foundUsers } = useAppSelector(userSelector)
+
+      const foundUser = useMemo(
+        () => foundUsers.find(user => user.id === author),
+        [author]
+      )
+
+      useEffect(() => {
+        if (!foundUser) {
+          dispatch(getUserThunk(author))
+        } else {
+          setUser(foundUser)
+        }
+      }, [foundUser])
+
+      const handleOpenModal = useCallback(() => setIsOpenModal(() => true), [])
+      const handleCloseModal = useCallback(() => {
+        dispatch(resetCommentError())
+        setIsOpenModal(() => false)
+      }, [])
+
+      const handleChangeMessage = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+          const { value } = e.currentTarget
+          setMessage(value)
+        },
+        [message]
+      )
+
+      const handleCancel = useCallback(() => {
+        setIsOpenModal(false)
+        setMessage('')
+      }, [setIsOpenModal, setMessage])
+
+      const handleSendReply = useCallback(
+        (e: FormEvent<HTMLFormElement>) => {
+          e.preventDefault()
+
+          if (message.trim() !== '') {
+            dispatch(
+              createCommentsThunk({
+                id: Number(topicId),
+                parentId: Number(id),
+                text: message,
+              })
+            )
+              .unwrap()
+              .then(() => {
+                setMessage('')
+                dispatch(getCommentsByIdThunk())
+                setIsOpenModal(() => false)
+              })
+          }
+        },
+        [message]
+      )
+
       return (
-        <Paper className={styles.comment} ref={ref}>
-          <Avatar
-            src={(avatar && makeResourcePath(avatar)) || ''}
-            className={styles.avatar}
-          />
-          <Box className={styles.box}>
-            <Box>
-              <Box position="relative">
-                <Typography variant="body1" color="secondary">
-                  {author}
+        <>
+          <Paper
+            className={classNames(styles.comment, isReply && styles.reply)}
+            ref={ref}>
+            <Avatar
+              src={(user?.avatar && makeResourcePath(user.avatar)) || ''}
+              className={styles.avatar}
+            />
+            <Box className={styles.box}>
+              <Box>
+                <Box position="relative">
+                  <Typography variant="body1" color="secondary">
+                    {user?.display_name || user?.first_name}
+                  </Typography>
+                  <TopicCommentMenu />
+                </Box>
+                <Typography
+                  variant="body1"
+                  color="silver"
+                  className={styles.date}>
+                  {getCountDaysAgo(date)}
                 </Typography>
-                <TopicCommentMenu />
               </Box>
-              <Typography
-                variant="body1"
-                color="silver"
-                className={styles.date}>
-                {getCountDaysAgo(date)}
+              <Typography variant="body1" className={styles.text}>
+                {text}
               </Typography>
+              {!isReply && (
+                <Button
+                  variant="text"
+                  className={styles.button}
+                  onClick={handleOpenModal}>
+                  Ответить
+                </Button>
+              )}
             </Box>
-            <Typography variant="body1" className={styles.text}>
-              {text}
-            </Typography>
-            <Button variant="text" className={styles.button}>
-              Ответить
-            </Button>
-          </Box>
-        </Paper>
+          </Paper>
+          {replyComments &&
+            replyComments.map(comment => (
+              <TopicCommentItem
+                key={comment.id}
+                id={comment.id}
+                text={comment.text}
+                author={comment.authorId}
+                date={comment.createdAt}
+                topicId={topicId}
+                isReply={true}
+              />
+            ))}
+          <CommentsReplyModal
+            isOpenModal={isOpenModal}
+            handleCloseModal={handleCloseModal}
+            handleChangeMessage={handleChangeMessage}
+            handleSendReply={handleSendReply}
+            handleCancel={handleCancel}
+            error={error?.message}
+          />
+        </>
       )
     }
   )
