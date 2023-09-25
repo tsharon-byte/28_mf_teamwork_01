@@ -5,7 +5,6 @@ import React, {
   useCallback,
   useEffect,
   useState,
-  useMemo,
 } from 'react'
 import { ContentLayout } from '../../layouts'
 import { CircularProgress } from '@mui/material'
@@ -23,6 +22,7 @@ import { useNavigate } from 'react-router-dom'
 import { SearchAndSelectBox } from '../../components/forum-components/search-and-select-box'
 import { Title } from '../../components'
 import { NoDiscussionIcon } from '../../icons'
+import { resetChatError } from '../../store/slices/forum-slice/actions'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
@@ -77,7 +77,10 @@ const Forum: FC = () => {
     [chatName, chatDescription]
   )
   const handleOpenModal = useCallback(() => setIsOpenModal(true), [])
-  const handleCloseModal = useCallback(() => setIsOpenModal(false), [])
+  const handleCloseModal = useCallback(() => {
+    dispatch(resetChatError())
+    setIsOpenModal(false)
+  }, [])
   const handleNavigate = useCallback((id: number) => {
     navigate(`${ROUTE_PATH.FORUM}/${id}`)
   }, [])
