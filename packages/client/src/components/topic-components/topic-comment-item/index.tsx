@@ -22,6 +22,7 @@ import getCommentsByIdThunk from '../../../store/slices/comments-slice/thunks/ge
 import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 import useComments from '../../../hooks/use-comments'
+import { IUser } from '../../../store/slices/user-slice/types'
 import { resetCommentError } from '../../../store/slices/comments-slice/actions'
 
 export const TopicCommentItem = memo(
@@ -29,20 +30,25 @@ export const TopicCommentItem = memo(
     ({ text, author, date, id, topicId, replyComments, isReply }, ref) => {
       const dispatch = useAppDispatch()
 
-      const { foundUsers } = useAppSelector(userSelector)
-
       const [isOpenModal, setIsOpenModal] = useState(false)
       const [message, setMessage] = useState('')
+      const [user, setUser] = useState<IUser | null>(null)
+
       const { error } = useComments()
+      const { foundUsers } = useAppSelector(userSelector)
 
       const foundUser = useMemo(
         () => foundUsers.find(user => user.id === author),
-        [foundUsers]
+        [author]
       )
 
       useEffect(() => {
-        dispatch(getUserThunk(author))
-      }, [])
+        if (!foundUser) {
+          dispatch(getUserThunk(author))
+        } else {
+          setUser(foundUser)
+        }
+      }, [foundUser])
 
       const handleOpenModal = useCallback(() => setIsOpenModal(() => true), [])
       const handleCloseModal = useCallback(() => {
@@ -92,16 +98,14 @@ export const TopicCommentItem = memo(
             className={classNames(styles.comment, isReply && styles.reply)}
             ref={ref}>
             <Avatar
-              src={
-                (foundUser?.avatar && makeResourcePath(foundUser.avatar)) || ''
-              }
+              src={(user?.avatar && makeResourcePath(user.avatar)) || ''}
               className={styles.avatar}
             />
             <Box className={styles.box}>
               <Box>
                 <Box position="relative">
                   <Typography variant="body1" color="secondary">
-                    {foundUser?.display_name || foundUser?.first_name}
+                    {user?.display_name || user?.first_name}
                   </Typography>
                   <TopicCommentMenu />
                 </Box>

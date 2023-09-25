@@ -5,35 +5,32 @@ import {
   KeyboardEventHandler,
   KeyboardEvent,
   useCallback,
-  useEffect,
   useMemo,
   useState,
 } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { getCurrentChat } from '../../store/slices/forum-slice/actions'
+import { useAppDispatch } from '../../store/hooks'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
 import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
-import { useChats } from '../../hooks'
+import { useChats, useUser } from '../../hooks'
 import { TopicHeader } from '../../components/topic-components/topic-header'
 import { makeResourcePath } from '../../helpers'
 import { createCommentsThunk } from '../../store/slices/comments-slice/thunks'
 import useComments from '../../hooks/use-comments'
 import getCommentsByIdThunk from '../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
-import { userSelector } from '../../store/slices/user-slice/selectors'
-import getUserThunk from '../../store/slices/user-slice/thunks/get-user-thunk'
 import { TComments } from '../../store/slices/comments-slice/types'
 
 const ForumTopic: FC = () => {
-  const params = useParams()
-  const { topicId } = params
-  const { chats, loading, currentChat } = useChats()
-
-  const { foundUsers } = useAppSelector(userSelector)
-  const [message, setMessage] = useState('')
-  const { comments } = useComments()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const params = useParams()
+  const { topicId } = params
+
+  const { loading, chats } = useChats()
+  const { user } = useUser()
+  const { comments } = useComments()
+
+  const [message, setMessage] = useState('')
 
   const commentByTopicId: TComments = useMemo(() => {
     const rows = comments.rows.filter(
@@ -42,22 +39,10 @@ const ForumTopic: FC = () => {
     return { count: rows.length, rows }
   }, [comments, topicId])
 
-  const foundUser = useMemo(
-    () => foundUsers.find(user => currentChat?.authorId === user.id),
-    [currentChat]
+  const currentChat = useMemo(
+    () => chats.rows.find(chat => chat.id === Number(topicId)),
+    [topicId]
   )
-
-  useEffect(() => {
-    if (chats && currentChat) {
-      dispatch(getUserThunk(currentChat.authorId))
-    }
-  }, [currentChat])
-
-  useEffect(() => {
-    if (topicId) {
-      dispatch(getCurrentChat(topicId))
-    }
-  }, [chats, topicId, dispatch])
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -101,13 +86,12 @@ const ForumTopic: FC = () => {
   if (!currentChat) {
     return null
   }
-  console.log(currentChat)
   return (
     <TopicCommentList
       title={currentChat.name}
-      description={currentChat.description || null}
-      user={foundUser || null}
       comments={commentByTopicId}
+      description={currentChat.description || null}
+      authorId={currentChat.authorId}
       header={
         <TopicHeader
           callback={handleNavigate}
@@ -118,9 +102,7 @@ const ForumTopic: FC = () => {
       footer={
         <TopicTextField
           placeholder="Добавить новый комментарий..."
-          avatar={
-            (foundUser?.avatar && makeResourcePath(foundUser.avatar)) || ''
-          }
+          avatar={(user?.avatar && makeResourcePath(user.avatar)) || ''}
           message={message}
           handleAddComment={handleAddComment}
           handleChange={handleChange}

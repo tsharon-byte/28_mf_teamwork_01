@@ -1,20 +1,40 @@
-import React, { memo, FC, useRef, useEffect } from 'react'
+import React, { FC, memo, useEffect, useMemo, useRef, useState } from 'react'
 import { TopicCommentListType } from './types'
 import styles from './styles.module.css'
 import { ContentLayout } from '../../../layouts'
 import { TopicCommentItem } from '../topic-comment-item'
 import { Avatar, Box, Typography } from '@mui/material'
 import { makeResourcePath } from '../../../helpers'
+import { IUser } from '../../../store/slices/user-slice/types'
+import { useAppDispatch, useAppSelector } from '../../../store/hooks'
+import { userSelector } from '../../../store/slices/user-slice/selectors'
+import { getUserThunk } from '../../../store/slices/user-slice/thunks'
 
 export const TopicCommentList: FC<TopicCommentListType> = memo(
-  ({ comments, header, footer, user, title, description }) => {
+  ({ comments, header, footer, title, description, authorId }) => {
     const endCommentRef = useRef<HTMLDivElement>(null)
+    const [user, setUser] = useState<IUser | null>(null)
+    const dispatch = useAppDispatch()
+    const { foundUsers } = useAppSelector(userSelector)
+
+    const foundUser = useMemo(
+      () => foundUsers.find(user => user.id === authorId),
+      [authorId]
+    )
 
     useEffect(() => {
       if (endCommentRef.current) {
         endCommentRef.current.scrollIntoView({ behavior: 'smooth' })
       }
     }, [comments])
+
+    useEffect(() => {
+      if (!foundUser) {
+        dispatch(getUserThunk(authorId))
+      } else {
+        setUser(foundUser)
+      }
+    }, [foundUser])
 
     return (
       <ContentLayout
