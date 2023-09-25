@@ -10,6 +10,8 @@ import TopicModel from './topic'
 @Table({
   tableName: 'comments',
   modelName: 'comment',
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
 })
 class CommentModel extends Model {
   @ForeignKey(() => TopicModel)
@@ -41,20 +43,6 @@ class CommentModel extends Model {
     allowNull: false,
   })
   text!: string
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-    field: 'created_at',
-    defaultValue: DataType.NOW,
-  })
-  override createdAt!: Date
-
-  @Column({
-    type: DataType.DATE,
-    field: 'updated_at',
-  })
-  override updatedAt!: Date
 }
 
 export default CommentModel

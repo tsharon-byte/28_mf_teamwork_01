@@ -50,6 +50,7 @@ const Leaderboard: FC = () => {
               <TableCell>
                 <Typography>Счет</Typography>
               </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -80,21 +81,14 @@ const Leaderboard: FC = () => {
                   </WithIconTypography>
                 </TableCell>
                 <TableCell>
+                  <Typography>{record.score}</Typography>
+                </TableCell>
+                <TableCell>
                   {i < 3 ? (
-                    <WithIconTypography
-                      icon={
-                        <BombIcon
-                          color={
-                            i === 1 ? 'silver' : i === 2 ? 'bronze' : 'gold'
-                          }
-                        />
-                      }
-                      iconPosition="right">
-                      {record.score}
-                    </WithIconTypography>
-                  ) : (
-                    <Typography>{record.score}</Typography>
-                  )}
+                    <BombIcon
+                      color={i === 1 ? 'silver' : i === 2 ? 'bronze' : 'gold'}
+                    />
+                  ) : null}
                 </TableCell>
               </TableRow>
             ))}

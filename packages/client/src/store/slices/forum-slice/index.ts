@@ -17,6 +17,11 @@ const forumSlice = createSlice({
   name: 'forum',
   initialState,
   reducers: {},
+  reducers: {
+    resetChatError(state) {
+      state.error = null
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(

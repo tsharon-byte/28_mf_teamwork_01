@@ -15,7 +15,11 @@ const initialState: TCommentsInitialState = {
 const commentsSlice = createSlice({
   name: 'comments',
   initialState,
-  reducers: {},
+  reducers: {
+    resetCommentError(state) {
+      state.error = null
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(

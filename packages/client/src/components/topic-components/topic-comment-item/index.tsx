@@ -23,6 +23,7 @@ import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 import useComments from '../../../hooks/use-comments'
 import { IUser } from '../../../store/slices/user-slice/types'
+import { resetCommentError } from '../../../store/slices/comments-slice/actions'
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
@@ -50,10 +51,10 @@ export const TopicCommentItem = memo(
       }, [foundUser])
 
       const handleOpenModal = useCallback(() => setIsOpenModal(() => true), [])
-      const handleCloseModal = useCallback(
-        () => setIsOpenModal(() => false),
-        []
-      )
+      const handleCloseModal = useCallback(() => {
+        dispatch(resetCommentError())
+        setIsOpenModal(() => false)
+      }, [])
 
       const handleChangeMessage = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
