@@ -4,8 +4,6 @@ import express, { json } from 'express'
 import process from 'process'
 import type { ViteDevServer } from 'vite'
 import { createServer as createViteServer } from 'vite'
-import { createProxyMiddleware } from 'http-proxy-middleware'
-import cors from 'cors'
 import { CLIENT_DIR, DIST_DIR, DIST_SSR_DIR, SERVER_DIR } from './assets/dir'
 import { ENVS } from './assets/env'
 import { topicRouter, commentRouter } from './api/v1/routers'
@@ -13,21 +11,17 @@ import { authMiddleware } from './middlewares'
 import useSwagger from './api/v1/swagger'
 import dbConnect from './db'
 import emojiRoute from './routes/emojiRoute'
+import { createProxyMiddleware } from 'http-proxy-middleware'
+import cors from 'cors'
 import themeRoute from './routes/theme-route'
-
 export const createServer = async () => {
-  try {
-    await dbConnect()
-  } catch (e) {
-    console.log('Ошибка подключения к БД', e)
-  }
-
   const app = express()
 
   const corsOptions = {
     origin: true,
     credentials: true,
   }
+
   app.use(cors(corsOptions))
 
   try {
