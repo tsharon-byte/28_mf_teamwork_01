@@ -16,7 +16,6 @@ const initialState: ForumInitialState = {
 const forumSlice = createSlice({
   name: 'forum',
   initialState,
-  reducers: {},
   reducers: {
     resetChatError(state) {
       state.error = null
