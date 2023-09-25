@@ -13,6 +13,7 @@ const authMiddleware = async (
 ) => {
   const nonSecurePaths = [
     '/v2/auth/signin',
+    '/v2/auth/signup',
     '/v2/oauth/yandex/service-id',
     '/v2/oauth/yandex',
   ]
