@@ -21,13 +21,15 @@ const useAuth = () => {
       const response = await registrationRequest(data)
       response.status === 200 && navigate(ROUTE_PATH.HOME)
     } catch (error) {
-      const err = prepareError(error)
-      err.status === 400 &&
-        err.message === 'User already in system' &&
+      const { status, message } = prepareError(error)
+      status === 400 &&
+        message === 'User already in system' &&
         navigate(ROUTE_PATH.HOME)
-      err.status === 401 && navigate(ROUTE_PATH.LOGIN)
-      err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
-      toast.error(err.message)
+      status === 401 && navigate(ROUTE_PATH.LOGIN)
+      status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
+      toast.error(message, {
+        toastId: message
+      })
     }
   }, [])
 
@@ -36,13 +38,15 @@ const useAuth = () => {
       const response = await loginRequest(data)
       response.status === 200 && navigate(ROUTE_PATH.HOME)
     } catch (error) {
-      const err = prepareError(error)
-      err.status === 400 &&
-        err.message === 'User already in system' &&
+      const { status, message } = prepareError(error)
+      status === 400 &&
+        message === 'User already in system' &&
         navigate(ROUTE_PATH.HOME)
-      err.status === 401 && navigate(ROUTE_PATH.LOGIN)
-      err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
-      toast.error(err.message)
+      status === 401 && navigate(ROUTE_PATH.LOGIN)
+      status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
+      toast.error(message, {
+        toastId: message
+      })
     }
   }, [])
 
@@ -52,10 +56,12 @@ const useAuth = () => {
       const response = await logoutRequest()
       response.status === 200 && dispatch(userSlice.actions.resetUser())
     } catch (error) {
-      const err = prepareError(error)
-      err.status === 401 && dispatch(userSlice.actions.resetUser())
-      err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
-      toast.error(err.message)
+      const { status, message } = prepareError(error)
+      status === 401 && dispatch(userSlice.actions.resetUser())
+      status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
+      toast.error(message, {
+        toastId: message
+      })
     }
   }, [])
 

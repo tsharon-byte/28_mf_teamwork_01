@@ -27,7 +27,7 @@ const Profile: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { logout } = useAuth()
-  const { user, updateUser } = useUser()
+  const { user, updateUser } = useUser(true)
   const { error } = useAppSelector(state => state.user, shallowEqual)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [password, setPassword] = useState({ oldPassword: '', newPassword: '' })

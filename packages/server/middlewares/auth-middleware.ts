@@ -11,6 +11,14 @@ const authMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
+  const nonSecurePaths = [
+    '/v2/auth/signin',
+    '/v2/oauth/yandex/service-id',
+    '/v2/oauth/yandex'
+  ]
+  if (nonSecurePaths.includes(req.path)) {
+    return next()
+  }
   const { cookie } = req.headers
   const { AUTH_URL } = process.env
   if (cookie && AUTH_URL) {

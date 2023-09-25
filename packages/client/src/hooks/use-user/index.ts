@@ -8,7 +8,7 @@ import {
 import { userSelector } from '../../store/slices/user-slice/selectors'
 import { IUser } from '../../store/slices/user-slice/types'
 
-const useUser = () => {
+const useUser = (toastifyError: boolean | undefined = false) => {
   const dispatch = useAppDispatch()
   const { loading, user, error } = useAppSelector(userSelector)
 
@@ -23,7 +23,7 @@ const useUser = () => {
   }
 
   useEffect(() => {
-    error?.message &&
+    toastifyError && error?.message &&
       toast.error(error.message, {
         toastId: error.message,
       })
