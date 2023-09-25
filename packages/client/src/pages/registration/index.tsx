@@ -1,6 +1,7 @@
 import { FC, FormEvent } from 'react'
 import styles from './styles.module.css'
-import { TextField, Form, Button } from '../../components'
+import { TextField, Form } from '../../components'
+import { Button, Link as MuiLink } from '@mui/material'
 import {
   emailValidationRule,
   loginValidationRule,
@@ -69,14 +70,17 @@ const Registration: FC = () => {
             validationRules={[passwordValidationRule]}
             required
           />
-          <div className={styles.btn}>
-            <Button type="submit" name="Зарегистрироваться" />
-          </div>
+          <Button type="submit" className={styles.button} variant="contained">
+            Зарегистрироваться
+          </Button>
         </Form>
         <div className={styles.textBlock}>
-          <span className={styles.text}>Уже зарегистрированы?</span>
+          <span>Уже зарегистрированы?</span>
+
           <Link to={ROUTE_PATH.LOGIN} className={styles.link}>
-            Войти
+            <MuiLink underline="always" variant="inherit">
+              Войти
+            </MuiLink>
           </Link>
         </div>
       </div>

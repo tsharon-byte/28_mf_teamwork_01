@@ -31,7 +31,7 @@ export const EditTextField: FC<EditTextFieldType> = memo(
     const textFieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
     const buttonRef = useRef<HTMLButtonElement>(null)
     const callbacks = {
-      hanldeChange: useCallback(
+      handleChange: useCallback(
         (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
           if (isEditing) {
             const { value } = e.currentTarget
@@ -60,7 +60,7 @@ export const EditTextField: FC<EditTextFieldType> = memo(
       setIsEditing(false)
     }
 
-    const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    const handleButtonClick: MouseEventHandler<HTMLButtonElement> = event => {
       !isEditing && event.preventDefault()
     }
 
@@ -71,7 +71,7 @@ export const EditTextField: FC<EditTextFieldType> = memo(
         name={name}
         label={label}
         value={currentValue}
-        onChange={callbacks.hanldeChange}
+        onChange={callbacks.handleChange}
         validationRules={validationRules}
         InputProps={{
           endAdornment: (
@@ -79,11 +79,17 @@ export const EditTextField: FC<EditTextFieldType> = memo(
               position={position}
               style={{ color: mainColor }}
               onClick={callbacks.handleEditMode}>
-              <IconButton type="submit" ref={buttonRef} onClick={handleButtonClick}>
+              <IconButton
+                type="submit"
+                ref={buttonRef}
+                onClick={handleButtonClick}>
                 {isEditing ? (
-                    <DoneIcon className={styles.done} />
+                  <DoneIcon className={styles.done} />
                 ) : (
-                    <StyledEditIcon mainColor={mainColor} hoverColor={hoverColor} />
+                  <StyledEditIcon
+                    mainColor={mainColor}
+                    hoverColor={hoverColor}
+                  />
                 )}
               </IconButton>
             </InputAdornment>

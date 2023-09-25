@@ -17,6 +17,7 @@ export interface IUserState {
   loading: boolean
   user: Nullable<IUser>
   error: Nullable<IError>
+  theme: ThemeType
   foundUsers: Array<IUser>
 }
 
@@ -36,4 +37,14 @@ export interface IUserUpdateData {
   login: string
   email: string
   phone: string
+}
+
+export type ThemeType = 'dark' | 'light'
+
+export interface ThemeData {
+  id: number
+  theme: ThemeType
+  userId: number
+  updatedAt?: string
+  createdAt?: string
 }

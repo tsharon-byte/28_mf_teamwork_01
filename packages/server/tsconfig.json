@@ -22,17 +22,13 @@
     "resolveJsonModule": true,
     "importsNotUsedAsValues": "error",
     "jsx": "react-jsx",
-    "lib": [
-      "es2019",
-      "esnext.asynciterable",
-      "dom"
-    ],
+    "lib": ["es2019", "esnext.asynciterable", "dom"],
     "types": ["node", "jest", "express-request"],
     "baseUrl": ".",
     "paths": {
       "*": ["types/*"]
     },
     "outDir": "dist",
-    "typeRoots": ["../../node_modules/@types", "types"],
+    "typeRoots": ["../../node_modules/@types", "types"]
   }
 }

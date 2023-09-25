@@ -25,10 +25,7 @@ const TopicCommentMenu = () => {
       <Toolbar>
         <div>
           <Tooltip title="Добавить реакцию" placement="top" arrow>
-            <IconButton
-              color="inherit"
-              aria-label="add emoji"
-              onClick={handleClick}>
+            <IconButton aria-label="add emoji" onClick={handleClick}>
               <AddReactionIcon />
             </IconButton>
           </Tooltip>

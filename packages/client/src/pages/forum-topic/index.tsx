@@ -12,7 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../store/hooks'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
 import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
-import { useChats, useUser } from '../../hooks'
+import { useChats, useUser, useTheme } from '../../hooks'
 import { TopicHeader } from '../../components/topic-components/topic-header'
 import { makeResourcePath } from '../../helpers'
 import { createCommentsThunk } from '../../store/slices/comments-slice/thunks'
@@ -25,7 +25,7 @@ const ForumTopic: FC = () => {
   const navigate = useNavigate()
   const params = useParams()
   const { topicId } = params
-
+  const { theme, toggleThemeCallback } = useTheme()
   const { loading, chats } = useChats()
   const { user } = useUser()
   const { comments } = useComments()
@@ -92,6 +92,8 @@ const ForumTopic: FC = () => {
       comments={commentByTopicId}
       description={currentChat.description || null}
       authorId={currentChat.authorId}
+      theme={theme}
+      toggleTheme={toggleThemeCallback}
       header={
         <TopicHeader
           callback={handleNavigate}

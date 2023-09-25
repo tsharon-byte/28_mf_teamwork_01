@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { Button } from '@mui/material'
 import { ContentLayout } from '../../layouts'
-import { useAuth, useUser } from '../../hooks'
+import { useAuth, useTheme, useUser } from '../../hooks'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   changeAvatarThunk,
@@ -32,7 +32,7 @@ const Profile: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [password, setPassword] = useState({ oldPassword: '', newPassword: '' })
   const inputRef = useRef<HTMLInputElement>(null)
-
+  const { theme } = useTheme()
   const handleBackNavigate = useCallback(() => navigate(-1 || '/'), [])
   const handleChangePasswordSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -78,7 +78,6 @@ const Profile: FC = () => {
   if (!user) {
     return null
   }
-
   const handleUpdateUserSubmit: FormEventHandler<HTMLFormElement> = event => {
     const form = event.currentTarget
     const formData = new FormData(form)
@@ -99,8 +98,10 @@ const Profile: FC = () => {
       <ProfileInfo
         user={user}
         handleOpenModal={handleOpenModal}
+        theme={theme}
         handleUpdateUserSubmit={handleUpdateUserSubmit}
       />
+
       <Button variant="contained" onClick={logout} sx={{ minWidth: 300 }}>
         Выйти
       </Button>

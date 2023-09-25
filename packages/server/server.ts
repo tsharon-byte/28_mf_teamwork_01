@@ -13,6 +13,7 @@ import dbConnect from './db'
 import emojiRoute from './routes/emojiRoute'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import cors from 'cors'
+import themeRoute from './routes/theme-route'
 
 export const createServer = async () => {
   const app = express()
@@ -71,6 +72,7 @@ export const createServer = async () => {
   app.use('/api/v1/topics', topicRouter)
   app.use('/api/v1/comments', commentRouter)
   app.use('/api/v1/emoji', emojiRoute)
+  app.use('/api/v1/theme', themeRoute)
 
   app.get('/api/*', (_, res) => {
     res.json('👋 Howdy from the server :)')

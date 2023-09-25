@@ -17,16 +17,18 @@ import { withIcon } from '../../hocs'
 import { UserIcon, BombIcon, PodiumIcon } from '../../icons'
 import styles from './styles.module.css'
 import useLeaderboard from '../../hooks/use-leaderboard'
-import { useUser } from '../../hooks'
+import { useUser, useTheme } from '../../hooks'
 
 const WithIconTypography = withIcon<TypographyProps>()(Typography)
 
 const Leaderboard: FC = () => {
   const { loading, leaderboard, infiniteScroll } = useLeaderboard()
   const { user } = useUser()
-
+  const { theme, toggleThemeCallback } = useTheme()
   return (
     <ContentLayout
+      theme={theme}
+      toggleTheme={toggleThemeCallback}
       header={
         loading || leaderboard.length ? (
           <Title mb="17px" mt="17px">

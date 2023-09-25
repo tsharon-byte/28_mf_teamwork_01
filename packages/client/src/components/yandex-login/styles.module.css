@@ -1,4 +1,5 @@
 .iconButton {
   border: thin solid white !important;
   margin: 0 auto !important;
+  mix-blend-mode: difference;
 }

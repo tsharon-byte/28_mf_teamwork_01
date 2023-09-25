@@ -15,7 +15,7 @@ import {
 } from '../../store/slices/forum-slice/thunks'
 import { ROUTE_PATH } from '../../utils/constants'
 import { CreateTopicModal } from '../../components/forum-components/create-topic-modal'
-import { useChats } from '../../hooks'
+import { useChats, useTheme } from '../../hooks'
 import { ForumFooter } from '../../components/forum-components/forum-footer'
 import { TopicItem } from '../../components/forum-components/topic-item'
 import { useNavigate } from 'react-router-dom'
@@ -32,7 +32,7 @@ const Forum: FC = () => {
   const [chatName, setChatName] = useState('')
   const [chatDescription, setChatDescription] = useState('')
   const navigate = useNavigate()
-
+  const { theme, toggleThemeCallback } = useTheme()
   useEffect(() => {
     setChangedChats(chats)
   }, [chats])
@@ -121,6 +121,8 @@ const Forum: FC = () => {
   return (
     <>
       <ContentLayout
+        theme={theme}
+        toggleTheme={toggleThemeCallback}
         header={
           chats.rows.length > 0 && <Title>any ideas for discussion?</Title>
         }

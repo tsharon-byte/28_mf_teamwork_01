@@ -15,8 +15,14 @@ const ContentLayout: FC<IContentLayoutProps> = ({
   footerClassName,
   pageClassNames,
   onScroll,
+  theme,
+  toggleTheme,
 }) => (
-  <PageLayout navigation={navigation} {...pageClassNames}>
+  <PageLayout
+    navigation={navigation}
+    {...pageClassNames}
+    theme={theme}
+    toggleTheme={toggleTheme}>
     {header && (
       <Box className={classNames(styles.header, headerClassName)}>{header}</Box>
     )}

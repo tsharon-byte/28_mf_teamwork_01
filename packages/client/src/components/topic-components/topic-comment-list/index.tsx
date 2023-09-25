@@ -11,7 +11,16 @@ import { userSelector } from '../../../store/slices/user-slice/selectors'
 import { getUserThunk } from '../../../store/slices/user-slice/thunks'
 
 export const TopicCommentList: FC<TopicCommentListType> = memo(
-  ({ comments, header, footer, title, description, authorId }) => {
+  ({
+    comments,
+    header,
+    footer,
+    title,
+    description,
+    authorId,
+    theme,
+    toggleTheme,
+  }) => {
     const endCommentRef = useRef<HTMLDivElement>(null)
     const [user, setUser] = useState<IUser | null>(null)
     const dispatch = useAppDispatch()
@@ -38,6 +47,8 @@ export const TopicCommentList: FC<TopicCommentListType> = memo(
 
     return (
       <ContentLayout
+        theme={theme}
+        toggleTheme={toggleTheme}
         mainClassName={styles.main}
         headerClassName={styles.header}
         footerClassName={styles.footer}

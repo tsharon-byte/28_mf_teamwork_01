@@ -2,6 +2,7 @@
   width: 310px;
   text-align: center;
 }
+
 .heading {
   color: #fff;
   font-size: 2rem;
@@ -9,18 +10,22 @@
   line-height: 1.25rem;
   margin-bottom: 5rem;
 }
+
 .btn {
   margin-top: 3rem;
 }
+
 .textBlock {
   margin-top: 1.25rem;
   display: flex;
   justify-content: space-between;
 }
+
 .text {
   color: rgba(255, 255, 255, 0.5);
   line-height: 1.25rem;
 }
+
 .link {
   composes: text;
   color: #fff;
