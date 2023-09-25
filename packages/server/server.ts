@@ -14,6 +14,7 @@ import emojiRoute from './routes/emojiRoute'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import cors from 'cors'
 import themeRoute from './routes/theme-route'
+
 export const createServer = async () => {
   const app = express()
 
