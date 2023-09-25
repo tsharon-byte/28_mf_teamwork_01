@@ -32,10 +32,12 @@ const useOAuth = () => {
         })
         response.status === 200 && dispatch(retrieveUserThunk())
       } catch (error) {
-        const err = prepareError(error)
-        err.status === 401 && navigate(ROUTE_PATH.LOGIN)
-        err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
-        toast.error(err.message)
+        const { status, message } = prepareError(error)
+        status === 401 && navigate(ROUTE_PATH.LOGIN)
+        status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
+        toast.error(message, {
+          toastId: message,
+        })
       }
     }
   }, [])
@@ -47,9 +49,11 @@ const useOAuth = () => {
       )
       response.status === 200 && setClientId(response.data.service_id)
     } catch (error) {
-      const err = prepareError(error)
-      err.status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
-      toast.error(err.message)
+      const { status, message } = prepareError(error)
+      status === 500 && navigate(ROUTE_PATH.SERVER_ERROR)
+      toast.error(message, {
+        toastId: message,
+      })
     }
   }, [])
 

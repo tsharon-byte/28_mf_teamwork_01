@@ -54,6 +54,8 @@ export const createServer = async () => {
     )
   }
 
+  app.use('/api', authMiddleware)
+
   app.use(
     '/api/v2',
     createProxyMiddleware({
@@ -66,8 +68,8 @@ export const createServer = async () => {
   )
 
   app.use(json())
-  app.use('/api/v1/topics', authMiddleware, topicRouter)
-  app.use('/api/v1/comments', authMiddleware, commentRouter)
+  app.use('/api/v1/topics', topicRouter)
+  app.use('/api/v1/comments', commentRouter)
   app.use('/api/v1/emoji', emojiRoute)
 
   app.get('/api/*', (_, res) => {
