@@ -10,7 +10,7 @@ export const TopicItem: FC<TopicItemType> = memo(({ chat, handleNavigate }) => {
     <Card className={styles.item}>
       <Box className={styles.info}>
         <Typography variant="body1">
-          {format(Date.parse(chat.createdAt), 'dd-MM-YYY HH:mm')}
+          {format(Date.parse(chat.created_at), 'dd-MM-YYY HH:mm')}
         </Typography>
       </Box>
       <Box className={styles.message}>
