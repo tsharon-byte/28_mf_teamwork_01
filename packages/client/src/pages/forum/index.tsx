@@ -17,11 +17,11 @@ import { ROUTE_PATH } from '../../utils/constants'
 import { CreateTopicModal } from '../../components/forum-components/create-topic-modal'
 import { useChats } from '../../hooks'
 import { ForumFooter } from '../../components/forum-components/forum-footer'
-import { ForumImage } from '../../components/forum-components/forum-image'
 import { TopicItem } from '../../components/forum-components/topic-item'
 import { useNavigate } from 'react-router-dom'
 import { SearchAndSelectBox } from '../../components/forum-components/search-and-select-box'
 import { Title } from '../../components'
+import { NoDiscussionIcon } from '../../icons'
 import { resetChatError } from '../../store/slices/forum-slice/actions'
 
 const Forum: FC = () => {
@@ -136,8 +136,8 @@ const Forum: FC = () => {
           <>
             {chats.rows.length === 0 && (
               <>
-                <Title>No one discussion</Title>
-                <ForumImage />
+                <Title variant="h2">No one discussion</Title>
+                <NoDiscussionIcon size={500} />
               </>
             )}
             {chats.rows.length > 0 && (
