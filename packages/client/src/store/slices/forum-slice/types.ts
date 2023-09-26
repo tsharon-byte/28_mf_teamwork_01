@@ -13,7 +13,7 @@ export type TChatItem = {
   authorId: number
   description?: string
   name: string
-  createdAt: string
+  created_at: string
 }
 
 export type TChatList = {
