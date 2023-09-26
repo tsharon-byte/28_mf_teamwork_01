@@ -228,7 +228,7 @@ const getDesignTokens = (mode: PaletteMode) =>
                 },
                 invisible: {
                   backgroundColor: 'transparent',
-                }
+                },
               },
             },
             MuiModal: {
@@ -405,7 +405,7 @@ const getDesignTokens = (mode: PaletteMode) =>
                 },
                 invisible: {
                   backgroundColor: 'transparent',
-                }
+                },
               },
             },
             MuiModal: {
