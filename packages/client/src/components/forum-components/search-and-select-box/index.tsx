@@ -21,7 +21,8 @@ export const SearchAndSelectBox: FC<SearchAndSelectBoxType> = memo(
         <Select
           value={selectValue}
           onChange={selectCallback}
-          className={styles.select}>
+          className={styles.ordering}
+        >
           <MenuItem value="Сначала новые">Сначала новые</MenuItem>
           <MenuItem value="Сначала старые">Сначала старые</MenuItem>
         </Select>

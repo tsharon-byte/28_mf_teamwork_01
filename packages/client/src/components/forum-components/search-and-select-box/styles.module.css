@@ -7,3 +7,7 @@
   max-width: 1364px;
   justify-content: space-between;
 }
+
+.ordering {
+  min-width: 236px;
+}
