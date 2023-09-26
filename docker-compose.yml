@@ -20,11 +20,11 @@ services:
     image: dpage/pgadmin4:4.18
     restart: always
     environment:
-      PGADMIN_LISTEN_PORT: 8880
+      PGADMIN_LISTEN_PORT: 8088
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
-      - "8080:80"
+      - "8088:8088"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
@@ -49,6 +49,7 @@ services:
       - .env
     depends_on:
       - postgres
+      - nginx
     command: ["./wait-for-it/wait-for-it.sh", "postgres:${POSTGRES_PORT}", "--", "node", "packages/server/dist/index.js"]
     networks:
       - project
@@ -63,8 +64,6 @@ services:
     restart: always
     ports:
       - "80:80"
-    depends_on:
-      - server
     environment:
       - DOMAIN=${DOMAIN}
     networks:
