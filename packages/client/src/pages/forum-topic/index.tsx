@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../store/hooks'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
 import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
@@ -22,7 +22,6 @@ import { Title } from '../../components'
 
 const ForumTopic: FC = () => {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const params = useParams()
   const { topicId } = params
   const { theme, toggleThemeCallback } = useTheme()
@@ -91,9 +90,7 @@ const ForumTopic: FC = () => {
       authorId={currentChat.authorId}
       theme={theme}
       toggleTheme={toggleThemeCallback}
-      header={
-        <Title>join the discussion</Title>
-      }
+      header={<Title>join the discussion</Title>}
       footer={
         <TopicTextField
           placeholder="Добавить новый комментарий..."
