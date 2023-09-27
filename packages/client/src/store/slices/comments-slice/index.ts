@@ -41,9 +41,11 @@ const commentsSlice = createSlice({
       )
       .addCase(createCommentsThunk.fulfilled, state => {
         state.loading = false
+        state.error = null
       })
       .addCase(createCommentsThunk.pending, state => {
         state.loading = true
+        state.error = null
       })
       .addCase(
         createCommentsThunk.rejected.type,

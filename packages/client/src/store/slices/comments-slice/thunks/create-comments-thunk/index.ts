@@ -1,11 +1,11 @@
 import { beInstance } from '../../../../../utils/http-transport'
 import { COMMENTS_URL } from '../../../../../constants/urls'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { isAxiosError } from 'axios'
+import { prepareError } from '../../../../../helpers'
 
 const createCommentsThunk = createAsyncThunk(
   '/comments/createCommentsThunk',
-  async (data: Record<string, string | number | null>, thunkAPI) => {
+  async (data: Record<string, string | number | null>, { rejectWithValue }) => {
     try {
       const response = await beInstance.post(COMMENTS_URL, {
         topicId: data.id,
@@ -14,15 +14,9 @@ const createCommentsThunk = createAsyncThunk(
       })
       return response.data
     } catch (error) {
-      if (isAxiosError(error)) {
-        return thunkAPI.rejectWithValue({
-          status: error.response?.status,
-          message: error.response?.data?.reason,
-        })
-      }
-      return thunkAPI.rejectWithValue({
-        message: 'Не удалось создать комментарий',
-      })
+      return rejectWithValue(
+        prepareError(error)
+      )
     }
   }
 )
