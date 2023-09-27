@@ -22,11 +22,7 @@ const useUser = (toastifyError: boolean | undefined = false) => {
     dispatch(updateUserThunk(data))
   }
 
-  useToast(
-    toastifyError
-      ? error?.message
-      : ''
-  )
+  useToast(toastifyError ? error?.message : '')
 
   return {
     loading,

@@ -14,9 +14,7 @@ const createCommentsThunk = createAsyncThunk(
       })
       return response.data
     } catch (error) {
-      return rejectWithValue(
-        prepareError(error)
-      )
+      return rejectWithValue(prepareError(error))
     }
   }
 )
