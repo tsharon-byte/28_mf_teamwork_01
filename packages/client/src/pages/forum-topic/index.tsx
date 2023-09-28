@@ -41,7 +41,7 @@ const ForumTopic: FC = () => {
 
   const currentChat = useMemo(
     () => chats.rows.find(chat => chat.id === Number(topicId)),
-    [topicId]
+    [topicId, chats]
   )
 
   const handleChange = useCallback(
