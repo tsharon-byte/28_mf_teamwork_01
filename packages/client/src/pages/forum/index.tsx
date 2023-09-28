@@ -26,7 +26,7 @@ import { resetChatError } from '../../store/slices/forum-slice/actions'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
-  const { chats, loading, error } = useChats()
+  const { chats, loading } = useChats()
   const [changedChats, setChangedChats] = useState(chats)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [chatName, setChatName] = useState('')
@@ -170,7 +170,6 @@ const Forum: FC = () => {
         handleChangeChatName={handleChangeChatName}
         handleChangeChatDescription={handleChangeChatDescription}
         handleCreateChatSubmit={handleCreateChatSubmit}
-        error={error?.message}
       />
     </>
   )

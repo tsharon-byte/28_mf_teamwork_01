@@ -14,8 +14,7 @@ export const CreateTopicModal: FC<CreateTopicModalType> = memo(
     handleCreateChatSubmit,
     handleCancel,
     handleChangeChatName,
-    handleChangeChatDescription,
-    error,
+    handleChangeChatDescription
   }) => {
     return (
       <Modal open={isOpenModal} onClose={handleCloseModal}>
@@ -37,11 +36,6 @@ export const CreateTopicModal: FC<CreateTopicModalType> = memo(
             onChange={handleChangeChatDescription}
             label="Описание"
           />
-          {error && (
-            <Typography variant="body1" color="error">
-              {error}
-            </Typography>
-          )}
           <Box className={styles.buttons}>
             <Button
               variant="contained"
