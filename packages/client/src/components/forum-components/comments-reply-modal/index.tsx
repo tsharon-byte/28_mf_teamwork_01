@@ -12,7 +12,7 @@ const CommentsReplyModal: FC<TCommentsReplyModal> = ({
   handleCloseModal,
   handleSendReply,
   handleCancel,
-  handleChangeMessage
+  handleChangeMessage,
 }) => {
   return (
     <Modal open={isOpenModal} onClose={handleCloseModal}>

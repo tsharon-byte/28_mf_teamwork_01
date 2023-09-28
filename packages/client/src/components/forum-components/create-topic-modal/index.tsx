@@ -14,7 +14,7 @@ export const CreateTopicModal: FC<CreateTopicModalType> = memo(
     handleCreateChatSubmit,
     handleCancel,
     handleChangeChatName,
-    handleChangeChatDescription
+    handleChangeChatDescription,
   }) => {
     return (
       <Modal open={isOpenModal} onClose={handleCloseModal}>
