@@ -23,6 +23,7 @@ import { SearchAndSelectBox } from '../../components/forum-components/search-and
 import { Title } from '../../components'
 import { NoDiscussionIcon } from '../../icons'
 import { resetChatError } from '../../store/slices/forum-slice/actions'
+import NoOneDiscussion from '../../components/forum-components/no-one-discussion'
 
 const Forum: FC = () => {
   const dispatch = useAppDispatch()
@@ -137,10 +138,7 @@ const Forum: FC = () => {
         ) : (
           <>
             {chats.rows.length === 0 && (
-              <>
-                <Title variant="h2">No one discussion</Title>
-                <NoDiscussionIcon size={500} />
-              </>
+              <NoOneDiscussion />
             )}
             {chats.rows.length > 0 && (
               <>
@@ -148,7 +146,7 @@ const Forum: FC = () => {
                   handleSearch={handleSearch}
                   handleSelect={handleSelect}
                 />
-                {changedChats.rows.map(chat => {
+                {changedChats.rows.length ? changedChats.rows.map(chat => {
                   const { id } = chat
                   return (
                     <TopicItem
@@ -157,7 +155,7 @@ const Forum: FC = () => {
                       handleNavigate={handleNavigate}
                     />
                   )
-                })}
+                }) : <NoOneDiscussion size="xsmall" />}
               </>
             )}
           </>
