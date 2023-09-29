@@ -9,6 +9,7 @@ import { IUser } from '../../../store/slices/user-slice/types'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { userSelector } from '../../../store/slices/user-slice/selectors'
 import { getUserThunk } from '../../../store/slices/user-slice/thunks'
+import classNames from 'classnames'
 
 export const TopicCommentList: FC<TopicCommentListType> = memo(
   ({
@@ -55,7 +56,7 @@ export const TopicCommentList: FC<TopicCommentListType> = memo(
         header={header}
         footer={footer}>
         <Box className={styles.title}>
-          <Box className={styles.box}>
+          <Box className={classNames(styles.box, styles.alignItemsCenter)}>
             <Avatar
               className={styles.avatar}
               src={(user?.avatar && makeResourcePath(user.avatar)) || ''}
