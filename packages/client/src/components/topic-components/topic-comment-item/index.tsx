@@ -21,7 +21,6 @@ import { createCommentsThunk } from '../../../store/slices/comments-slice/thunks
 import getCommentsByIdThunk from '../../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
 import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
-import useComments from '../../../hooks/use-comments'
 import { IUser } from '../../../store/slices/user-slice/types'
 import { resetCommentError } from '../../../store/slices/comments-slice/actions'
 
@@ -34,7 +33,6 @@ export const TopicCommentItem = memo(
       const [message, setMessage] = useState('')
       const [user, setUser] = useState<IUser | null>(null)
 
-      const { error } = useComments()
       const { foundUsers } = useAppSelector(userSelector)
 
       const foundUser = useMemo(
@@ -147,7 +145,6 @@ export const TopicCommentItem = memo(
             handleChangeMessage={handleChangeMessage}
             handleSendReply={handleSendReply}
             handleCancel={handleCancel}
-            error={error?.message}
           />
         </>
       )
