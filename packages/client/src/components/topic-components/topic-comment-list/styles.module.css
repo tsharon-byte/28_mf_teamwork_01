@@ -52,6 +52,10 @@
   gap: 8px;
 }
 
+.alignItemsCenter {
+  align-items: center;
+}
+
 .text {
   font-family: Roboto, 'sans-serif';
   font-size: 14px;
