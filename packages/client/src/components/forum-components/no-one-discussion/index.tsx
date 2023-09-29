@@ -7,10 +7,10 @@ import { INoOneDiscussion } from './types'
 import { TITLE_VARIANTS, ICON_SIZES } from './constants'
 
 const NoOneDiscussion: FC<INoOneDiscussion> = ({ size = 'middle' }) => (
-    <Box className={styles.root}>
-      <Title variant={TITLE_VARIANTS[size]}>No one discussion</Title>
-      <NoDiscussionIcon size={ICON_SIZES[size]} />
-    </Box>
+  <Box className={styles.root}>
+    <Title variant={TITLE_VARIANTS[size]}>No one discussion</Title>
+    <NoDiscussionIcon size={ICON_SIZES[size]} />
+  </Box>
 )
 
 export default NoOneDiscussion

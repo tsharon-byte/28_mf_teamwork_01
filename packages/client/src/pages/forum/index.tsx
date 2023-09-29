@@ -137,25 +137,27 @@ const Forum: FC = () => {
           <CircularProgress />
         ) : (
           <>
-            {chats.rows.length === 0 && (
-              <NoOneDiscussion />
-            )}
+            {chats.rows.length === 0 && <NoOneDiscussion />}
             {chats.rows.length > 0 && (
               <>
                 <SearchAndSelectBox
                   handleSearch={handleSearch}
                   handleSelect={handleSelect}
                 />
-                {changedChats.rows.length ? changedChats.rows.map(chat => {
-                  const { id } = chat
-                  return (
-                    <TopicItem
-                      key={id}
-                      chat={chat}
-                      handleNavigate={handleNavigate}
-                    />
-                  )
-                }) : <NoOneDiscussion size="xsmall" />}
+                {changedChats.rows.length ? (
+                  changedChats.rows.map(chat => {
+                    const { id } = chat
+                    return (
+                      <TopicItem
+                        key={id}
+                        chat={chat}
+                        handleNavigate={handleNavigate}
+                      />
+                    )
+                  })
+                ) : (
+                  <NoOneDiscussion size="xsmall" />
+                )}
               </>
             )}
           </>
