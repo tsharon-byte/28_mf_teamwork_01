@@ -57,6 +57,7 @@ services:
 
   nginx:
     container_name: prakticum-nginx
+    image: prackicum-nginx
     build:
       context: .
       dockerfile: Dockerfile.ginx
