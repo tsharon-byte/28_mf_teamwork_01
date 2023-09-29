@@ -21,6 +21,7 @@ import Page500 from '../../pages/page-500'
 import { useTheme } from '../../hooks'
 import { useAppDispatch } from '../../store/hooks'
 import { retrieveUserThunk } from '../../store/slices/user-slice/thunks'
+import Page404 from '../../pages/page-404'
 
 const App: FC = () => {
   const dispatch = useAppDispatch()
@@ -50,6 +51,7 @@ const App: FC = () => {
           </Route>
           <Route path={ROUTE_PATH.SERVER_ERROR} element={<Page500 />} />
         </Route>
+        <Route path="*" element={<Page404 />} />
       </Routes>
       <ToastContainer />
     </ThemeProvider>
