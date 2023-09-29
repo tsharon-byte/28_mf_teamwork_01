@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { toast } from 'react-toastify'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   retrieveUserThunk,
@@ -7,6 +6,7 @@ import {
 } from '../../store/slices/user-slice/thunks'
 import { userSelector } from '../../store/slices/user-slice/selectors'
 import { IUser } from '../../store/slices/user-slice/types'
+import useToast from '../use-toast'
 
 const useUser = (toastifyError: boolean | undefined = false) => {
   const dispatch = useAppDispatch()
@@ -22,13 +22,7 @@ const useUser = (toastifyError: boolean | undefined = false) => {
     dispatch(updateUserThunk(data))
   }
 
-  useEffect(() => {
-    toastifyError &&
-      error?.message &&
-      toast.error(error.message, {
-        toastId: error.message,
-      })
-  }, [error])
+  useToast(toastifyError ? error?.message : '')
 
   return {
     loading,
