@@ -8,25 +8,24 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../store/hooks'
 import { TopicTextField } from '../../components/topic-components/topic-text-field'
 import { TopicCommentList } from '../../components/topic-components/topic-comment-list'
 import { useChats, useUser, useTheme } from '../../hooks'
-import { TopicHeader } from '../../components/topic-components/topic-header'
 import { makeResourcePath } from '../../helpers'
 import { createCommentsThunk } from '../../store/slices/comments-slice/thunks'
 import useComments from '../../hooks/use-comments'
 import getCommentsByIdThunk from '../../store/slices/comments-slice/thunks/get-comments-by-id-thunk'
 import { TComments } from '../../store/slices/comments-slice/types'
+import { Title } from '../../components'
 
 const ForumTopic: FC = () => {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const params = useParams()
   const { topicId } = params
   const { theme, toggleThemeCallback } = useTheme()
-  const { loading, chats } = useChats()
+  const { chats } = useChats()
   const { user } = useUser()
   const { comments } = useComments()
 
@@ -80,9 +79,6 @@ const ForumTopic: FC = () => {
     },
     [message]
   )
-  const handleNavigate = useCallback(() => {
-    navigate(-1)
-  }, [])
   if (!currentChat) {
     return null
   }
@@ -94,13 +90,7 @@ const ForumTopic: FC = () => {
       authorId={currentChat.authorId}
       theme={theme}
       toggleTheme={toggleThemeCallback}
-      header={
-        <TopicHeader
-          callback={handleNavigate}
-          loading={loading}
-          title="join the discussion"
-        />
-      }
+      header={<Title>join the discussion</Title>}
       footer={
         <TopicTextField
           placeholder="Добавить новый комментарий..."

@@ -51,7 +51,6 @@ export const TopicCommentList: FC<TopicCommentListType> = memo(
         theme={theme}
         toggleTheme={toggleTheme}
         mainClassName={styles.main}
-        headerClassName={styles.header}
         footerClassName={styles.footer}
         header={header}
         footer={footer}>
@@ -66,7 +65,7 @@ export const TopicCommentList: FC<TopicCommentListType> = memo(
             </Typography>
           </Box>
           <Box className={styles.box}>
-            <Typography variant="h2">{title}</Typography>
+            <Typography variant="h4">{title}</Typography>
             <Typography className={styles.text} variant="body1">
               {description || ''}
             </Typography>

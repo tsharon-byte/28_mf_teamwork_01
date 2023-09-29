@@ -31,9 +31,7 @@ const Leaderboard: FC = () => {
       toggleTheme={toggleThemeCallback}
       header={
         loading || leaderboard.length ? (
-          <Title mb="17px" mt="17px">
-            Add your name to history
-          </Title>
+          <Title>Add your name to history</Title>
         ) : null
       }
       onScroll={infiniteScroll}>
