@@ -115,11 +115,6 @@ const getDesignTokens = (mode: PaletteMode) =>
             MuiTextField: {
               styleOverrides: {
                 root: {
-                  '& .MuiOutlinedInput-root': {
-                    '& > fieldset': {
-                      borderColor: '#212121',
-                    },
-                  },
                   '& .MuiFormLabel-colorPrimary': {
                     color: '#212121',
                   },
@@ -231,6 +226,9 @@ const getDesignTokens = (mode: PaletteMode) =>
                 root: {
                   backgroundColor: '#504e4e',
                 },
+                invisible: {
+                  backgroundColor: 'transparent',
+                },
               },
             },
             MuiModal: {
@@ -266,30 +264,6 @@ const getDesignTokens = (mode: PaletteMode) =>
                 },
               },
             },
-            MuiPaper: {
-              styleOverrides: {
-                root: {
-                  backgroundColor: '#ffffff',
-                  padding: '2px 4px',
-                },
-              },
-            },
-            MuiSelect: {
-              styleOverrides: {
-                icon: {
-                  color: '#171813',
-                },
-
-                select: {
-                  '&': {
-                    boxShadow: '0 0 0 2px #FFFFFF',
-                    color: 'rgba(56,53,53,0.5)',
-                    borderColor: '#171813',
-                    minWidth: 236,
-                  },
-                },
-              },
-            },
             MuiIconButton: {
               styleOverrides: {
                 root: {
@@ -318,11 +292,6 @@ const getDesignTokens = (mode: PaletteMode) =>
             MuiTextField: {
               styleOverrides: {
                 root: {
-                  '& .MuiOutlinedInput-root': {
-                    '& > fieldset': {
-                      borderColor: '#ffffff',
-                    },
-                  },
                   '& .MuiFormLabel-colorPrimary': {
                     color: '#ffffff',
                   },
@@ -434,6 +403,9 @@ const getDesignTokens = (mode: PaletteMode) =>
                 root: {
                   backgroundColor: '#ffffff80',
                 },
+                invisible: {
+                  backgroundColor: 'transparent',
+                },
               },
             },
             MuiModal: {
@@ -466,30 +438,6 @@ const getDesignTokens = (mode: PaletteMode) =>
                   fontWeight: 400,
                   padding: 16,
                   textAlign: 'center',
-                },
-              },
-            },
-            MuiPaper: {
-              styleOverrides: {
-                root: {
-                  backgroundColor: '#171813',
-                  padding: '2px 4px',
-                },
-              },
-            },
-            MuiSelect: {
-              styleOverrides: {
-                icon: {
-                  color: '#FFFFFF',
-                },
-
-                select: {
-                  '&': {
-                    boxShadow: '0 0 0 2px #FFFFFF',
-                    color: '#FFFFFF80',
-                    borderColor: '#FFFFFF',
-                    minWidth: 236,
-                  },
                 },
               },
             },
