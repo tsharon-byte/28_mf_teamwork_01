@@ -24,7 +24,11 @@ import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 import { IUser } from '../../../store/slices/user-slice/types'
 import { resetCommentError } from '../../../store/slices/comments-slice/actions'
 import { getEmojiForComment } from '../../../api/emoji-api'
+import { EmojiType } from '../../../store/slices/emoji-slice/types'
 
+type EmojiesForCommentType = {
+  emoji: EmojiType
+}
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
     ({ text, author, date, id, topicId, replyComments, isReply }, ref) => {
@@ -33,6 +37,10 @@ export const TopicCommentItem = memo(
       const [isOpenModal, setIsOpenModal] = useState(false)
       const [message, setMessage] = useState('')
       const [user, setUser] = useState<IUser | null>(null)
+      const [emojiesForComment, setEmojiesForComment] = useState<
+        EmojiesForCommentType[]
+      >([])
+      const [shouldUpdate, setShouldUpdate] = useState<boolean>(false)
 
       const { foundUsers } = useAppSelector(userSelector)
 
@@ -43,9 +51,9 @@ export const TopicCommentItem = memo(
 
       useEffect(() => {
         getEmojiForComment(id).then(data => {
-          console.log('To set state here', data)
+          setEmojiesForComment(data.data)
         })
-      }, [id])
+      }, [id, shouldUpdate])
 
       useEffect(() => {
         if (!foundUser) {
@@ -96,7 +104,6 @@ export const TopicCommentItem = memo(
         },
         [message]
       )
-
       return (
         <>
           <Paper
@@ -112,7 +119,11 @@ export const TopicCommentItem = memo(
                   <Typography variant="body1" color="secondary">
                     {user?.display_name || user?.first_name}
                   </Typography>
-                  <TopicCommentMenu id={id} />
+                  <TopicCommentMenu
+                    id={id}
+                    shouldUpdate={shouldUpdate}
+                    setShouldUpdate={setShouldUpdate}
+                  />
                 </Box>
                 <Typography
                   variant="body1"
@@ -132,6 +143,11 @@ export const TopicCommentItem = memo(
                   Ответить
                 </Button>
               )}
+              <Box>
+                {emojiesForComment.map(item => (
+                  <span>{item.emoji.code}</span>
+                ))}
+              </Box>
             </Box>
           </Paper>
           {replyComments &&

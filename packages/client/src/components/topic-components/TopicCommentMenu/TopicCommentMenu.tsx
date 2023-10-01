@@ -15,7 +15,15 @@ import { EmojiType } from '../../../store/slices/emoji-slice/types'
 import { addEmoji } from '../../../api/emoji-api'
 import { userSelector } from '../../../store/slices/user-slice/selectors'
 
-const TopicCommentMenu = ({ id }: { id: number }) => {
+const TopicCommentMenu = ({
+  id,
+  shouldUpdate,
+  setShouldUpdate,
+}: {
+  id: number
+  shouldUpdate: boolean
+  setShouldUpdate: (arg0: boolean) => void
+}) => {
   const { emojies } = useEmoji()
   const { user } = useAppSelector(userSelector)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -33,8 +41,8 @@ const TopicCommentMenu = ({ id }: { id: number }) => {
         emoji_id: item.id,
         author_id: user!.id,
       }
-      const response = await addEmoji(id, data)
-      console.log(response)
+      await addEmoji(id, data)
+      setShouldUpdate(!shouldUpdate)
     } catch (error) {
       console.log(error)
     }
