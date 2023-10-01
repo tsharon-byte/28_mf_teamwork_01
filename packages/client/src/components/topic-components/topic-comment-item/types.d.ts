@@ -1,6 +1,7 @@
 import { TComment } from '../../../store/slices/comments-slice/types'
+import { EmojiType } from '../../../store/slices/emoji-slice/types'
 
-export type TopicCommentItemType = {
+type TopicCommentItemType = {
   id: number
   topicId: number
   text: string
@@ -8,4 +9,13 @@ export type TopicCommentItemType = {
   date: string
   replyComments?: Array<TComment>
   isReply: boolean
+}
+
+type EmojiesType = {
+  emoji: EmojiType
+}
+
+type EmojiesForComment = {
+  code: 'string'
+  count: number
 }

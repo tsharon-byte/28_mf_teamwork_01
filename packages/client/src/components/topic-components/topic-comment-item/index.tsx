@@ -8,8 +8,8 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import { Avatar, Box, Button, Paper, Typography } from '@mui/material'
-import { TopicCommentItemType } from './types'
+import { Avatar, Box, Button, Chip, Paper, Typography } from '@mui/material'
+import { EmojiesForComment, EmojiesType, TopicCommentItemType } from './types'
 import styles from './styles.module.css'
 import { getCountDaysAgo } from '../../../utils/get-count-days-ago'
 import { makeResourcePath } from '../../../helpers'
@@ -24,11 +24,20 @@ import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 import { IUser } from '../../../store/slices/user-slice/types'
 import { resetCommentError } from '../../../store/slices/comments-slice/actions'
 import { getEmojiForComment } from '../../../api/emoji-api'
-import { EmojiType } from '../../../store/slices/emoji-slice/types'
 
-type EmojiesForCommentType = {
-  emoji: EmojiType
+const emojiesDataTransformer = (data: EmojiesType[]) => {
+  const result: EmojiesForComment[] = []
+  data.forEach(item => {
+    const temp = result.findIndex(v => v.code === item.emoji.code)
+    if (temp > -1) {
+      result[temp].count++
+    } else {
+      result.push({ code: item.emoji.code, count: 1 } as EmojiesForComment)
+    }
+  })
+  return result
 }
+
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
     ({ text, author, date, id, topicId, replyComments, isReply }, ref) => {
@@ -38,7 +47,7 @@ export const TopicCommentItem = memo(
       const [message, setMessage] = useState('')
       const [user, setUser] = useState<IUser | null>(null)
       const [emojiesForComment, setEmojiesForComment] = useState<
-        EmojiesForCommentType[]
+        EmojiesForComment[]
       >([])
       const [shouldUpdate, setShouldUpdate] = useState<boolean>(false)
 
@@ -51,7 +60,7 @@ export const TopicCommentItem = memo(
 
       useEffect(() => {
         getEmojiForComment(id).then(data => {
-          setEmojiesForComment(data.data)
+          setEmojiesForComment(emojiesDataTransformer(data.data))
         })
       }, [id, shouldUpdate])
 
@@ -145,7 +154,9 @@ export const TopicCommentItem = memo(
               )}
               <Box>
                 {emojiesForComment.map(item => (
-                  <span>{item.emoji.code}</span>
+                  <Chip
+                    avatar={<Avatar>{item.code}</Avatar>}
+                    label={item.count}></Chip>
                 ))}
               </Box>
             </Box>
