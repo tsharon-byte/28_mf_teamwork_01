@@ -24,12 +24,13 @@ export const getEmojiForComment: Handler = (req, res) => {
     where: {
       comment_id: +req.params.id,
     },
-    attributes: ['emoji'],
+    //attributes: ['emoji'],
   })
     .then(data => {
       res.status(200).send(data)
     })
-    .catch(() => {
+    .catch(error => {
+      console.log(error)
       res.status(500).send({ message: 'NOK' })
     })
 }
