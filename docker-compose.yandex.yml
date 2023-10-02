@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   postgres:
-    container_name: postgres
+    container_name: prakticum-postgres
     image: postgres:14
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
@@ -12,7 +12,46 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - ./tmp/pgdata:/var/lib/postgresql/data
-      - ./create_test_db.sh:/docker-entrypoint-initdb.d/create_test_db.sh
+    networks:
+      - project
+
+  server:
+    container_name: prakticum-server
+    image: ghcr.io/tsharon-byte/28_mf_teamwork_01/server:b13629df1bf973fbac5f762ca42167050197e8ba
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    restart: always
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    environment:
+      SERVER_PORT: ${SERVER_PORT}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      NODE_ENV: ${ENV}
+      AUTH_URL: ${AUTH_URL}
+    depends_on:
+      - postgres
+      - nginx
+    command: ["./wait-for-it/wait-for-it.sh", "${POSTGRES_HOST}:${POSTGRES_PORT}", "--", "node", "packages/server/dist/index.js"]
+    networks:
+      - project
+
+  nginx:
+    container_name: prakticum-nginx
+    image: ghcr.io/tsharon-byte/28_mf_teamwork_01/nginx:b13629df1bf973fbac5f762ca42167050197e8ba
+    build:
+      context: .
+      dockerfile: Dockerfile.ginx
+      args:
+        DOMAIN: siberians-bomberman-28.ya-praktikum.tech
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./etc/certs:/certs
+    environment:
+      - DOMAIN=siberians-bomberman-28.ya-praktikum.tech
     networks:
       - project
 
@@ -30,48 +69,6 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - postgres
-    networks:
-      - project
-
-  server:
-    container_name: prakticum-server
-    image: prackicum-server
-    build:
-      context: .
-      dockerfile: Dockerfile.server
-    restart: always
-    ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
-    environment:
-      SERVER_PORT: ${SERVER_PORT}
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      NODE_ENV: ${ENV}
-      AUTH_URL: ${AUTH_URL}
-    env_file:
-      - .env
-    depends_on:
-      - postgres
-      - nginx
-    command: ["./wait-for-it/wait-for-it.sh", "postgres:${POSTGRES_PORT}", "--", "node", "packages/server/dist/index.js"]
-    networks:
-      - project
-
-  nginx:
-    container_name: prakticum-nginx
-    image: prackicum-nginx
-    build:
-      context: .
-      dockerfile: Dockerfile.ginx
-      args:
-        DOMAIN: ${DOMAIN}
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /etc/certs:/certs
-    environment:
-      - DOMAIN=${DOMAIN}
     networks:
       - project
 
