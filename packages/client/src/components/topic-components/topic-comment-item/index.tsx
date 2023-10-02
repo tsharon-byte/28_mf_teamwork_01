@@ -8,8 +8,8 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import { Avatar, Box, Button, Paper, Typography } from '@mui/material'
-import { TopicCommentItemType } from './types'
+import { Avatar, Box, Button, Chip, Paper, Typography } from '@mui/material'
+import { EmojiesForComment, EmojiesType, TopicCommentItemType } from './types'
 import styles from './styles.module.css'
 import { getCountDaysAgo } from '../../../utils/get-count-days-ago'
 import { makeResourcePath } from '../../../helpers'
@@ -23,6 +23,20 @@ import classNames from 'classnames'
 import TopicCommentMenu from '../TopicCommentMenu/TopicCommentMenu'
 import { IUser } from '../../../store/slices/user-slice/types'
 import { resetCommentError } from '../../../store/slices/comments-slice/actions'
+import { getEmojiForComment } from '../../../api/emoji-api'
+
+const emojiesDataTransformer = (data: EmojiesType[]) => {
+  const result: EmojiesForComment[] = []
+  data.forEach(item => {
+    const temp = result.findIndex(v => v.code === item.emoji.code)
+    if (temp > -1) {
+      result[temp].count++
+    } else {
+      result.push({ code: item.emoji.code, count: 1 } as EmojiesForComment)
+    }
+  })
+  return result
+}
 
 export const TopicCommentItem = memo(
   forwardRef<HTMLDivElement, TopicCommentItemType>(
@@ -32,6 +46,10 @@ export const TopicCommentItem = memo(
       const [isOpenModal, setIsOpenModal] = useState(false)
       const [message, setMessage] = useState('')
       const [user, setUser] = useState<IUser | null>(null)
+      const [emojiesForComment, setEmojiesForComment] = useState<
+        EmojiesForComment[]
+      >([])
+      const [shouldUpdate, setShouldUpdate] = useState<boolean>(false)
 
       const { foundUsers } = useAppSelector(userSelector)
 
@@ -39,6 +57,12 @@ export const TopicCommentItem = memo(
         () => foundUsers.find(user => user.id === author),
         [author]
       )
+
+      useEffect(() => {
+        getEmojiForComment(id).then(data => {
+          setEmojiesForComment(emojiesDataTransformer(data.data))
+        })
+      }, [id, shouldUpdate])
 
       useEffect(() => {
         if (!foundUser) {
@@ -89,7 +113,6 @@ export const TopicCommentItem = memo(
         },
         [message]
       )
-
       return (
         <>
           <Paper
@@ -105,7 +128,11 @@ export const TopicCommentItem = memo(
                   <Typography variant="body1" color="secondary">
                     {user?.display_name || user?.first_name}
                   </Typography>
-                  <TopicCommentMenu />
+                  <TopicCommentMenu
+                    id={id}
+                    shouldUpdate={shouldUpdate}
+                    setShouldUpdate={setShouldUpdate}
+                  />
                 </Box>
                 <Typography
                   variant="body1"
@@ -125,6 +152,13 @@ export const TopicCommentItem = memo(
                   Ответить
                 </Button>
               )}
+              <Box>
+                {emojiesForComment.map(item => (
+                  <Chip
+                    avatar={<Avatar>{item.code}</Avatar>}
+                    label={item.count}></Chip>
+                ))}
+              </Box>
             </Box>
           </Paper>
           {replyComments &&
