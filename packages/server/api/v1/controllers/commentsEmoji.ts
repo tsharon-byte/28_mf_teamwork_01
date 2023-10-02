@@ -2,8 +2,6 @@ import type { Handler } from 'express'
 import { CommentEmojiModel, EmojiModel } from '../models'
 
 export const addEmojiToComment: Handler = (req, res) => {
-  console.log(req.params, 'req.params')
-  console.log(req.body, 'req.body')
   const { id } = req.params
   const { emoji_id, author_id } = req.body
   CommentEmojiModel.create({

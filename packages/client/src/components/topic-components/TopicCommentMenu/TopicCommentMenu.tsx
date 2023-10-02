@@ -35,7 +35,6 @@ const TopicCommentMenu = ({
   }
   const handleSelectEmoji = async (item: EmojiType) => {
     handleClose()
-    console.log('Отправлено на BE: ', item.code)
     try {
       const data = {
         emoji_id: item.id,
