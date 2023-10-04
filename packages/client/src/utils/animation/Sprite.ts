@@ -1,4 +1,5 @@
-import { drawGrass } from './helpers'
+import { drawItem, getTailImage } from './helpers'
+import { BOX_SIZE } from './helpers'
 
 class Sprite {
   protected readonly ctx: CanvasRenderingContext2D
@@ -17,11 +18,13 @@ class Sprite {
   protected sy: number
   protected dx: number
   protected dy: number
+  protected level: string[]
 
   constructor(options: SpriteOptions) {
     this.ctx = options.ctx
 
-    this.image = options.image
+    this.image = new Image()
+    this.image.src = options.spritePath
 
     this.frameIndex = 0
     this.tickCount = 0
@@ -40,6 +43,15 @@ class Sprite {
     this.dy = 0
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
+    this.level = options.level
+  }
+
+  get delta() {
+    return [this.dx, this.dy]
+  }
+
+  set delta([dx, dy]) {
+    [this.dx, this.dy] = [dx, dy]
   }
 
   update = () => {
@@ -56,10 +68,17 @@ class Sprite {
   }
 
   render = () => {
-    drawGrass(
+    drawItem(
       this.ctx,
-      this.size + this.x0 + this.dx * this.size,
-      this.size + this.y0 + this.dy * this.size
+      this.size + BOX_SIZE * this.x0 + Math.floor(this.dx) * this.size,
+      this.size + BOX_SIZE * this.y0 + Math.floor(this.dy) * this.size,
+      getTailImage(this.level, this.x0 + Math.floor(this.dx), this.y0 + Math.floor(this.dy))
+    )
+    drawItem(
+      this.ctx,
+      this.size + BOX_SIZE * this.x0 + Math.ceil(this.dx) * this.size,
+      this.size + BOX_SIZE * this.y0 + Math.ceil(this.dy) * this.size,
+      getTailImage(this.level, this.x0 + Math.ceil(this.dx), this.y0 + Math.ceil(this.dy))
     )
     this.ctx.drawImage(
       this.image,
@@ -67,8 +86,8 @@ class Sprite {
       this.sy,
       this.width / this.numberOfFrames,
       this.height,
-      this.size + this.x0 + this.dx * this.size,
-      this.size + this.y0 + this.dy * this.size,
+      this.size + BOX_SIZE * this.x0 + this.dx * this.size,
+      this.size + BOX_SIZE * this.y0 + this.dy * this.size,
       this.size,
       this.size
     )

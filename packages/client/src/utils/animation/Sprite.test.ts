@@ -1,9 +1,13 @@
 const mockedDrawGrassFunction = jest.fn()
+const mockedGetTailImageFunction = jest.fn()
+const mockedDrawItemFunction = jest.fn()
 
 import Sprite from './Sprite'
 
 jest.mock('./helpers', () => ({
   drawGrass: mockedDrawGrassFunction,
+  getTailImage: mockedGetTailImageFunction,
+  drawItem: mockedDrawItemFunction
 }))
 
 class MockedSprite extends Sprite {
@@ -185,8 +189,8 @@ describe('test Sprite class', () => {
       sprite.render()
     })
 
-    it('should be called once drawGrass function', () => {
-      expect(mockedDrawGrassFunction).toBeCalledTimes(1)
+    it('should be called twice drawItem function', () => {
+      expect(mockedDrawItemFunction).toBeCalledTimes(2)
     })
 
     it('should be called once drawImage method', () => {

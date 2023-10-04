@@ -1,6 +1,6 @@
 type SpriteOptions = {
   ctx: CanvasRenderingContext2D
-  image: CanvasImageSource
+  spritePath: string
   ticksPerFrame: number
   numberOfFrames: number
   width: number
@@ -13,4 +13,5 @@ type SpriteOptions = {
       | ((prevState: [number, number]) => [number, number])
       | [number, number]
   ) => void
+  level: string[]
 }
