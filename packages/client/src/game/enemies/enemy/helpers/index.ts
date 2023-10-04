@@ -5,9 +5,9 @@ import randomInRange from './random-in-range'
 import roundToDecimal from './round-to-decimal'
 
 export {
-    createEnemySprites,
-    noCollision,
-    randomEnumValue,
-    randomInRange,
-    roundToDecimal
+  createEnemySprites,
+  noCollision,
+  randomEnumValue,
+  randomInRange,
+  roundToDecimal,
 }

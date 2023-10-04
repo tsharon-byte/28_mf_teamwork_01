@@ -1,6 +1,11 @@
 import Sprite from './Sprite'
 import HeroSprite from './HeroSprite'
-import { BRICK_CHARACTER, GRASS_CHARACTER, PORTAL_CHARACTER, WALL_CHARACTER } from './constants'
+import {
+  BRICK_CHARACTER,
+  GRASS_CHARACTER,
+  PORTAL_CHARACTER,
+  WALL_CHARACTER,
+} from './constants'
 
 //size in pixels of one box
 export const BOX_SIZE = 32
@@ -94,7 +99,7 @@ export const drawSprite = (
     size: BOX_SIZE,
     x0,
     y0,
-    level
+    level,
   })
 }
 
@@ -204,7 +209,7 @@ export const getRandomAudio = () => {
 }
 
 export const getTailImage = (level: string[], x: number, y: number) => {
-  switch(level[y][x]) {
+  switch (level[y][x]) {
     case GRASS_CHARACTER:
       return GRASS
     case BRICK_CHARACTER:

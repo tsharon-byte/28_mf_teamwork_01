@@ -1,15 +1,15 @@
 export const MOVE_SPRITE = {
-    PATH: 'img/enemies/pontan/move.png',
-    TAILS_NUMBER: 3,
-    TAIL_SIZE: 16,
-    ANIMATION_SPEED: 64
+  PATH: 'img/enemies/pontan/move.png',
+  TAILS_NUMBER: 3,
+  TAIL_SIZE: 16,
+  ANIMATION_SPEED: 64,
 }
 
 export const DEAD_SPRITE = {
-    PATH: 'img/enemies/pontan/dead.png',
-    TAILS_NUMBER: 5,
-    TAIL_SIZE: 16,
-    ANIMATION_SPEED: 32
+  PATH: 'img/enemies/pontan/dead.png',
+  TAILS_NUMBER: 5,
+  TAIL_SIZE: 16,
+  ANIMATION_SPEED: 32,
 }
 
 export const SPEED = 30

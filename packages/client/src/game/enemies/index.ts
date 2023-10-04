@@ -7,13 +7,4 @@ import Ovapi from './ovapi'
 import Pass from './pass'
 import Pontan from './pontan'
 
-export {
-    Balloom,
-    Oneal,
-    Doll,
-    Minvo,
-    Kondoria,
-    Ovapi,
-    Pass,
-    Pontan
-}
+export { Balloom, Oneal, Doll, Minvo, Kondoria, Ovapi, Pass, Pontan }

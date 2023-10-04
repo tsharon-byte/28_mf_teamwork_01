@@ -18,7 +18,16 @@ import EndGame from '../end-game/EndGame'
 import IBombermanProps from './types'
 import useMusicPlayer from '../../hooks/use-music-player'
 const GEORGE = 'img/george.png'
-import { Balloom, Oneal, Doll, Minvo, Kondoria, Ovapi, Pass, Pontan } from '../../game/enemies'
+import {
+  Balloom,
+  Oneal,
+  Doll,
+  Minvo,
+  Kondoria,
+  Ovapi,
+  Pass,
+  Pontan,
+} from '../../game/enemies'
 import type Enemy from '../../game/enemies/enemy'
 
 const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
@@ -69,9 +78,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
     if (bomber) {
       bomber.start()
     }
-    enemies.forEach(
-      enemy => enemy.start()
-    )
+    enemies.forEach(enemy => enemy.start())
     playMusic()
   }
   const stopGame = () => {

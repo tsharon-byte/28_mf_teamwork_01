@@ -7,7 +7,7 @@ import Sprite from './Sprite'
 jest.mock('./helpers', () => ({
   drawGrass: mockedDrawGrassFunction,
   getTailImage: mockedGetTailImageFunction,
-  drawItem: mockedDrawItemFunction
+  drawItem: mockedDrawItemFunction,
 }))
 
 class MockedSprite extends Sprite {

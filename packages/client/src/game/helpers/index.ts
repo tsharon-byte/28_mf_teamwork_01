@@ -1,5 +1,3 @@
 import createSprite from './create-sprite'
 
-export {
-    createSprite
-}
+export { createSprite }

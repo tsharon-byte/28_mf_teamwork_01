@@ -51,7 +51,7 @@ class Sprite {
   }
 
   set delta([dx, dy]) {
-    [this.dx, this.dy] = [dx, dy]
+    ;[this.dx, this.dy] = [dx, dy]
   }
 
   update = () => {
@@ -72,13 +72,21 @@ class Sprite {
       this.ctx,
       this.size + BOX_SIZE * this.x0 + Math.floor(this.dx) * this.size,
       this.size + BOX_SIZE * this.y0 + Math.floor(this.dy) * this.size,
-      getTailImage(this.level, this.x0 + Math.floor(this.dx), this.y0 + Math.floor(this.dy))
+      getTailImage(
+        this.level,
+        this.x0 + Math.floor(this.dx),
+        this.y0 + Math.floor(this.dy)
+      )
     )
     drawItem(
       this.ctx,
       this.size + BOX_SIZE * this.x0 + Math.ceil(this.dx) * this.size,
       this.size + BOX_SIZE * this.y0 + Math.ceil(this.dy) * this.size,
-      getTailImage(this.level, this.x0 + Math.ceil(this.dx), this.y0 + Math.ceil(this.dy))
+      getTailImage(
+        this.level,
+        this.x0 + Math.ceil(this.dx),
+        this.y0 + Math.ceil(this.dy)
+      )
     )
     this.ctx.drawImage(
       this.image,
