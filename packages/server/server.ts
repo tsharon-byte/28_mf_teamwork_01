@@ -17,6 +17,14 @@ import themeRoute from './routes/theme-route'
 
 export const createServer = async () => {
   const app = express()
+  app.disable('x-powered-by')
+  app.use((_, res, next) => {
+    res.set({
+      'Content-Security-Policy':
+        "default-src 'self' https://ya-praktikum.tech https://siberians-bomberman-28.ya-praktikum.tech",
+    })
+    next()
+  })
 
   const corsOptions = {
     origin: true,
