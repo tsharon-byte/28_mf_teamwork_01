@@ -17,7 +17,7 @@ const FINISH_TIMEOUT = 200
 
 class HeroSprite extends Sprite {
   private _setCurrentPos: any
-  private readonly level: string[]
+  protected readonly level: string[]
   private setLevel: (
     value: ((prevState: string[]) => string[]) | string[]
   ) => void
@@ -45,8 +45,8 @@ class HeroSprite extends Sprite {
       flame = drawSprite(
         this.ctx,
         FIRE_SPRITE,
-        BOX_SIZE * x,
-        BOX_SIZE * y,
+        x,
+        y,
         FIRE_SPRITE_FRAMES,
         FIRE_SPRITE_WIDTH,
         FIRE_SPRITE_HEIGHT,
@@ -64,8 +64,8 @@ class HeroSprite extends Sprite {
     const bomb = drawSprite(
       this.ctx,
       BOMB_SPRITE,
-      BOX_SIZE * (this.dx + 1),
-      BOX_SIZE * (this.dy + 1),
+      this.dx + 1,
+      this.dy + 1,
       BOMB_SPRITE_FRAMES,
       BOMB_SPRITE_WIDTH,
       BOMB_SPRITE_HEIGHT
@@ -78,8 +78,8 @@ class HeroSprite extends Sprite {
       const flame = drawSprite(
         this.ctx,
         FIRE_SPRITE,
-        BOX_SIZE * (bombX + 1),
-        BOX_SIZE * (bombY + 1),
+        bombX + 1,
+        bombY + 1,
         FIRE_SPRITE_FRAMES,
         FIRE_SPRITE_WIDTH,
         FIRE_SPRITE_HEIGHT,

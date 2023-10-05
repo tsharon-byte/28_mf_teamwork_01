@@ -1,6 +1,11 @@
 import Sprite from './Sprite'
 import HeroSprite from './HeroSprite'
-import { BRICK_CHARACTER, PORTAL_CHARACTER, WALL_CHARACTER } from './constants'
+import {
+  BRICK_CHARACTER,
+  GRASS_CHARACTER,
+  PORTAL_CHARACTER,
+  WALL_CHARACTER,
+} from './constants'
 
 //size in pixels of one box
 export const BOX_SIZE = 32
@@ -11,9 +16,9 @@ const TICKS_PER_FRAME = 15
 const SPRITE_HEIGHT = 50
 const SPRITE_WIDTH = 192
 const WALL = 'img/tile_wall.png'
-const PORTAL = 'img/portal.png'
-const BRICK = 'img/tile_wood.png'
-const GRASS = 'img/tile_grass.png'
+export const PORTAL = 'img/portal.png'
+export const BRICK = 'img/tile_wood.png'
+export const GRASS = 'img/tile_grass.png'
 
 export const EVIL_1_COORDINATES = [1, 13]
 export const EVIL_2_COORDINATES = [1, 17]
@@ -56,11 +61,9 @@ export const drawBomber = (
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   gameOverCallback: () => void = () => {}
 ) => {
-  const image = new Image()
-  image.src = src
   return new HeroSprite({
     ctx: ctx,
-    image: image,
+    spritePath: src,
     width: SPRITE_WIDTH,
     height: SPRITE_HEIGHT,
     numberOfFrames: NUMBER_OF_FRAMES,
@@ -83,13 +86,12 @@ export const drawSprite = (
   numberOfFrames = NUMBER_OF_FRAMES,
   width = SPRITE_WIDTH,
   height = SPRITE_HEIGHT,
-  ticksPerFrame = TICKS_PER_FRAME
+  ticksPerFrame = TICKS_PER_FRAME,
+  level = level1
 ) => {
-  const image = new Image()
-  image.src = src
   return new Sprite({
     ctx: ctx,
-    image: image,
+    spritePath: src,
     width,
     height,
     numberOfFrames,
@@ -97,10 +99,11 @@ export const drawSprite = (
     size: BOX_SIZE,
     x0,
     y0,
+    level,
   })
 }
 
-const drawItem = (
+export const drawItem = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
@@ -203,4 +206,17 @@ export const portalIsFound = (level: string[], newPosition: number[]) => {
 export const getRandomAudio = () => {
   const randomIx = Math.floor(Math.random() * musicList.length)
   return musicList[randomIx]
+}
+
+export const getTailImage = (level: string[], x: number, y: number) => {
+  switch (level[y][x]) {
+    case GRASS_CHARACTER:
+      return GRASS
+    case BRICK_CHARACTER:
+      return BRICK
+    case PORTAL_CHARACTER:
+      return PORTAL
+    default:
+      return GRASS
+  }
 }

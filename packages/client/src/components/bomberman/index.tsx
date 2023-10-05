@@ -9,33 +9,34 @@ import {
   GAME_COLUMNS,
   GAME_ROWS,
   drawLevel,
-  drawSprite,
-  EVIL_1_COORDINATES,
-  EVIL_2_COORDINATES,
   level1,
 } from '../../utils/animation/helpers'
 import HeroSprite from '../../utils/animation/HeroSprite'
-import Sprite from '../../utils/animation/Sprite'
 import useFullScreen from '../../utils/useFullScreen'
 import StyledDialog from '../dialog/StyledDialog'
 import EndGame from '../end-game/EndGame'
 import IBombermanProps from './types'
 import useMusicPlayer from '../../hooks/use-music-player'
-const BETTY_SPRITE = 'img/betty.png'
-const BETTY2_SPRITE = 'img/betty2.png'
 const GEORGE = 'img/george.png'
+import {
+  Balloom,
+  Oneal,
+  Doll,
+  Minvo,
+  Kondoria,
+  Ovapi,
+  Pass,
+  Pontan,
+} from '../../game/enemies'
+import type Enemy from '../../game/enemies/enemy'
 
 const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
   const ref = useRef(null)
   const [fullScreenFlag, toggleFullScreen] = useFullScreen()
   const [bomber, setBomber] = useState<HeroSprite>()
-  const [evil1, setEvil1] = useState<Sprite>()
-  const [evil2, setEvil2] = useState<Sprite>()
+  const [enemies, setEnemies] = useState<Enemy[]>([])
   const [level, setLevel] = useState(level1)
-  const [currentPos, setCurrentPos] = useState<[number, number]>([
-    BOX_SIZE,
-    BOX_SIZE,
-  ])
+  const [currentPos, setCurrentPos] = useState<[number, number]>([1, 1])
 
   const [open, setOpen] = useState<boolean>(false)
   const [isSuccess, setSuccess] = useState<boolean>(false)
@@ -60,22 +61,16 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
           gameOverCallback
         )
       )
-      setEvil1(
-        drawSprite(
-          ctx,
-          BETTY_SPRITE,
-          BOX_SIZE * EVIL_1_COORDINATES[1],
-          BOX_SIZE * EVIL_1_COORDINATES[0]
-        )
-      )
-      setEvil2(
-        drawSprite(
-          ctx,
-          BETTY2_SPRITE,
-          BOX_SIZE * EVIL_2_COORDINATES[1],
-          BOX_SIZE * EVIL_2_COORDINATES[0]
-        )
-      )
+
+      const balloom = new Balloom(ctx, level, [13, 1])
+      const oneal = new Oneal(ctx, level, [17, 1])
+      const doll = new Doll(ctx, level, [20, 1])
+      const minvo = new Minvo(ctx, level, [27, 1])
+      const kondoria = new Kondoria(ctx, level, [29, 5])
+      const ovapi = new Ovapi(ctx, level, [20, 11])
+      const pass = new Pass(ctx, level, [14, 11])
+      const pontan = new Pontan(ctx, level, [10, 11])
+      setEnemies([balloom, oneal, doll, minvo, kondoria, ovapi, pass, pontan])
     }
   }, [ref.current, currentPos])
 
@@ -83,13 +78,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
     if (bomber) {
       bomber.start()
     }
-    if (evil1) {
-      evil1.start()
-    }
-    if (evil2) {
-      evil2.start()
-    }
-
+    enemies.forEach(enemy => enemy.start())
     playMusic()
   }
   const stopGame = () => {
