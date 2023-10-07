@@ -6,8 +6,8 @@ jest.mock('./constants', () => ({
 
 jest.mock('../../game/core/event-bus', () => ({
   default: {
-    emit: jest.fn()
-  }
+    emit: jest.fn(),
+  },
 }))
 
 const mockedBombSpriteStartMethod = jest.fn()

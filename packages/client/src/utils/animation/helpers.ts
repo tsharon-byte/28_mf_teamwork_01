@@ -49,7 +49,7 @@ export const drawBomber = (
   src: string,
   level: string[],
   x0 = 0,
-  y0 = 0,
+  y0 = 0
 ) => {
   return new HeroSprite({
     ctx: ctx,

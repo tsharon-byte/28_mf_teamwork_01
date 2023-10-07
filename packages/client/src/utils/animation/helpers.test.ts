@@ -48,13 +48,7 @@ describe('test drawBomber helper', () => {
     const x0 = 0
     const y0 = 0
 
-    const instance = drawBomber(
-      ctx,
-      src,
-      level,
-      x0,
-      y0,
-    )
+    const instance = drawBomber(ctx, src, level, x0, y0)
 
     expect(instance).toBeInstanceOf(MockedHeroSprite)
   })
