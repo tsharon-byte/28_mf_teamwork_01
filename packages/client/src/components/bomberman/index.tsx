@@ -125,7 +125,6 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
     window.location.reload()
     setOpen(false)
   }
-
   return (
     <div className="bomberman">
       <ProgressBar isStartGame={isStartGame} />
@@ -136,7 +135,9 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
         height={BOX_SIZE * (GAME_ROWS + 1)}
       />
       <div className="bomberman__buttons">
-        <Button onClick={startGame}>Начать Игру</Button>
+        <Button onClick={startGame} disabled={isStartGame}>
+          Начать Игру
+        </Button>
         <Button onClick={stopGame}>Окончить Игру</Button>
         <Fab
           onClick={toggleFullScreen}
