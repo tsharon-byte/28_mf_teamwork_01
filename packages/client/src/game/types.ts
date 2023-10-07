@@ -19,3 +19,12 @@ export type TDirectionVectors = {
 }
 
 export type TDirectionVector = TDirectionVectors[TDirection]
+
+export enum GameEvent {
+  StartGame = 'START_GAME',
+  StopGame = 'STOP_GAME',
+  GameOverSuccess = 'GAME_OVER_SUCCESS',
+  GameOverFailure = 'GAME_OVER_FAILURE',
+  BombermanMove = 'BOMBERMAN_MOVE',
+  EnemyMove = 'ENEMY_MOVE',
+}

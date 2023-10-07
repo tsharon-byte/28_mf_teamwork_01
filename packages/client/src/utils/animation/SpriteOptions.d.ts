@@ -8,10 +8,5 @@ type SpriteOptions = {
   size: number
   x0?: number
   y0?: number
-  setCurrentPos?: (
-    value:
-      | ((prevState: [number, number]) => [number, number])
-      | [number, number]
-  ) => void
   level: string[]
 }

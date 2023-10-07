@@ -5,7 +5,7 @@ import {
   CAN_GO_THROUGH_WALLS,
 } from './constants'
 import { DIRECTION_VECTORS } from '../../constants'
-import { TLevel, TPosition, TDirection, Direction } from '../../types'
+import { TLevel, TPosition, TDirection, Direction, GameEvent } from '../../types'
 import {
   createEnemySprites,
   randomEnumValue,
@@ -15,6 +15,8 @@ import {
 import { TActionSprite, TActionSpriteConstant } from './types'
 import { Nullable } from '../../../types'
 import Sprite from '../../../utils/animation/Sprite'
+import eventBus from '../../core/event-bus'
+import { Vector } from '../../core'
 
 class Enemy {
   protected _sprites: TActionSprite
@@ -22,6 +24,7 @@ class Enemy {
   protected _sprite: Nullable<Sprite> = null
   protected _timer = 0
   protected _animationFrameId: Nullable<number> = null
+  protected _isDead = false
 
   constructor(
     protected _context: CanvasRenderingContext2D,
@@ -39,6 +42,12 @@ class Enemy {
       _actionSpriteConstants
     )
     this._sprite = this._sprites[this._direction]
+  }
+
+  get position(): Vector {
+    return this._sprite
+      ? this._sprite.position
+      : new Vector(...this._startPosition)
   }
 
   move() {
@@ -90,6 +99,7 @@ class Enemy {
         roundToDecimal(x1 + x4 * 0.1, 1),
         roundToDecimal(y1 + y4 * 0.1, 1),
       ]
+      eventBus.emit(GameEvent.EnemyMove, this)
     }
   }
 
@@ -110,11 +120,29 @@ class Enemy {
   }
 
   tick() {
-    this._timer++
-    if (this._timer % Math.ceil(100 / this._speed) === 0) {
-      this.move()
+    if (this._animationFrameId) {
+      this._timer++
+      if (this._timer % Math.ceil(100 / this._speed) === 0) {
+        this.move()
+      }
+      window.requestAnimationFrame(
+        this.tick.bind(this)
+      )
     }
-    window.requestAnimationFrame(this.tick.bind(this))
+  }
+
+  dead() {
+    if (!this._isDead) {
+      this._isDead = true
+      this.stop()
+      if (this._sprite) {
+        this._sprite.stop()
+        this._sprites.dead.delta = this._sprite.delta
+      }
+      this._sprite = this._sprites.dead
+      this._sprite.onlyOneCycle = true
+      this._sprite.start()
+    }
   }
 }
 
