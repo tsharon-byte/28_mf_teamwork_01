@@ -1,3 +1,4 @@
+import Enemy from './enemy'
 import Balloom from './balloom'
 import Oneal from './oneal'
 import Doll from './doll'
@@ -7,4 +8,4 @@ import Ovapi from './ovapi'
 import Pass from './pass'
 import Pontan from './pontan'
 
-export { Balloom, Oneal, Doll, Minvo, Kondoria, Ovapi, Pass, Pontan }
+export { Enemy, Balloom, Oneal, Doll, Minvo, Kondoria, Ovapi, Pass, Pontan }

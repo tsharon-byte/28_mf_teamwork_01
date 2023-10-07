@@ -1,5 +1,6 @@
 import { drawItem, getTailImage } from './helpers'
 import { BOX_SIZE } from './helpers'
+import { Vector } from '../../game/core'
 
 class Sprite {
   protected readonly ctx: CanvasRenderingContext2D
@@ -19,6 +20,7 @@ class Sprite {
   protected dx: number
   protected dy: number
   protected level: string[]
+  onlyOneCycle = false
 
   constructor(options: SpriteOptions) {
     this.ctx = options.ctx
@@ -46,6 +48,10 @@ class Sprite {
     this.level = options.level
   }
 
+  get position(): Vector {
+    return new Vector(this.x0 + this.dx, this.y0 + this.dy)
+  }
+
   get delta() {
     return [this.dx, this.dy]
   }
@@ -63,6 +69,9 @@ class Sprite {
         this.frameIndex++
       } else {
         this.frameIndex = 0
+        if (this.onlyOneCycle) {
+          this.stop()
+        }
       }
     }
   }

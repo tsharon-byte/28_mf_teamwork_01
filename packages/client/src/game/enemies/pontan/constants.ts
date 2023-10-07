@@ -1,6 +1,6 @@
 export const MOVE_SPRITE = {
   PATH: 'img/enemies/pontan/move.png',
-  TAILS_NUMBER: 3,
+  TAILS_NUMBER: 4,
   TAIL_SIZE: 16,
   ANIMATION_SPEED: 64,
 }
