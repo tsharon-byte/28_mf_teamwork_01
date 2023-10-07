@@ -1,1 +1,1 @@
-export type TEventListener<T = any> = (...args: T[]) => void;
+export type TEventListener<T = any> = (...args: T[]) => void

@@ -4,6 +4,12 @@ jest.mock('./constants', () => ({
   WALL_CHARACTER: '#',
 }))
 
+jest.mock('../../game/core/event-bus', () => ({
+  default: {
+    emit: jest.fn()
+  }
+}))
+
 const mockedBombSpriteStartMethod = jest.fn()
 const mockedBombSpriteStopMethod = jest.fn()
 const mockedFireSpriteStartMethod = jest.fn()

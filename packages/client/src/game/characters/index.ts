@@ -1,5 +1,3 @@
 import Bomberman from './bomberman'
 
-export {
-    Bomberman
-}
+export { Bomberman }

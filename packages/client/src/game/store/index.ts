@@ -3,8 +3,8 @@ import bombermanSlice from './bomberman-slice'
 
 const store = configureStore({
   reducer: {
-    bomberman: bombermanSlice
-  }
+    bomberman: bombermanSlice,
+  },
 })
 
 export default store

@@ -6,7 +6,7 @@ import { Button, Fab } from '@mui/material'
 import {
   BOX_SIZE,
   GAME_COLUMNS,
-  GAME_ROWS
+  GAME_ROWS,
 } from '../../utils/animation/helpers'
 import useFullScreen from '../../utils/useFullScreen'
 import StyledDialog from '../dialog/StyledDialog'

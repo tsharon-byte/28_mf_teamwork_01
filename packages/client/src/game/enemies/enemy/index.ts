@@ -5,7 +5,13 @@ import {
   CAN_GO_THROUGH_WALLS,
 } from './constants'
 import { DIRECTION_VECTORS } from '../../constants'
-import { TLevel, TPosition, TDirection, Direction, GameEvent } from '../../types'
+import {
+  TLevel,
+  TPosition,
+  TDirection,
+  Direction,
+  GameEvent,
+} from '../../types'
 import {
   createEnemySprites,
   randomEnumValue,
@@ -125,9 +131,7 @@ class Enemy {
       if (this._timer % Math.ceil(100 / this._speed) === 0) {
         this.move()
       }
-      window.requestAnimationFrame(
-        this.tick.bind(this)
-      )
+      window.requestAnimationFrame(this.tick.bind(this))
     }
   }
 

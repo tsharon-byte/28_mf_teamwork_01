@@ -135,7 +135,7 @@ class HeroSprite extends Sprite {
       }, FINISH_TIMEOUT)
     }
     if (noCollision(this.level, newPos)) {
-      [this.dy, this.dx] = newPos
+      ;[this.dy, this.dx] = newPos
       // store.dispatch(setPosition(this.position))
       eventBus.emit(GameEvent.BombermanMove)
     }

@@ -49,10 +49,7 @@ class Sprite {
   }
 
   get position(): Vector {
-    return new Vector(
-      this.x0 + this.dx,
-      this.y0 + this.dy
-    )
+    return new Vector(this.x0 + this.dx, this.y0 + this.dy)
   }
 
   get delta() {
@@ -60,7 +57,7 @@ class Sprite {
   }
 
   set delta([dx, dy]) {
-    [this.dx, this.dy] = [dx, dy]
+    ;[this.dx, this.dy] = [dx, dy]
   }
 
   update = () => {

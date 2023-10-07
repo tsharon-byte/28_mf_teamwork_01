@@ -45,19 +45,15 @@ describe('test drawBomber helper', () => {
       .createElement('canvas')
       .getContext('2d') as CanvasRenderingContext2D
     const src = ''
-    const setLevel = jest.fn()
     const x0 = 0
     const y0 = 0
-    const setCurrentPos = jest.fn()
 
     const instance = drawBomber(
       ctx,
       src,
       level,
-      setLevel,
       x0,
       y0,
-      setCurrentPos
     )
 
     expect(instance).toBeInstanceOf(MockedHeroSprite)
