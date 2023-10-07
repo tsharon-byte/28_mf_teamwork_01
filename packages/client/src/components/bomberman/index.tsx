@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { CSSProperties, FC, useEffect, useRef, useState } from 'react'
 import FullscreenIcon from '@mui/icons-material/Fullscreen'
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 import './bomberman.css'
@@ -29,19 +29,38 @@ import {
   Pontan,
 } from '../../game/enemies'
 import type Enemy from '../../game/enemies/enemy'
+import { GAME_DURATION } from '../../utils/constants'
+import ProgressBar from './progress-bar'
 
 const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
   const ref = useRef(null)
+  const timerRef = useRef<number | null>(null)
+
   const [fullScreenFlag, toggleFullScreen] = useFullScreen()
   const [bomber, setBomber] = useState<HeroSprite>()
   const [enemies, setEnemies] = useState<Enemy[]>([])
   const [level, setLevel] = useState(level1)
   const [currentPos, setCurrentPos] = useState<[number, number]>([1, 1])
+  const [isStartGame, setIsStartGame] = useState(false)
 
   const [open, setOpen] = useState<boolean>(false)
   const [isSuccess, setSuccess] = useState<boolean>(false)
 
   const [playMusic, stopMusic] = useMusicPlayer()
+
+  const startTimer = () => {
+    if (timerRef.current !== null) return
+
+    timerRef.current = window.setTimeout(gameOverCallback, GAME_DURATION * 1000)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (ref.current) {
@@ -80,10 +99,13 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
     }
     enemies.forEach(enemy => enemy.start())
     playMusic()
+    startTimer()
+    setIsStartGame(() => true)
   }
   const stopGame = () => {
     window.location.reload()
     stopMusic()
+    setIsStartGame(() => false)
   }
 
   const successCallback = () => {
@@ -91,18 +113,22 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
     setSuccess(true)
     setOpen(true)
     onSuccess?.()
+    setIsStartGame(() => false)
   }
   const gameOverCallback = () => {
     stopMusic()
     setSuccess(false)
     setOpen(true)
+    setIsStartGame(() => false)
   }
   const handleCloseDialog = () => {
     window.location.reload()
     setOpen(false)
   }
+
   return (
     <div className="bomberman">
+      <ProgressBar isStartGame={isStartGame} />
       <canvas
         data-testid="canvas"
         ref={ref}
