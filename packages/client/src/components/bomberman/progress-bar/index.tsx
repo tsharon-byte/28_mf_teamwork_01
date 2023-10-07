@@ -4,7 +4,7 @@ import { TProgressBar } from './types'
 import styles from './styles.module.css'
 
 const animDurationCss = {
-  'animation-duration': `${GAME_DURATION}s`,
+  animationDuration: `${GAME_DURATION}s`,
 } as CSSProperties
 
 const ProgressBar: FC<TProgressBar> = ({ isStartGame }) => {
