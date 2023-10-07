@@ -24,6 +24,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
 
   const [open, setOpen] = useState<boolean>(false)
   const [isSuccess, setSuccess] = useState<boolean>(false)
+  const [disabledStart, isDisabledStart] = useState(false)
 
   const [playMusic, stopMusic] = useMusicPlayer()
 
@@ -40,6 +41,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
       eventBus.on(GameEvent.GameOverSuccess, successCallback)
       eventBus.on(GameEvent.GameOverFailure, gameOverCallback)
       playMusic()
+      isDisabledStart(() => true)
     }
   }
   const stopGame = () => {
@@ -47,6 +49,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
       setStarted(false)
       eventBus.emit(GameEvent.StopGame)
       window.location.reload()
+      isDisabledStart(() => false)
     }
   }
 
@@ -74,7 +77,9 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
         height={BOX_SIZE * (GAME_ROWS + 1)}
       />
       <div className="bomberman__buttons">
-        <Button onClick={startGame}>Начать Игру</Button>
+        <Button onClick={startGame} disabled={disabledStart}>
+          Начать Игру
+        </Button>
         <Button onClick={stopGame}>Окончить Игру</Button>
         <Fab
           onClick={toggleFullScreen}

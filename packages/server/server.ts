@@ -21,7 +21,7 @@ export const createServer = async () => {
   app.use((_, res, next) => {
     res.set({
       'Content-Security-Policy':
-        "default-src 'self' https://ya-praktikum.tech https://siberians-bomberman-28.ya-praktikum.tech",
+        "default-src 'self' https://ya-praktikum.tech https://siberians-bomberman-28.ya-praktikum.tech 'unsafe-inline'",
     })
     next()
   })
