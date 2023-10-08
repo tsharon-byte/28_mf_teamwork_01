@@ -4,7 +4,6 @@ import {
   logout as logoutRequest,
   login as loginRequest,
   registration as registrationRequest,
-  getUser,
   saveUserInBD,
 } from '../../api/auth-api'
 import { TLoginData, TRegistrationData } from '../../api/auth-api/type'
@@ -13,9 +12,6 @@ import { toast } from 'react-toastify'
 import { useAppDispatch } from '../../store/hooks'
 import { userSlice } from '../../store/slices'
 import { prepareError } from '../../helpers'
-import { beInstance } from '../../utils/http-transport'
-import { IUserData } from 'server/api/v1/types/user'
-import { SELF_USER_URL } from '../../constants/urls'
 
 const useAuth = () => {
   const dispatch = useAppDispatch()
