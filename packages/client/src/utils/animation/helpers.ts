@@ -48,18 +48,8 @@ export const drawBomber = (
   ctx: CanvasRenderingContext2D,
   src: string,
   level: string[],
-  setLevel: (value: ((prevState: string[]) => string[]) | string[]) => void,
   x0 = 0,
-  y0 = 0,
-  setCurrentPos: (
-    value:
-      | ((prevState: [number, number]) => [number, number])
-      | [number, number]
-  ) => void,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  successCallback: () => void = () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  gameOverCallback: () => void = () => {}
+  y0 = 0
 ) => {
   return new HeroSprite({
     ctx: ctx,
@@ -70,12 +60,8 @@ export const drawBomber = (
     ticksPerFrame: TICKS_PER_FRAME,
     size: BOX_SIZE,
     level,
-    setLevel,
     x0,
     y0,
-    setCurrentPos,
-    successCallback,
-    gameOverCallback,
   })
 }
 export const drawSprite = (
