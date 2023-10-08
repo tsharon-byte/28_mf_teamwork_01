@@ -99,6 +99,26 @@ const options: swaggerJsdoc.Options = {
             },
           },
         },
+        UserModel: {
+          type: 'object',
+          required: ['yandexId', 'name'],
+          properties: {
+            yandexId: {
+              type: 'number',
+            },
+            name: {
+              type: 'string',
+            },
+            avatar: {
+              type: 'string',
+              nullable: true,
+            },
+            score: {
+              type: 'number',
+              defaultValue: 0,
+            },
+          },
+        },
         TopicRequest: {
           type: 'object',
           required: ['name'],
@@ -173,6 +193,24 @@ const options: swaggerJsdoc.Options = {
                 items: {
                   $ref: '#/components/schemas/EmojiModel',
                 },
+              },
+            },
+          },
+          UserRequest: {
+            type: 'object',
+            required: ['yandexId', 'name'],
+            properties: {
+              yandexId: {
+                type: 'number',
+              },
+              name: {
+                type: 'string',
+              },
+              avatar: {
+                type: 'string',
+              },
+              score: {
+                type: 'number',
               },
             },
           },
@@ -1025,6 +1063,64 @@ const options: swaggerJsdoc.Options = {
           },
         },
       },
+      '/api/v1/users/': {
+        post: {
+          tags: ['User'],
+          summary: 'Create user',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/UserRequest',
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: 'Created',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/UserModel',
+                  },
+                },
+              },
+            },
+            400: {
+              description: 'Bad Request',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/ErrorResponse',
+                  },
+                },
+              },
+            },
+            403: {
+              description: 'Forbidden',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/ErrorResponse',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal Server Error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/ErrorResponse',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
   apis: [
@@ -1032,6 +1128,7 @@ const options: swaggerJsdoc.Options = {
     './api/v1/routers/comment.ts',
     './api/v1/routers/theme.ts',
     './api/v1/routers/emoji.ts',
+    './api/v1/routers/user.ts',
   ],
 }
 
