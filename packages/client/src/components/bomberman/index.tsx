@@ -16,17 +16,33 @@ import useMusicPlayer from '../../hooks/use-music-player'
 import Game from '../../game'
 import { GameEvent } from '../../game/types'
 import eventBus from '../../game/core/event-bus'
+import { GAME_DURATION } from '../../utils/constants'
+import ProgressBar from './progress-bar'
 
 const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
   const ref = useRef<HTMLCanvasElement>(null)
+  const timerRef = useRef<number | null>(null)
   const [fullScreenFlag, toggleFullScreen] = useFullScreen()
   const [started, setStarted] = useState(false)
 
   const [open, setOpen] = useState<boolean>(false)
   const [isSuccess, setSuccess] = useState<boolean>(false)
-  const [disabledStart, isDisabledStart] = useState(false)
 
   const [playMusic, stopMusic] = useMusicPlayer()
+
+  const startTimer = () => {
+    if (timerRef.current !== null) return
+
+    timerRef.current = window.setTimeout(gameOverCallback, GAME_DURATION * 1000)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (ref.current) {
@@ -41,7 +57,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
       eventBus.on(GameEvent.GameOverSuccess, successCallback)
       eventBus.on(GameEvent.GameOverFailure, gameOverCallback)
       playMusic()
-      isDisabledStart(() => true)
+      startTimer()
     }
   }
   const stopGame = () => {
@@ -49,7 +65,6 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
       setStarted(false)
       eventBus.emit(GameEvent.StopGame)
       window.location.reload()
-      isDisabledStart(() => false)
     }
   }
 
@@ -70,6 +85,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
   }
   return (
     <div className="bomberman">
+      <ProgressBar isStartGame={started} />
       <canvas
         data-testid="canvas"
         ref={ref}
@@ -77,7 +93,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
         height={BOX_SIZE * (GAME_ROWS + 1)}
       />
       <div className="bomberman__buttons">
-        <Button onClick={startGame} disabled={disabledStart}>
+        <Button onClick={startGame} disabled={started}>
           Начать Игру
         </Button>
         <Button onClick={stopGame}>Окончить Игру</Button>
