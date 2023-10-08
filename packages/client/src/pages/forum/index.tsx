@@ -21,7 +21,6 @@ import { TopicItem } from '../../components/forum-components/topic-item'
 import { useNavigate } from 'react-router-dom'
 import { SearchAndSelectBox } from '../../components/forum-components/search-and-select-box'
 import { Title } from '../../components'
-import { NoDiscussionIcon } from '../../icons'
 import { resetChatError } from '../../store/slices/forum-slice/actions'
 import NoOneDiscussion from '../../components/forum-components/no-one-discussion'
 

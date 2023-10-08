@@ -6,6 +6,7 @@ import {
   CommentModel,
   EmojiModel,
   CommentEmojiModel,
+  UserModel,
 } from './api/v1/models'
 
 dotenv.config()
@@ -25,7 +26,7 @@ const sequelize = new Sequelize({
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   dialect: 'postgres',
-  models: [TopicModel, CommentModel, EmojiModel, CommentEmojiModel],
+  models: [TopicModel, CommentModel, EmojiModel, CommentEmojiModel, UserModel],
 })
 
 const smileCodes = [

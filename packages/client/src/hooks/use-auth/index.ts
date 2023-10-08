@@ -4,6 +4,8 @@ import {
   logout as logoutRequest,
   login as loginRequest,
   registration as registrationRequest,
+  getUser,
+  saveUserInBD,
 } from '../../api/auth-api'
 import { TLoginData, TRegistrationData } from '../../api/auth-api/type'
 import { ROUTE_PATH } from '../../utils/constants'
@@ -11,6 +13,9 @@ import { toast } from 'react-toastify'
 import { useAppDispatch } from '../../store/hooks'
 import { userSlice } from '../../store/slices'
 import { prepareError } from '../../helpers'
+import { beInstance } from '../../utils/http-transport'
+import { IUserData } from 'server/api/v1/types/user'
+import { SELF_USER_URL } from '../../constants/urls'
 
 const useAuth = () => {
   const dispatch = useAppDispatch()
@@ -19,7 +24,11 @@ const useAuth = () => {
   const registration = useCallback(async (data: TRegistrationData) => {
     try {
       const response = await registrationRequest(data)
-      response.status === 200 && navigate(ROUTE_PATH.HOME)
+
+      if (response.status === 200) {
+        await saveUserInBD()
+        navigate(ROUTE_PATH.HOME)
+      }
     } catch (error) {
       const { status, message } = prepareError(error)
       status === 400 &&
@@ -36,7 +45,11 @@ const useAuth = () => {
   const login = useCallback(async (data: TLoginData) => {
     try {
       const response = await loginRequest(data)
-      response.status === 200 && navigate(ROUTE_PATH.HOME)
+
+      if (response.status === 200) {
+        await saveUserInBD()
+        navigate(ROUTE_PATH.HOME)
+      }
     } catch (error) {
       const { status, message } = prepareError(error)
       status === 400 &&

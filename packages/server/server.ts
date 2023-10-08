@@ -6,7 +6,7 @@ import type { ViteDevServer } from 'vite'
 import { createServer as createViteServer } from 'vite'
 import { CLIENT_DIR, DIST_DIR, DIST_SSR_DIR, SERVER_DIR } from './assets/dir'
 import { ENVS } from './assets/env'
-import { topicRouter, commentRouter } from './api/v1/routers'
+import { topicRouter, commentRouter, userRouter } from './api/v1/routers'
 import { authMiddleware } from './middlewares'
 import useSwagger from './api/v1/swagger'
 import dbConnect from './db'
@@ -81,6 +81,7 @@ export const createServer = async () => {
   app.use('/api/v1/comments', commentRouter)
   app.use('/api/v1/emoji', emojiRoute)
   app.use('/api/v1/theme', themeRoute)
+  app.use('/api/v1/user', userRouter)
 
   app.get('/api/*', (_, res) => {
     res.json('👋 Howdy from the server :)')

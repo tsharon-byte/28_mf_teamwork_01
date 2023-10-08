@@ -1,4 +1,5 @@
 import topicRouter from './topic'
 import commentRouter from './comment'
+import userRouter from './user'
 
-export { topicRouter, commentRouter }
+export { topicRouter, commentRouter, userRouter }

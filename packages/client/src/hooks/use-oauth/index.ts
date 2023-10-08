@@ -12,6 +12,7 @@ import { prepareError } from '../../helpers'
 import { useAppDispatch } from '../../store/hooks'
 import { retrieveUserThunk } from '../../store/slices/user-slice/thunks'
 import { useUser } from '../../hooks'
+import { saveUserInBD } from '../../api/auth-api'
 
 const useOAuth = () => {
   const navigate = useNavigate()
@@ -30,7 +31,12 @@ const useOAuth = () => {
           code,
           redirect_uri: REDIRECT_URI,
         })
-        response.status === 200 && dispatch(retrieveUserThunk())
+
+        if (response.status === 200) {
+          await saveUserInBD()
+
+          dispatch(retrieveUserThunk())
+        }
       } catch (error) {
         const { status, message } = prepareError(error)
         status === 401 && navigate(ROUTE_PATH.LOGIN)

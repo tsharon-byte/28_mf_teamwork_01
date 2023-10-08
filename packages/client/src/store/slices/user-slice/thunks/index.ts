@@ -5,6 +5,7 @@ import changeThemeThunk from './change-theme-thunk'
 import retrieveThemeThunk from './retrieve-theme-thunk'
 import getUserThunk from './get-user-thunk'
 import updateUserThunk from './update-user-thunk'
+import saveUserThunk from './save-user-thunk'
 
 export {
   retrieveUserThunk,
@@ -14,4 +15,5 @@ export {
   retrieveThemeThunk,
   getUserThunk,
   updateUserThunk,
+  saveUserThunk,
 }
