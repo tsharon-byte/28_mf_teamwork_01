@@ -19,7 +19,7 @@ import {
   MOVE_RIGHT_SPRITE,
   DEAD_SPRITE,
   START_POSITION,
-  SPEED
+  SPEED,
 } from './constants'
 import { DIRECTION_VECTORS } from '../../constants'
 import { roundToDecimal, getMoveAction } from '../../helpers'
