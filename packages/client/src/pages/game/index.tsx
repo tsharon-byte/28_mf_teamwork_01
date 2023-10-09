@@ -3,12 +3,13 @@ import Bomberman from '../../components/bomberman'
 import { Box } from '@mui/material'
 import './Game.css'
 import { useLeaderboard } from '../../hooks'
+import { saveScore } from '../../api/auth-api'
 
 const Game: FC = () => {
   const { createLeaderboardRecord } = useLeaderboard(false)
 
-  const handleSuccess = () => {
-    const score = Math.floor(Math.random() * 100)
+  const handleSuccess = (score: number) => {
+    saveScore(score)
     createLeaderboardRecord(score)
   }
 

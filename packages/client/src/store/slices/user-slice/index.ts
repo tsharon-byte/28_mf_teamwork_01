@@ -22,6 +22,7 @@ const initialState: IUserState = {
   error: null,
   foundUsers: [],
   theme: 'dark',
+  score: 0,
 }
 
 const userSlice = createSlice({
@@ -36,6 +37,9 @@ const userSlice = createSlice({
     },
     changeTheme(state, action: PayloadAction<ThemeType>) {
       state.theme = action.payload
+    },
+    addScore(state, action: PayloadAction<number>) {
+      state.score += action.payload
     },
   },
   extraReducers: builder => {

@@ -34,6 +34,7 @@ class Game {
   protected _enemies: Enemy[] = []
   protected _level: TLevel = level1
   protected _burstWaves: BurstWave[] = []
+  protected _score = 0
 
   constructor(protected _canvas: HTMLCanvasElement) {
     if (Game.__instance) {
@@ -107,7 +108,7 @@ class Game {
       this._bomberman &&
       portalIsFound(this._level, this._bomberman.position)
     ) {
-      eventBus.emit(GameEvent.GameOverSuccess)
+      eventBus.emit(GameEvent.GameOverSuccess, { score: this._score })
       this._bomberman = null
     }
     this._bombermanIsKilledCheck()
@@ -123,7 +124,7 @@ class Game {
       this._bomberman &&
       this._bomberman.position.round().isEqual(enemy.position.round())
     ) {
-      eventBus.emit(GameEvent.GameOverFailure)
+      eventBus.emit(GameEvent.GameOverFailure, { score: this._score })
     }
   }
 
@@ -135,7 +136,8 @@ class Game {
           burstWave.position.isEqual(enemy.position.floor())
       )
     ) {
-      enemy.dead()
+      this._score += enemy.dead()
+      eventBus.emit(GameEvent.KillingEnemy, { score: this._score })
     }
   }
 
@@ -148,7 +150,7 @@ class Game {
             burstWave.position.isEqual(this._bomberman.position.floor()))
       )
     ) {
-      eventBus.emit(GameEvent.GameOverFailure)
+      eventBus.emit(GameEvent.GameOverFailure, { score: this._score })
     }
   }
 

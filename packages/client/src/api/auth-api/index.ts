@@ -30,3 +30,11 @@ export const saveUserInBD = async (): Promise<AxiosResponse> => {
     avatar: user.data?.avatar,
   })
 }
+
+export const saveScore = async (score: number): Promise<AxiosResponse> => {
+  const user = await getUser()
+
+  return await beInstance.put(`${SELF_USER_URL}${user.data.id}`, {
+    score,
+  })
+}

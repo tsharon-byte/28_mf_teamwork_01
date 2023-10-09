@@ -14,12 +14,16 @@ import EndGame from '../end-game/EndGame'
 import IBombermanProps from './types'
 import useMusicPlayer from '../../hooks/use-music-player'
 import Game from '../../game'
-import { GameEvent } from '../../game/types'
+import { GameEvent, TScore } from '../../game/types'
 import eventBus from '../../game/core/event-bus'
 import { GAME_DURATION } from '../../utils/constants'
 import ProgressBar from './progress-bar'
+import { useAppDispatch } from '../../store/hooks'
+import { userSlice } from '../../store/slices'
 
 const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
+  const dispatch = useAppDispatch()
+
   const ref = useRef<HTMLCanvasElement>(null)
   const timerRef = useRef<number | null>(null)
   const [fullScreenFlag, toggleFullScreen] = useFullScreen()
@@ -54,12 +58,18 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
     if (!started) {
       setStarted(true)
       eventBus.emit(GameEvent.StartGame)
-      eventBus.on(GameEvent.GameOverSuccess, successCallback)
-      eventBus.on(GameEvent.GameOverFailure, gameOverCallback)
+      eventBus.on(GameEvent.GameOverSuccess, data => successCallback(data))
+      eventBus.on(GameEvent.GameOverFailure, data => gameOverCallback(data))
+      eventBus.on(GameEvent.KillingEnemy, data => counter(data))
       playMusic()
       startTimer()
     }
   }
+
+  const counter = (data: TScore) => {
+    dispatch(userSlice.actions.addScore(data.score))
+  }
+
   const stopGame = () => {
     if (started) {
       setStarted(false)
@@ -68,16 +78,17 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
     }
   }
 
-  const successCallback = () => {
+  const successCallback = (data: TScore) => {
     stopMusic()
     setSuccess(true)
     setOpen(true)
-    onSuccess?.()
+    onSuccess?.(data.score)
   }
-  const gameOverCallback = () => {
+  const gameOverCallback = (data: TScore) => {
     stopMusic()
     setSuccess(false)
     setOpen(true)
+    onSuccess?.(data.score)
   }
   const handleCloseDialog = () => {
     window.location.reload()

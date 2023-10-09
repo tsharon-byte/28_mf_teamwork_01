@@ -19,6 +19,7 @@ export interface IUserState {
   error: Nullable<IError>
   theme: ThemeType
   foundUsers: Array<IUser>
+  score: number
 }
 
 export interface IPasswordData {
