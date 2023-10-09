@@ -19,6 +19,7 @@ import {
   MOVE_RIGHT_SPRITE,
   DEAD_SPRITE,
   START_POSITION,
+  SPEED
 } from './constants'
 import { DIRECTION_VECTORS } from '../../constants'
 import { roundToDecimal, getMoveAction } from '../../helpers'
@@ -30,6 +31,7 @@ import { Bomb } from '../../items'
 
 class Bomberman extends Entity<TBombermanAction> {
   protected _direction: TDirection = Direction.Down
+  protected _speed: number = SPEED
   bombs: Bomb[] = []
 
   constructor(context: CanvasRenderingContext2D, level: TLevel) {
@@ -180,7 +182,9 @@ class Bomberman extends Entity<TBombermanAction> {
       if (['Left', 'ArrowLeft'].includes(key)) {
         this._direction = Direction.Left
       }
-      this.move()
+      for (let i = 0; i < this._speed; i++) {
+        this.move()
+      }
     }
     if (key === ' ') {
       this.plantBomb()
