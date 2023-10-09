@@ -1,4 +1,12 @@
-import { TDirection, TLevel, Direction, MoveAction, DeathAction, TurnAction, TActionSpriteConstantsMap } from '../../types'
+import {
+  TDirection,
+  TLevel,
+  Direction,
+  MoveAction,
+  DeathAction,
+  TurnAction,
+  TActionSpriteConstantsMap,
+} from '../../types'
 import { Entity, Vector } from '../../core'
 import {
   TURN_FACE_SPRITE,
@@ -10,7 +18,7 @@ import {
   MOVE_LEFT_SPRITE,
   MOVE_RIGHT_SPRITE,
   DEAD_SPRITE,
-  START_POSITION
+  START_POSITION,
 } from './constants'
 import { DIRECTION_VECTORS } from '../../constants'
 import { roundToDecimal, getMoveAction } from '../../helpers'
@@ -50,30 +58,63 @@ class Bomberman extends Entity<TBombermanAction> {
   move() {
     let sprite
     const directionVector = DIRECTION_VECTORS[this._direction]
-    const positionVector = this._position.add(directionVector.mul(0.1)).roundToDecimal(1)
+    const positionVector = this._position
+      .add(directionVector.mul(0.1))
+      .roundToDecimal(1)
     if (noCollision(this._level, directionVector, positionVector, false)) {
-      if (!directionVector.x && Math.round(positionVector.x) !== positionVector.x) {
+      if (
+        !directionVector.x &&
+        Math.round(positionVector.x) !== positionVector.x
+      ) {
         this._position = new Vector(
-          roundToDecimal(Math.round(positionVector.x) < positionVector.x ? positionVector.x - 0.1 : positionVector.x + 0.1, 1),
+          roundToDecimal(
+            Math.round(positionVector.x) < positionVector.x
+              ? positionVector.x - 0.1
+              : positionVector.x + 0.1,
+            1
+          ),
           this._position.y
         )
-        sprite = this._actionSpriteMap[Math.round(positionVector.x) < positionVector.x ? MoveAction.MoveLeft : MoveAction.MoveRight]
+        sprite =
+          this._actionSpriteMap[
+            Math.round(positionVector.x) < positionVector.x
+              ? MoveAction.MoveLeft
+              : MoveAction.MoveRight
+          ]
         if (this._sprite !== sprite) {
           this._sprite.stop()
         }
         const [x, y] = this._sprite.delta
         Object.values(this._actionSpriteMap).forEach(sprite => {
           sprite.delta = [
-            roundToDecimal(Math.round(positionVector.x) < positionVector.x ? x - 0.1 : x + 0.1, 1),
+            roundToDecimal(
+              Math.round(positionVector.x) < positionVector.x
+                ? x - 0.1
+                : x + 0.1,
+              1
+            ),
             y,
           ]
         })
-      } else if (!directionVector.y && Math.round(positionVector.y) !== positionVector.y) {
+      } else if (
+        !directionVector.y &&
+        Math.round(positionVector.y) !== positionVector.y
+      ) {
         this._position = new Vector(
           this._position.x,
-          roundToDecimal(Math.round(positionVector.y) < positionVector.y ? positionVector.y - 0.1 : positionVector.y + 0.1, 1)
+          roundToDecimal(
+            Math.round(positionVector.y) < positionVector.y
+              ? positionVector.y - 0.1
+              : positionVector.y + 0.1,
+            1
+          )
         )
-        sprite = this._actionSpriteMap[Math.round(positionVector.y) < positionVector.y ? MoveAction.MoveUp : MoveAction.MoveDown]
+        sprite =
+          this._actionSpriteMap[
+            Math.round(positionVector.y) < positionVector.y
+              ? MoveAction.MoveUp
+              : MoveAction.MoveDown
+          ]
         if (this._sprite !== sprite) {
           this._sprite.stop()
         }
@@ -81,7 +122,12 @@ class Bomberman extends Entity<TBombermanAction> {
         Object.values(this._actionSpriteMap).forEach(sprite => {
           sprite.delta = [
             x,
-            roundToDecimal(Math.round(positionVector.y) < positionVector.y ? y - 0.1 : y + 0.1, 1),
+            roundToDecimal(
+              Math.round(positionVector.y) < positionVector.y
+                ? y - 0.1
+                : y + 0.1,
+              1
+            ),
           ]
         })
       } else {
@@ -110,7 +156,18 @@ class Bomberman extends Entity<TBombermanAction> {
 
   handleKeyDown(event: KeyboardEvent) {
     const { key } = event
-    if (['Up', 'ArrowUp', 'Down', 'ArrowDown', 'Right', 'ArrowRight', 'Left', 'ArrowLeft'].includes(key)) {
+    if (
+      [
+        'Up',
+        'ArrowUp',
+        'Down',
+        'ArrowDown',
+        'Right',
+        'ArrowRight',
+        'Left',
+        'ArrowLeft',
+      ].includes(key)
+    ) {
       if (['Up', 'ArrowUp'].includes(key)) {
         this._direction = Direction.Up
       }
@@ -132,7 +189,18 @@ class Bomberman extends Entity<TBombermanAction> {
 
   handleKeyUp(event: KeyboardEvent) {
     const { key } = event
-    if (['Up', 'ArrowUp', 'Down', 'ArrowDown', 'Right', 'ArrowRight', 'Left', 'ArrowLeft'].includes(key)) {
+    if (
+      [
+        'Up',
+        'ArrowUp',
+        'Down',
+        'ArrowDown',
+        'Right',
+        'ArrowRight',
+        'Left',
+        'ArrowLeft',
+      ].includes(key)
+    ) {
       this._sprite.stop()
       if (['Up', 'ArrowUp'].includes(key)) {
         this._sprite = this._actionSpriteMap[TurnAction.TurnBack]

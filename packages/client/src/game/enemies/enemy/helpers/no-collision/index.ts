@@ -33,9 +33,9 @@ const noCollision = (
   }
   const tailCharacter = level[y][x]
   return (
-    tailCharacter !== BRICK_CHARACTER ||
-    canGoThroughWals
-  ) && tailCharacter !== WALL_CHARACTER
+    (tailCharacter !== BRICK_CHARACTER || canGoThroughWals) &&
+    tailCharacter !== WALL_CHARACTER
+  )
 }
 
 export default noCollision

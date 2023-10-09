@@ -1,5 +1,5 @@
 export enum BombAction {
-    Plant = 'Plant'
+  Plant = 'Plant',
 }
 
 export type TBombAction = keyof typeof BombAction

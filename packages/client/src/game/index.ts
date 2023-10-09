@@ -16,7 +16,12 @@ import {
 import eventBus from './core/event-bus'
 import { portalIsFound, getBurstWaveEndAction } from './helpers'
 import { Bomb } from './items'
-import { BurstWave, BurstWaveStart, BurstWaveMiddle, BurstWaveEnd } from './items/burst-waves'
+import {
+  BurstWave,
+  BurstWaveStart,
+  BurstWaveMiddle,
+  BurstWaveEnd,
+} from './items/burst-waves'
 import { DIRECTION_VECTORS } from './constants'
 import { BurstWaveMiddleAction } from './items/burst-waves/burst-wave-middle/types'
 import { WALL_CHARACTER } from '../utils/animation/constants'
@@ -77,7 +82,10 @@ class Game {
     eventBus.on(GameEvent.BombermanMove, this._handleBombermanMove.bind(this))
     eventBus.on(GameEvent.EnemyMove, this._handleEnemyMove.bind(this))
     eventBus.on(GameEvent.BombExploded, this._handleBombExploded.bind(this))
-    eventBus.on(GameEvent.BurstWavePassed, this._handleBurstWavePassed.bind(this))
+    eventBus.on(
+      GameEvent.BurstWavePassed,
+      this._handleBurstWavePassed.bind(this)
+    )
   }
 
   protected _start() {
@@ -95,7 +103,10 @@ class Game {
   }
 
   protected _handleBombermanMove() {
-    if (this._bomberman && portalIsFound(this._level, this._bomberman.position)) {
+    if (
+      this._bomberman &&
+      portalIsFound(this._level, this._bomberman.position)
+    ) {
       eventBus.emit(GameEvent.GameOverSuccess)
       this._bomberman = null
     }
@@ -129,10 +140,9 @@ class Game {
     if (
       this._burstWaves.some(
         burstWave =>
-          this._bomberman && (
-            burstWave.position.isEqual(this._bomberman.position.ceil()) ||
-            burstWave.position.isEqual(this._bomberman.position.floor())
-          )
+          this._bomberman &&
+          (burstWave.position.isEqual(this._bomberman.position.ceil()) ||
+            burstWave.position.isEqual(this._bomberman.position.floor()))
       )
     ) {
       eventBus.emit(GameEvent.GameOverFailure)
@@ -141,7 +151,9 @@ class Game {
 
   protected _handleBombExploded(bomb: Bomb) {
     if (this._context) {
-      this._burstWaves.push(new BurstWaveStart(this._context, this._level, bomb.position))
+      this._burstWaves.push(
+        new BurstWaveStart(this._context, this._level, bomb.position)
+      )
       this._createBurstWaves(Direction.Up, bomb.position)
       this._createBurstWaves(Direction.Down, bomb.position)
       this._createBurstWaves(Direction.Left, bomb.position)
@@ -153,7 +165,10 @@ class Game {
 
   protected _createBurstWaves(direction: Direction, positionVector: Vector) {
     let position = positionVector.add(DIRECTION_VECTORS[direction])
-    if (this._level[position.y][position.x] !== WALL_CHARACTER && this._context) {
+    if (
+      this._level[position.y][position.x] !== WALL_CHARACTER &&
+      this._context
+    ) {
       this._burstWaves.push(
         new BurstWaveMiddle(
           this._context,
@@ -179,9 +194,7 @@ class Game {
   }
 
   protected _handleBurstWavePassed(burstWave: BurstWave) {
-    this._burstWaves = this._burstWaves.filter(
-      item => item !== burstWave
-    )
+    this._burstWaves = this._burstWaves.filter(item => item !== burstWave)
   }
 }
 

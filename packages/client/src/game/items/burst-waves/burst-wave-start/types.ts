@@ -1,5 +1,5 @@
 export enum BurstWaveStartAction {
-    Boom = 'Boom'
+  Boom = 'Boom',
 }
 
 export type TBurstWaveStartAction = keyof typeof BurstWaveStartAction

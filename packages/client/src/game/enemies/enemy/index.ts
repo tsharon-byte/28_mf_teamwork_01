@@ -13,10 +13,7 @@ import {
   TPosition,
   DeathAction,
 } from '../../types'
-import {
-  randomEnumValue,
-  noCollision,
-} from './helpers'
+import { randomEnumValue, noCollision } from './helpers'
 import { Nullable } from '../../../types'
 import eventBus from '../../core/event-bus'
 import { Vector, Entity } from '../../core'
@@ -50,7 +47,9 @@ class Enemy extends Entity<TEnemyAction> {
     if (this._sprite) {
       const prevDirection = this._direction
       const directionVector = DIRECTION_VECTORS[this._direction]
-      const positionVector = this._position.add(directionVector.mul(0.1)).roundToDecimal(1)
+      const positionVector = this._position
+        .add(directionVector.mul(0.1))
+        .roundToDecimal(1)
       const canMove = noCollision(
         this._level,
         directionVector,
@@ -61,7 +60,9 @@ class Enemy extends Entity<TEnemyAction> {
         const availableDirections = Object.fromEntries(
           Object.entries(Direction).filter(([key, _]) => {
             const directionVector = DIRECTION_VECTORS[key as TDirection]
-            const positionVector = this._position.add(directionVector.mul(0.1)).roundToDecimal(1)
+            const positionVector = this._position
+              .add(directionVector.mul(0.1))
+              .roundToDecimal(1)
             return noCollision(
               this._level,
               directionVector,

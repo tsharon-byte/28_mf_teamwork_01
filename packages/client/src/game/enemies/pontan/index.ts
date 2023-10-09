@@ -1,5 +1,11 @@
 import Enemy from '../enemy'
-import { TLevel, TPosition, TActionSpriteConstantsMap, MoveAction, DeathAction } from '../../types'
+import {
+  TLevel,
+  TPosition,
+  TActionSpriteConstantsMap,
+  MoveAction,
+  DeathAction,
+} from '../../types'
 import {
   MOVE_SPRITE,
   DEAD_SPRITE,

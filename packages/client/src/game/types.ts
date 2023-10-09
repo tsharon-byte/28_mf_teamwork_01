@@ -36,7 +36,10 @@ export interface ISpriteConstants {
 
 export type TActionSpriteMap<TAction extends string> = Record<TAction, Sprite>
 
-export type TActionSpriteConstantsMap<TAction extends string> = Record<TAction, ISpriteConstants>
+export type TActionSpriteConstantsMap<TAction extends string> = Record<
+  TAction,
+  ISpriteConstants
+>
 
 export enum MoveAction {
   MoveUp = 'MoveUp',
