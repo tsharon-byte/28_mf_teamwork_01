@@ -119,7 +119,10 @@ class Game {
   }
 
   protected _gameOverFailureCheck(enemy: Enemy) {
-    if (this._bomberman && this._bomberman.position.isEqual(enemy.position)) {
+    if (
+      this._bomberman &&
+      this._bomberman.position.round().isEqual(enemy.position.round())
+    ) {
       eventBus.emit(GameEvent.GameOverFailure)
     }
   }
