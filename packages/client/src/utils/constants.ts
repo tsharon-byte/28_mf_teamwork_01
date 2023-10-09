@@ -16,3 +16,5 @@ export const isBrowser = !!(
   window.document &&
   window.document.createElement
 )
+
+export const GAME_DURATION = 60
