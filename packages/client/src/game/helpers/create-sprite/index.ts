@@ -1,16 +1,15 @@
 import Sprite from '../../../utils/animation/Sprite'
-import { TLevel, TPosition } from '../../types'
 import { BOX_SIZE } from '../../../utils/animation/helpers'
-import { ISpriteConstant } from './types'
+import type { TLevel, ISpriteConstants } from '../../types'
+import type { Vector } from '../../core'
 
 const createSprite = (
   context: CanvasRenderingContext2D,
   level: TLevel,
-  position: TPosition,
-  spriteConstant: ISpriteConstant
+  position: Vector,
+  spriteConstants: ISpriteConstants
 ) => {
-  const [x, y] = position
-  const { PATH, TAILS_NUMBER, TAIL_SIZE, ANIMATION_SPEED } = spriteConstant
+  const { PATH, TAILS_NUMBER, TAIL_SIZE, ANIMATION_SPEED } = spriteConstants
   return new Sprite({
     ctx: context,
     spritePath: PATH,
@@ -19,8 +18,8 @@ const createSprite = (
     numberOfFrames: TAILS_NUMBER,
     ticksPerFrame: ANIMATION_SPEED,
     size: BOX_SIZE,
-    x0: x,
-    y0: y,
+    x0: position.x,
+    y0: position.y,
     level,
   })
 }

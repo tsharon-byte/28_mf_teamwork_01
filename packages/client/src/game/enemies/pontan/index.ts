@@ -1,6 +1,11 @@
 import Enemy from '../enemy'
-import { TLevel, TPosition } from '../../types'
-import { TActionSpriteConstant } from '../enemy/types'
+import {
+  TLevel,
+  TPosition,
+  TActionSpriteConstantsMap,
+  MoveAction,
+  DeathAction,
+} from '../../types'
 import {
   MOVE_SPRITE,
   DEAD_SPRITE,
@@ -8,6 +13,7 @@ import {
   POINTS_PER_KILL,
   CAN_GO_THROUGH_WALLS,
 } from './constants'
+import { TEnemyAction } from '../enemy/types'
 
 class Pass extends Enemy {
   constructor(
@@ -15,12 +21,12 @@ class Pass extends Enemy {
     level: TLevel,
     startPosition: TPosition
   ) {
-    const actionSpriteConstants: TActionSpriteConstant = {
-      up: MOVE_SPRITE,
-      down: MOVE_SPRITE,
-      left: MOVE_SPRITE,
-      right: MOVE_SPRITE,
-      dead: DEAD_SPRITE,
+    const actionSpriteConstants: TActionSpriteConstantsMap<TEnemyAction> = {
+      [MoveAction.MoveUp]: MOVE_SPRITE,
+      [MoveAction.MoveDown]: MOVE_SPRITE,
+      [MoveAction.MoveLeft]: MOVE_SPRITE,
+      [MoveAction.MoveRight]: MOVE_SPRITE,
+      [DeathAction.Death]: DEAD_SPRITE,
     }
     super(
       context,
