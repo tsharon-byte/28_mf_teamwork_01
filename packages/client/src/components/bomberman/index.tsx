@@ -12,7 +12,7 @@ import useFullScreen from '../../utils/useFullScreen'
 import StyledDialog from '../dialog/StyledDialog'
 import EndGame from '../end-game/EndGame'
 import IBombermanProps from './types'
-import useMusicPlayer from '../../hooks/use-music-player'
+// import useMusicPlayer from '../../hooks/use-music-player'
 import Game from '../../game'
 import { GameEvent } from '../../game/types'
 import eventBus from '../../game/core/event-bus'
@@ -26,7 +26,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
   const [isSuccess, setSuccess] = useState<boolean>(false)
   const [disabledStart, isDisabledStart] = useState(false)
 
-  const [playMusic, stopMusic] = useMusicPlayer()
+  // const [playMusic, stopMusic] = useMusicPlayer()
 
   useEffect(() => {
     if (ref.current) {
@@ -40,7 +40,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
       eventBus.emit(GameEvent.StartGame)
       eventBus.on(GameEvent.GameOverSuccess, successCallback)
       eventBus.on(GameEvent.GameOverFailure, gameOverCallback)
-      playMusic()
+      // playMusic()
       isDisabledStart(() => true)
     }
   }
@@ -54,13 +54,13 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
   }
 
   const successCallback = () => {
-    stopMusic()
+    // stopMusic()
     setSuccess(true)
     setOpen(true)
     onSuccess?.()
   }
   const gameOverCallback = () => {
-    stopMusic()
+    // stopMusic()
     setSuccess(false)
     setOpen(true)
   }
