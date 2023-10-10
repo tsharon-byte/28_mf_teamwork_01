@@ -57,7 +57,7 @@ class Sprite {
   }
 
   set delta([dx, dy]) {
-    [this.dx, this.dy] = [dx, dy]
+    ;[this.dx, this.dy] = [dx, dy]
   }
 
   update = () => {
