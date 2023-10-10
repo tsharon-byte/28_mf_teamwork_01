@@ -136,7 +136,10 @@ class Enemy extends Entity<TEnemyAction> {
       this._sprite = this._actionSpriteMap[DeathAction.Death]
       this._sprite.onlyOneCycle = true
       this._sprite.start()
+
+      return this._pointsPerKill
     }
+    return 0
   }
 }
 

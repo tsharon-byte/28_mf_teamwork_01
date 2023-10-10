@@ -7,8 +7,7 @@ import { useLeaderboard } from '../../hooks'
 const Game: FC = () => {
   const { createLeaderboardRecord } = useLeaderboard(false)
 
-  const handleSuccess = () => {
-    const score = Math.floor(Math.random() * 100)
+  const handleSuccess = (score: number) => {
     createLeaderboardRecord(score)
   }
 
