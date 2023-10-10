@@ -26,6 +26,7 @@ export enum GameEvent {
   BurstWavePassed = 'BurstWavePassed',
   BombExploded = 'BombExploded',
   BombHasBeenPlanted = 'BombHasBeenPlanted',
+  EnemyKilled = 'EnemyKilled',
 }
 
 export interface ISpriteConstants {
@@ -65,3 +66,7 @@ export enum TurnAction {
 }
 
 export type TTurnAction = keyof typeof TurnAction
+
+export type TScore = {
+  score: number
+}
