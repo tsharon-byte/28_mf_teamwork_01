@@ -62,7 +62,7 @@ class Bomberman extends Entity<TBombermanAction> {
   }
 
   protected _move() {
-    let sprite
+    // let sprite
     const directionVector = DIRECTION_VECTORS[this._direction]
     const positionVector = this._position
       .add(directionVector.mul(0.1))
@@ -81,15 +81,15 @@ class Bomberman extends Entity<TBombermanAction> {
           ),
           this._position.y
         )
-        sprite =
+        this._sprite.image =
           this._actionSpriteMap[
             Math.round(positionVector.x) < positionVector.x
               ? MoveAction.MoveLeft
               : MoveAction.MoveRight
-          ]
-        if (this._sprite !== sprite) {
-          this._sprite.stop()
-        }
+          ].image
+        // if (this._sprite !== sprite) {
+        //   this._sprite.stop()
+        // }
         const [x, y] = this._sprite.delta
         Object.values(this._actionSpriteMap).forEach(sprite => {
           sprite.delta = [
@@ -115,15 +115,15 @@ class Bomberman extends Entity<TBombermanAction> {
             1
           )
         )
-        sprite =
+        this._sprite.image =
           this._actionSpriteMap[
             Math.round(positionVector.y) < positionVector.y
               ? MoveAction.MoveUp
               : MoveAction.MoveDown
-          ]
-        if (this._sprite !== sprite) {
-          this._sprite.stop()
-        }
+          ].image
+        // if (this._sprite !== sprite) {
+        //   this._sprite.stop()
+        // }
         const [x, y] = this._sprite.delta
         Object.values(this._actionSpriteMap).forEach(sprite => {
           sprite.delta = [
@@ -147,17 +147,17 @@ class Bomberman extends Entity<TBombermanAction> {
           ]
         })
         const action = getMoveAction(this._direction)
-        sprite = this._actionSpriteMap[action]
-        if (this._sprite !== sprite) {
-          this._sprite.stop()
-        }
+        this._sprite.image = this._actionSpriteMap[action].image
+        // if (this._sprite !== sprite) {
+        //   this._sprite.stop()
+        // }
       }
       eventBus.emit(GameEvent.BombermanMove)
     }
-    if (this._sprite !== sprite && sprite) {
-      this._sprite = sprite
-      this._sprite.start()
-    }
+    // if (this._sprite !== sprite && sprite) {
+    //   this._sprite = sprite
+    //   this._sprite.start()
+    // }
   }
 
   handleKeyDown = (event: KeyboardEvent) => {
@@ -220,37 +220,39 @@ class Bomberman extends Entity<TBombermanAction> {
         'ArrowLeft',
       ].includes(key)
     ) {
-      this._sprite.stop()
+      // this._sprite.stop()
       if (['Up', 'ArrowUp'].includes(key)) {
-        this._sprite = this._actionSpriteMap[TurnAction.TurnBack]
+        this._sprite.image = this._actionSpriteMap[TurnAction.TurnBack].image
       }
       if (['Down', 'ArrowDown'].includes(key)) {
-        this._sprite = this._actionSpriteMap[TurnAction.TurnFace]
+        this._sprite.image = this._actionSpriteMap[TurnAction.TurnFace].image
       }
       if (['Right', 'ArrowRight'].includes(key)) {
-        this._sprite = this._actionSpriteMap[TurnAction.TurnRight]
+        this._sprite.image = this._actionSpriteMap[TurnAction.TurnRight].image
       }
       if (['Left', 'ArrowLeft'].includes(key)) {
-        this._sprite = this._actionSpriteMap[TurnAction.TurnLeft]
+        this._sprite.image = this._actionSpriteMap[TurnAction.TurnLeft].image
       }
-      this._sprite.start()
+      // this._sprite.start()
     }
   }
 
   start() {
     super.start()
+    this._sprite.start()
     if (!this._animationFrameId) {
       this._animationFrameId = window.requestAnimationFrame(
         this.tick.bind(this)
       )
     }
-    this._sprite.render()
+    // this._sprite.render()
     document.addEventListener('keydown', this.handleKeyDown)
     document.addEventListener('keyup', this.handleKeyUp)
   }
 
   stop() {
     super.stop()
+    this._sprite.stop()
     document.removeEventListener('keydown', this.handleKeyDown)
     document.removeEventListener('keyup', this.handleKeyUp)
   }
