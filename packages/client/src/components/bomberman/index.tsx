@@ -16,10 +16,11 @@ import useMusicPlayer from '../../hooks/use-music-player'
 import Game from '../../game'
 import { GameEvent, TScore } from '../../game/types'
 import eventBus from '../../game/core/event-bus'
-import { GAME_DURATION } from '../../utils/constants'
+import { GAME_DURATION, ROUTE_PATH } from '../../utils/constants'
 import ProgressBar from './progress-bar'
 import { useAppDispatch } from '../../store/hooks'
 import UserSlice from '../../store/slices/user-slice'
+import { useNavigate } from 'react-router-dom'
 
 const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
   const dispatch = useAppDispatch()
@@ -29,6 +30,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
 
   const [fullScreenFlag, toggleFullScreen] = useFullScreen()
   const [playMusic, stopMusic] = useMusicPlayer()
+  const navigate = useNavigate()
 
   const [started, setStarted] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
@@ -74,7 +76,7 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
     if (started) {
       setStarted(false)
       eventBus.emit(GameEvent.StopGame)
-      window.location.reload()
+      navigate(ROUTE_PATH.LEADERBOARD)
     }
   }
 
@@ -91,8 +93,8 @@ const Bomberman: FC<IBombermanProps> = ({ onSuccess }) => {
     onSuccess?.(data.score)
   }
   const handleCloseDialog = () => {
-    window.location.reload()
     setOpen(false)
+    navigate(ROUTE_PATH.LEADERBOARD)
   }
   return (
     <div className="bomberman">
