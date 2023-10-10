@@ -62,4 +62,4 @@ export const DEAD_SPRITE = {
 }
 
 export const START_POSITION = [1, 1]
-export const SPEED = 30
+export const SPEED = 240

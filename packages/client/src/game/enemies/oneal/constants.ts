@@ -19,6 +19,6 @@ export const DEAD_SPRITE = {
   ANIMATION_SPEED: 32,
 }
 
-export const SPEED = 20
+export const SPEED = 80
 export const POINTS_PER_KILL = 200
 export const CAN_GO_THROUGH_WALLS = false
