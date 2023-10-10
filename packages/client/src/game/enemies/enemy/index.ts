@@ -96,6 +96,7 @@ class Enemy extends Entity<TEnemyAction> {
       })
       this._position = this._position.add(delta).roundToDecimal(1)
       eventBus.emit(GameEvent.EnemyMove, this)
+      this._sprite.render()
     }
   }
 

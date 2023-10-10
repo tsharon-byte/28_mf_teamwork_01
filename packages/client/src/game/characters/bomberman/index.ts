@@ -192,6 +192,7 @@ class Bomberman extends Entity<TBombermanAction> {
         this._direction = Direction.Left
       }
       this._move()
+      this._sprite.render()
     }
   }
 
