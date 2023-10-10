@@ -1,30 +1,67 @@
+import type Sprite from '../utils/animation/Sprite'
+import type { Vector } from './core'
+
 export type TLevel = string[]
 
 export type TPosition = [number, number]
 
 export enum Direction {
-  up = 'up',
-  down = 'down',
-  left = 'left',
-  right = 'right',
+  Up = 'Up',
+  Down = 'Down',
+  Left = 'Left',
+  Right = 'Right',
 }
 
 export type TDirection = keyof typeof Direction
 
-export type TDirectionVectors = {
-  up: [0, -1]
-  down: [0, 1]
-  left: [-1, 0]
-  right: [1, 0]
-}
-
-export type TDirectionVector = TDirectionVectors[TDirection]
+export type TDirectionVector = Record<TDirection, Vector>
 
 export enum GameEvent {
-  StartGame = 'START_GAME',
-  StopGame = 'STOP_GAME',
-  GameOverSuccess = 'GAME_OVER_SUCCESS',
-  GameOverFailure = 'GAME_OVER_FAILURE',
-  BombermanMove = 'BOMBERMAN_MOVE',
-  EnemyMove = 'ENEMY_MOVE',
+  StartGame = 'StartGame',
+  StopGame = 'StopGame',
+  GameOverSuccess = 'GameOverSuccess',
+  GameOverFailure = 'GameOverFailure',
+  BombermanMove = 'BombermanMove',
+  EnemyMove = 'EnemyMove',
+  BurstWavePassed = 'BurstWavePassed',
+  BombExploded = 'BombExploded',
+  BombHasBeenPlanted = 'BombHasBeenPlanted',
 }
+
+export interface ISpriteConstants {
+  PATH: string
+  TAILS_NUMBER: number
+  TAIL_SIZE: number
+  ANIMATION_SPEED: number
+}
+
+export type TActionSpriteMap<TAction extends string> = Record<TAction, Sprite>
+
+export type TActionSpriteConstantsMap<TAction extends string> = Record<
+  TAction,
+  ISpriteConstants
+>
+
+export enum MoveAction {
+  MoveUp = 'MoveUp',
+  MoveDown = 'MoveDown',
+  MoveLeft = 'MoveLeft',
+  MoveRight = 'MoveRight',
+}
+
+export type TMoveAction = keyof typeof MoveAction
+
+export enum DeathAction {
+  Death = 'Death',
+}
+
+export type TDeathAction = keyof typeof DeathAction
+
+export enum TurnAction {
+  TurnFace = 'TurnFace',
+  TurnBack = 'TurnBack',
+  TurnLeft = 'TurnLeft',
+  TurnRight = 'TurnRight',
+}
+
+export type TTurnAction = keyof typeof TurnAction

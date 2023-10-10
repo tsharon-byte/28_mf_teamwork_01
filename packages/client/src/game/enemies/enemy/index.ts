@@ -1,87 +1,72 @@
 import {
-  POSITION,
   SPEED,
   POINTS_PER_KILL,
   CAN_GO_THROUGH_WALLS,
+  POSITION,
 } from './constants'
 import { DIRECTION_VECTORS } from '../../constants'
 import {
   TLevel,
-  TPosition,
   TDirection,
   Direction,
   GameEvent,
+  TPosition,
+  DeathAction,
 } from '../../types'
-import {
-  createEnemySprites,
-  randomEnumValue,
-  noCollision,
-  roundToDecimal,
-} from './helpers'
-import { TActionSprite, TActionSpriteConstant } from './types'
+import { randomEnumValue, noCollision } from './helpers'
 import { Nullable } from '../../../types'
-import Sprite from '../../../utils/animation/Sprite'
 import eventBus from '../../core/event-bus'
-import { Vector } from '../../core'
+import { Vector, Entity } from '../../core'
+import { TActionSpriteConstantsMap } from '../../types'
+import { roundToDecimal, getMoveAction } from '../../helpers'
+import { TEnemyAction } from './types'
 
-class Enemy {
-  protected _sprites: TActionSprite
-  protected _direction: TDirection = randomEnumValue(Direction)
-  protected _sprite: Nullable<Sprite> = null
+class Enemy extends Entity<TEnemyAction> {
+  protected _direction: TDirection
   protected _timer = 0
   protected _animationFrameId: Nullable<number> = null
   protected _isDead = false
 
   constructor(
-    protected _context: CanvasRenderingContext2D,
-    protected _level: TLevel,
-    protected _startPosition: TPosition = POSITION,
-    protected _actionSpriteConstants: TActionSpriteConstant,
+    context: CanvasRenderingContext2D,
+    level: TLevel,
+    startPosition: TPosition = POSITION,
+    actionSpriteConstantsMap: TActionSpriteConstantsMap<TEnemyAction>,
     protected _speed: number = SPEED,
     protected _pointsPerKill: number = POINTS_PER_KILL,
     protected _canGoThroughWalls: boolean = CAN_GO_THROUGH_WALLS
   ) {
-    this._sprites = createEnemySprites(
-      _context,
-      _level,
-      _startPosition,
-      _actionSpriteConstants
-    )
-    this._sprite = this._sprites[this._direction]
-  }
-
-  get position(): Vector {
-    return this._sprite
-      ? this._sprite.position
-      : new Vector(...this._startPosition)
+    const position = new Vector(...startPosition)
+    const direction = randomEnumValue(Direction)
+    const action = getMoveAction(direction)
+    super(context, level, position, actionSpriteConstantsMap, action)
+    this._direction = direction
   }
 
   move() {
     if (this._sprite) {
       const prevDirection = this._direction
-      const [x0, y0] = this._startPosition
-      const [x1, y1] = this._sprite.delta
-      const [x2, y2] = DIRECTION_VECTORS[this._direction]
+      const directionVector = DIRECTION_VECTORS[this._direction]
+      const positionVector = this._position
+        .add(directionVector.mul(0.1))
+        .roundToDecimal(1)
       const canMove = noCollision(
         this._level,
-        [
-          roundToDecimal(x0 + x1 + x2 * 0.1, 1),
-          roundToDecimal(y0 + y1 + y2 * 0.1, 1),
-        ],
-        DIRECTION_VECTORS[this._direction],
+        directionVector,
+        positionVector,
         this._canGoThroughWalls
       )
       if (!canMove) {
         const availableDirections = Object.fromEntries(
           Object.entries(Direction).filter(([key, _]) => {
-            const [x2, y2] = DIRECTION_VECTORS[key as TDirection]
+            const directionVector = DIRECTION_VECTORS[key as TDirection]
+            const positionVector = this._position
+              .add(directionVector.mul(0.1))
+              .roundToDecimal(1)
             return noCollision(
               this._level,
-              [
-                roundToDecimal(x0 + x1 + x2 * 0.1, 1),
-                roundToDecimal(y0 + y1 + y2 * 0.1, 1),
-              ],
-              DIRECTION_VECTORS[key as TDirection],
+              directionVector,
+              positionVector,
               this._canGoThroughWalls
             )
           })
@@ -92,19 +77,24 @@ class Enemy {
           return
         }
       }
+      const action = getMoveAction(this._direction)
       if (
         prevDirection !== this._direction &&
-        this._sprite !== this._sprites[this._direction]
+        this._sprite !== this._actionSpriteMap[action]
       ) {
         this._sprite.stop()
-        this._sprite = this._sprites[this._direction]
+        this._sprite = this._actionSpriteMap[action]
         this._sprite.start()
       }
-      const [x4, y4] = DIRECTION_VECTORS[this._direction]
-      this._sprite.delta = [
-        roundToDecimal(x1 + x4 * 0.1, 1),
-        roundToDecimal(y1 + y4 * 0.1, 1),
-      ]
+      const [x, y] = this._sprite.delta
+      const delta = DIRECTION_VECTORS[this._direction].mul(0.1)
+      Object.values(this._actionSpriteMap).forEach(sprite => {
+        sprite.delta = [
+          roundToDecimal(x + delta.x, 1),
+          roundToDecimal(y + delta.y, 1),
+        ]
+      })
+      this._position = this._position.add(delta).roundToDecimal(1)
       eventBus.emit(GameEvent.EnemyMove, this)
     }
   }
@@ -141,9 +131,9 @@ class Enemy {
       this.stop()
       if (this._sprite) {
         this._sprite.stop()
-        this._sprites.dead.delta = this._sprite.delta
+        this._actionSpriteMap[DeathAction.Death].delta = this._sprite.delta
       }
-      this._sprite = this._sprites.dead
+      this._sprite = this._actionSpriteMap[DeathAction.Death]
       this._sprite.onlyOneCycle = true
       this._sprite.start()
     }
