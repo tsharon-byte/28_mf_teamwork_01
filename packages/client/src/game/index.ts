@@ -149,8 +149,9 @@ class Game {
   }
 
   protected _bombermanIsKilledEnemy(enemy: Enemy) {
-    return this._bomberman && this._bomberman.position.round().isEqual(
-        enemy.position.round()
+    return (
+      this._bomberman &&
+      this._bomberman.position.round().isEqual(enemy.position.round())
     )
   }
 
