@@ -4,7 +4,7 @@ import { Vector } from '../../game/core'
 
 class Sprite {
   protected readonly ctx: CanvasRenderingContext2D
-  private readonly image: CanvasImageSource
+  public image: CanvasImageSource
   protected frameIndex: number
   protected tickCount: number
   protected readonly ticksPerFrame: number
@@ -57,7 +57,7 @@ class Sprite {
   }
 
   set delta([dx, dy]) {
-    ;[this.dx, this.dy] = [dx, dy]
+    [this.dx, this.dy] = [dx, dy]
   }
 
   update = () => {
