@@ -25,5 +25,3 @@ export const BOOM_RIGHT_SPRITE = {
   TAIL_SIZE: 16,
   ANIMATION_SPEED: 8,
 }
-
-export const BOOM_TIMER = 1000

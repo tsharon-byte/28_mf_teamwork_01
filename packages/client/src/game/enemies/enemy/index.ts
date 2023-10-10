@@ -80,11 +80,11 @@ class Enemy extends Entity<TEnemyAction> {
       const action = getMoveAction(this._direction)
       if (
         prevDirection !== this._direction &&
-        this._sprite.image !== this._actionSpriteMap[action].image
+        this._sprite !== this._actionSpriteMap[action]
       ) {
-        // this._sprite.stop()
-        this._sprite.image = this._actionSpriteMap[action].image
-        // this._sprite.start()
+        this._sprite.stop()
+        this._sprite = this._actionSpriteMap[action]
+        this._sprite.start()
       }
       const [x, y] = this._sprite.delta
       const delta = DIRECTION_VECTORS[this._direction].mul(0.1)
@@ -96,7 +96,6 @@ class Enemy extends Entity<TEnemyAction> {
       })
       this._position = this._position.add(delta).roundToDecimal(1)
       eventBus.emit(GameEvent.EnemyMove, this)
-      this._sprite.render()
     }
   }
 

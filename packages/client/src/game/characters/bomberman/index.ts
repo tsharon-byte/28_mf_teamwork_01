@@ -62,7 +62,7 @@ class Bomberman extends Entity<TBombermanAction> {
   }
 
   protected _move() {
-    // let sprite
+    let sprite
     const directionVector = DIRECTION_VECTORS[this._direction]
     const positionVector = this._position
       .add(directionVector.mul(0.1))
@@ -81,15 +81,15 @@ class Bomberman extends Entity<TBombermanAction> {
           ),
           this._position.y
         )
-        this._sprite.image =
+        sprite =
           this._actionSpriteMap[
             Math.round(positionVector.x) < positionVector.x
               ? MoveAction.MoveLeft
               : MoveAction.MoveRight
-          ].image
-        // if (this._sprite !== sprite) {
-        //   this._sprite.stop()
-        // }
+          ]
+        if (this._sprite !== sprite) {
+          this._sprite.stop()
+        }
         const [x, y] = this._sprite.delta
         Object.values(this._actionSpriteMap).forEach(sprite => {
           sprite.delta = [
@@ -115,15 +115,15 @@ class Bomberman extends Entity<TBombermanAction> {
             1
           )
         )
-        this._sprite.image =
+        sprite =
           this._actionSpriteMap[
             Math.round(positionVector.y) < positionVector.y
               ? MoveAction.MoveUp
               : MoveAction.MoveDown
-          ].image
-        // if (this._sprite !== sprite) {
-        //   this._sprite.stop()
-        // }
+          ]
+        if (this._sprite !== sprite) {
+          this._sprite.stop()
+        }
         const [x, y] = this._sprite.delta
         Object.values(this._actionSpriteMap).forEach(sprite => {
           sprite.delta = [
@@ -147,17 +147,17 @@ class Bomberman extends Entity<TBombermanAction> {
           ]
         })
         const action = getMoveAction(this._direction)
-        this._sprite.image = this._actionSpriteMap[action].image
-        // if (this._sprite !== sprite) {
-        //   this._sprite.stop()
-        // }
+        sprite = this._actionSpriteMap[action]
+        if (this._sprite !== sprite) {
+          this._sprite.stop()
+        }
       }
       eventBus.emit(GameEvent.BombermanMove)
     }
-    // if (this._sprite !== sprite && sprite) {
-    //   this._sprite = sprite
-    //   this._sprite.start()
-    // }
+    if (this._sprite !== sprite && sprite && !this._isDead) {
+      this._sprite = sprite
+      this._sprite.start()
+    }
   }
 
   handleKeyDown = (event: KeyboardEvent) => {
@@ -192,7 +192,6 @@ class Bomberman extends Entity<TBombermanAction> {
         this._direction = Direction.Left
       }
       this._move()
-      this._sprite.render()
     }
   }
 
@@ -221,20 +220,20 @@ class Bomberman extends Entity<TBombermanAction> {
         'ArrowLeft',
       ].includes(key)
     ) {
-      // this._sprite.stop()
+      this._sprite.stop()
       if (['Up', 'ArrowUp'].includes(key)) {
-        this._sprite.image = this._actionSpriteMap[TurnAction.TurnBack].image
+        this._sprite = this._actionSpriteMap[TurnAction.TurnBack]
       }
       if (['Down', 'ArrowDown'].includes(key)) {
-        this._sprite.image = this._actionSpriteMap[TurnAction.TurnFace].image
+        this._sprite = this._actionSpriteMap[TurnAction.TurnFace]
       }
       if (['Right', 'ArrowRight'].includes(key)) {
-        this._sprite.image = this._actionSpriteMap[TurnAction.TurnRight].image
+        this._sprite = this._actionSpriteMap[TurnAction.TurnRight]
       }
       if (['Left', 'ArrowLeft'].includes(key)) {
-        this._sprite.image = this._actionSpriteMap[TurnAction.TurnLeft].image
+        this._sprite = this._actionSpriteMap[TurnAction.TurnLeft]
       }
-      // this._sprite.start()
+      this._sprite.start()
     }
   }
 
@@ -246,7 +245,6 @@ class Bomberman extends Entity<TBombermanAction> {
         this.tick.bind(this)
       )
     }
-    // this._sprite.render()
     document.addEventListener('keydown', this.handleKeyDown)
     document.addEventListener('keyup', this.handleKeyUp)
   }
@@ -254,6 +252,11 @@ class Bomberman extends Entity<TBombermanAction> {
   stop() {
     super.stop()
     this._sprite.stop()
+    if (this._animationFrameId) {
+      window.cancelAnimationFrame(this._animationFrameId)
+      this._animationFrameId = null
+    }
+    Object.values(this._actionSpriteMap).forEach(sprite => sprite.stop())
     document.removeEventListener('keydown', this.handleKeyDown)
     document.removeEventListener('keyup', this.handleKeyUp)
   }
