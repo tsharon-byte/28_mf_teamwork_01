@@ -1,1 +1,1 @@
-export const BOOM_TIMER = 1000
+export const BOOM_TIMER = 500

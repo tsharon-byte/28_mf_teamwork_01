@@ -154,7 +154,7 @@ class Bomberman extends Entity<TBombermanAction> {
       }
       eventBus.emit(GameEvent.BombermanMove)
     }
-    if (this._sprite !== sprite && sprite) {
+    if (this._sprite !== sprite && sprite && !this._isDead) {
       this._sprite = sprite
       this._sprite.start()
     }
@@ -244,13 +244,17 @@ class Bomberman extends Entity<TBombermanAction> {
         this.tick.bind(this)
       )
     }
-    this._sprite.render()
     document.addEventListener('keydown', this.handleKeyDown)
     document.addEventListener('keyup', this.handleKeyUp)
   }
 
   stop() {
     super.stop()
+    if (this._animationFrameId) {
+      window.cancelAnimationFrame(this._animationFrameId)
+      this._animationFrameId = null
+    }
+    Object.values(this._actionSpriteMap).forEach(sprite => sprite.stop())
     document.removeEventListener('keydown', this.handleKeyDown)
     document.removeEventListener('keyup', this.handleKeyUp)
   }
