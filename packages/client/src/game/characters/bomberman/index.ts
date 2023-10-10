@@ -28,11 +28,15 @@ import { noCollision } from '../../enemies/enemy/helpers'
 import eventBus from '../../core/event-bus'
 import { GameEvent } from '../../types'
 import { Bomb } from '../../items'
+import { Nullable } from '../../../types'
 
 class Bomberman extends Entity<TBombermanAction> {
   protected _direction: TDirection = Direction.Down
   protected _speed: number = SPEED
-  bombs: Bomb[] = []
+  protected _isDead = false
+  protected _keyState: Record<string, boolean> = {}
+  protected _timer = 0
+  protected _animationFrameId: Nullable<number> = null
 
   constructor(context: CanvasRenderingContext2D, level: TLevel) {
     const actionSpriteConstants: TActionSpriteConstantsMap<TBombermanAction> = {
@@ -53,11 +57,11 @@ class Bomberman extends Entity<TBombermanAction> {
 
   plantBomb() {
     const bomb = new Bomb(this._context, this._level, this.position.round())
-    this.bombs.push(bomb)
+    eventBus.emit(GameEvent.BombHasBeenPlanted, bomb)
     bomb.start()
   }
 
-  move() {
+  protected _move() {
     let sprite
     const directionVector = DIRECTION_VECTORS[this._direction]
     const positionVector = this._position
@@ -156,43 +160,54 @@ class Bomberman extends Entity<TBombermanAction> {
     }
   }
 
-  handleKeyDown(event: KeyboardEvent) {
+  handleKeyDown = (event: KeyboardEvent) => {
     const { key } = event
-    if (
-      [
-        'Up',
-        'ArrowUp',
-        'Down',
-        'ArrowDown',
-        'Right',
-        'ArrowRight',
-        'Left',
-        'ArrowLeft',
-      ].includes(key)
-    ) {
-      if (['Up', 'ArrowUp'].includes(key)) {
-        this._direction = Direction.Up
-      }
-      if (['Down', 'ArrowDown'].includes(key)) {
-        this._direction = Direction.Down
-      }
-      if (['Right', 'ArrowRight'].includes(key)) {
-        this._direction = Direction.Right
-      }
-      if (['Left', 'ArrowLeft'].includes(key)) {
-        this._direction = Direction.Left
-      }
-      for (let i = 0; i < this._speed; i++) {
-        this.move()
-      }
-    }
+    this._keyState[key] = true
     if (key === ' ') {
       this.plantBomb()
     }
   }
 
-  handleKeyUp(event: KeyboardEvent) {
+  move() {
+    if (
+      this._keyState['Up'] ||
+      this._keyState['ArrowUp'] ||
+      this._keyState['Down'] ||
+      this._keyState['ArrowDown'] ||
+      this._keyState['Right'] ||
+      this._keyState['ArrowRight'] ||
+      this._keyState['Left'] ||
+      this._keyState['ArrowLeft']
+    ) {
+      if (this._keyState['Up'] || this._keyState['ArrowUp']) {
+        this._direction = Direction.Up
+      }
+      if (this._keyState['Down'] || this._keyState['ArrowDown']) {
+        this._direction = Direction.Down
+      }
+      if (this._keyState['Right'] || this._keyState['ArrowRight']) {
+        this._direction = Direction.Right
+      }
+      if (this._keyState['Left'] || this._keyState['ArrowLeft']) {
+        this._direction = Direction.Left
+      }
+      this._move()
+    }
+  }
+
+  tick() {
+    if (this._animationFrameId) {
+      this._timer++
+      if (this._timer % Math.ceil(100 / this._speed) === 0) {
+        this.move()
+      }
+      window.requestAnimationFrame(this.tick.bind(this))
+    }
+  }
+
+  handleKeyUp = (event: KeyboardEvent) => {
     const { key } = event
+    this._keyState[key] = false
     if (
       [
         'Up',
@@ -224,15 +239,34 @@ class Bomberman extends Entity<TBombermanAction> {
 
   start() {
     super.start()
+    if (!this._animationFrameId) {
+      this._animationFrameId = window.requestAnimationFrame(
+        this.tick.bind(this)
+      )
+    }
     this._sprite.render()
-    document.addEventListener('keydown', this.handleKeyDown.bind(this), false)
-    document.addEventListener('keyup', this.handleKeyUp.bind(this), false)
+    document.addEventListener('keydown', this.handleKeyDown)
+    document.addEventListener('keyup', this.handleKeyUp)
   }
 
   stop() {
     super.stop()
-    document.removeEventListener('keydown', this.handleKeyDown.bind(this))
-    document.removeEventListener('keyup', this.handleKeyUp.bind(this))
+    document.removeEventListener('keydown', this.handleKeyDown)
+    document.removeEventListener('keyup', this.handleKeyUp)
+  }
+
+  dead() {
+    if (!this._isDead) {
+      this._isDead = true
+      this.stop()
+      if (this._sprite) {
+        this._sprite.stop()
+        this._actionSpriteMap[DeathAction.Death].delta = this._sprite.delta
+      }
+      this._sprite = this._actionSpriteMap[DeathAction.Death]
+      this._sprite.onlyOneCycle = true
+      this._sprite.start()
+    }
   }
 }
 

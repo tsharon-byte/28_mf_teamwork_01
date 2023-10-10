@@ -1,3 +1,16 @@
 import Bomb from './bomb'
 
-export { Bomb }
+import {
+    BurstWave,
+    BurstWaveStart,
+    BurstWaveMiddle,
+    BurstWaveEnd
+} from './burst-waves'
+
+export {
+    Bomb,
+    BurstWave,
+    BurstWaveStart,
+    BurstWaveMiddle,
+    BurstWaveEnd
+}

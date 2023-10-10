@@ -25,6 +25,7 @@ export enum GameEvent {
   EnemyMove = 'EnemyMove',
   BurstWavePassed = 'BurstWavePassed',
   BombExploded = 'BombExploded',
+  BombHasBeenPlanted = 'BombHasBeenPlanted',
 }
 
 export interface ISpriteConstants {

@@ -15,13 +15,13 @@ import {
 } from './enemies'
 import eventBus from './core/event-bus'
 import { portalIsFound, getBurstWaveEndAction } from './helpers'
-import { Bomb } from './items'
 import {
+  Bomb,
   BurstWave,
   BurstWaveStart,
   BurstWaveMiddle,
   BurstWaveEnd,
-} from './items/burst-waves'
+} from './items'
 import { DIRECTION_VECTORS } from './constants'
 import { BurstWaveMiddleAction } from './items/burst-waves/burst-wave-middle/types'
 import { WALL_CHARACTER } from '../utils/animation/constants'
@@ -34,6 +34,7 @@ class Game {
   protected _enemies: Enemy[] = []
   protected _level: TLevel = level1
   protected _burstWaves: BurstWave[] = []
+  protected _bombs: Bomb[] = []
 
   constructor(protected _canvas: HTMLCanvasElement) {
     if (Game.__instance) {
@@ -86,6 +87,10 @@ class Game {
       GameEvent.BurstWavePassed,
       this._handleBurstWavePassed.bind(this)
     )
+    eventBus.on(
+      GameEvent.BombHasBeenPlanted,
+      this._handleBombHasBeenPlanted.bind(this)
+    )
   }
 
   protected _start() {
@@ -110,21 +115,16 @@ class Game {
       eventBus.emit(GameEvent.GameOverSuccess)
       this._bomberman = null
     }
-    this._bombermanIsKilledCheck()
+    if (this._bombermanIsKilledBurstWave()) {
+      this._handleBombermanDeath()
+    }
   }
 
   protected _handleEnemyMove(enemy: Enemy) {
-    this._gameOverFailureCheck(enemy)
-    this._enemyIsKilledCheck(enemy)
-  }
-
-  protected _gameOverFailureCheck(enemy: Enemy) {
-    if (
-      this._bomberman &&
-      this._bomberman.position.round().isEqual(enemy.position.round())
-    ) {
-      eventBus.emit(GameEvent.GameOverFailure)
+    if (this._bombermanIsKilledEnemy(enemy)) {
+      this._handleBombermanDeath()
     }
+    this._enemyIsKilledCheck(enemy)
   }
 
   protected _enemyIsKilledCheck(enemy: Enemy) {
@@ -139,17 +139,24 @@ class Game {
     }
   }
 
-  protected _bombermanIsKilledCheck() {
-    if (
-      this._burstWaves.some(
-        burstWave =>
-          this._bomberman &&
-          (burstWave.position.isEqual(this._bomberman.position.ceil()) ||
-            burstWave.position.isEqual(this._bomberman.position.floor()))
-      )
-    ) {
-      eventBus.emit(GameEvent.GameOverFailure)
-    }
+  protected _bombermanIsKilledBurstWave() {
+    return this._burstWaves.some(
+      burstWave =>
+        this._bomberman &&
+        (burstWave.position.isEqual(this._bomberman.position.ceil()) ||
+          burstWave.position.isEqual(this._bomberman.position.floor()))
+    )
+  }
+
+  protected _bombermanIsKilledEnemy(enemy: Enemy) {
+    return this._bomberman && this._bomberman.position.round().isEqual(
+        enemy.position.round()
+    )
+  }
+
+  protected _handleBombermanDeath() {
+    this._bomberman?.dead()
+    setTimeout(() => eventBus.emit(GameEvent.GameOverFailure), 1000)
   }
 
   protected _handleBombExploded(bomb: Bomb) {
@@ -162,7 +169,9 @@ class Game {
       this._createBurstWaves(Direction.Left, bomb.position)
       this._createBurstWaves(Direction.Right, bomb.position)
       this._burstWaves.forEach(burstWave => burstWave.start())
-      this._bombermanIsKilledCheck()
+      if (this._bombermanIsKilledBurstWave()) {
+        this._handleBombermanDeath()
+      }
     }
   }
 
@@ -198,6 +207,10 @@ class Game {
 
   protected _handleBurstWavePassed(burstWave: BurstWave) {
     this._burstWaves = this._burstWaves.filter(item => item !== burstWave)
+  }
+
+  protected _handleBombHasBeenPlanted(bomb: Bomb) {
+    this._bombs.push(bomb)
   }
 }
 
